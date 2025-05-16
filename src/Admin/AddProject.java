@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package arasakasocialmediaprojectmanagement;
+package Admin;
 
 /**
  *
  * @author NOVA
  */
-public class EditProject extends javax.swing.JFrame {
+public class AddProject extends javax.swing.JFrame {
 
     /**
-     * Creates new form EditProject
+     * Creates new form AddProject
      */
-    public EditProject() {
+    public AddProject() {
         initComponents();
     }
 
@@ -36,16 +36,14 @@ public class EditProject extends javax.swing.JFrame {
         task = new javax.swing.JLabel();
         garis1 = new javax.swing.JSeparator();
         garis2 = new javax.swing.JSeparator();
-        EDITPROJECT = new javax.swing.JLabel();
+        ADDPROJECT = new javax.swing.JLabel();
         MainContent = new javax.swing.JPanel();
         ProjectName = new javax.swing.JLabel();
         txtProjectName = new javax.swing.JTextField();
         Description = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
         Asignee = new javax.swing.JLabel();
-        txtAsignee1 = new javax.swing.JTextField();
-        txtAsignee2 = new javax.swing.JTextField();
-        txtAsignee3 = new javax.swing.JTextField();
+        txtAsignee = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,7 +98,7 @@ public class EditProject extends javax.swing.JFrame {
                             .addComponent(project)
                             .addComponent(logo2)
                             .addComponent(logo1))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,15 +117,15 @@ public class EditProject extends javax.swing.JFrame {
                 .addComponent(project)
                 .addGap(18, 18, 18)
                 .addComponent(task)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(garis2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logout)
                 .addGap(91, 91, 91))
         );
 
-        EDITPROJECT.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        EDITPROJECT.setText("EDIT PROJECT");
+        ADDPROJECT.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        ADDPROJECT.setText("ADD PROJECT");
 
         MainContent.setBackground(new java.awt.Color(255, 153, 51));
 
@@ -145,12 +143,6 @@ public class EditProject extends javax.swing.JFrame {
 
         Asignee.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Asignee.setText("Asignee");
-
-        txtAsignee1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAsignee1ActionPerformed(evt);
-            }
-        });
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSave.setText("Save");
@@ -170,13 +162,11 @@ public class EditProject extends javax.swing.JFrame {
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(Asignee)
+                        .addComponent(txtAsignee, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Description)
                         .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ProjectName)
-                        .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtAsignee1, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtAsignee2, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtAsignee3, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         MainContentLayout.setVerticalGroup(
@@ -193,12 +183,8 @@ public class EditProject extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(Asignee)
                 .addGap(18, 18, 18)
-                .addComponent(txtAsignee1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtAsignee2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtAsignee3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(txtAsignee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
         );
@@ -208,43 +194,34 @@ public class EditProject extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(Sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EDITPROJECT)
+                    .addComponent(ADDPROJECT)
                     .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(EDITPROJECT)
-                        .addGap(26, 26, 26)
-                        .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(22, 22, 22))
+                .addGap(33, 33, 33)
+                .addComponent(ADDPROJECT)
+                .addGap(33, 33, 33)
+                .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(88, Short.MAX_VALUE))
+            .addComponent(Sidebar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProjectNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProjectNameActionPerformed
-
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void txtAsignee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAsignee1ActionPerformed
+    private void txtProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProjectNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAsignee1ActionPerformed
+    }//GEN-LAST:event_txtProjectNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,28 +240,28 @@ public class EditProject extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditProject().setVisible(true);
+                new AddProject().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ADDPROJECT;
     private javax.swing.JLabel Asignee;
     private javax.swing.JLabel Description;
-    private javax.swing.JLabel EDITPROJECT;
     private javax.swing.JPanel MainContent;
     private javax.swing.JLabel ProjectName;
     private javax.swing.JPanel Sidebar;
@@ -297,9 +274,7 @@ public class EditProject extends javax.swing.JFrame {
     private javax.swing.JLabel logout;
     private javax.swing.JLabel project;
     private javax.swing.JLabel task;
-    private javax.swing.JTextField txtAsignee1;
-    private javax.swing.JTextField txtAsignee2;
-    private javax.swing.JTextField txtAsignee3;
+    private javax.swing.JTextField txtAsignee;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtProjectName;
     private javax.swing.JLabel user;
