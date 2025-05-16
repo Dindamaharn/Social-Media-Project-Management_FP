@@ -26,17 +26,551 @@ public class DashboardUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Sidebar = new javax.swing.JPanel();
+        logo1 = new javax.swing.JLabel();
+        logo2 = new javax.swing.JLabel();
+        dashboard = new javax.swing.JLabel();
+        project = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
+        task = new javax.swing.JLabel();
+        garis1 = new javax.swing.JSeparator();
+        garis2 = new javax.swing.JSeparator();
+        MainContent = new javax.swing.JPanel();
+        OverdueTask1 = new javax.swing.JPanel();
+        txt1 = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        jLabel71 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        TotalUser1 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        TotalTask1 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        TotalProject1 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        AllUser1 = new javax.swing.JPanel();
+        jLabel77 = new javax.swing.JLabel();
+        jLabel78 = new javax.swing.JLabel();
+        jLabel81 = new javax.swing.JLabel();
+        jLabel83 = new javax.swing.JLabel();
+        jLabel84 = new javax.swing.JLabel();
+        jLabel85 = new javax.swing.JLabel();
+        jLabel82 = new javax.swing.JLabel();
+        jLabel86 = new javax.swing.JLabel();
+        jLabel88 = new javax.swing.JLabel();
+        jLabel89 = new javax.swing.JLabel();
+        jLabel91 = new javax.swing.JLabel();
+        TopUser1 = new javax.swing.JPanel();
+        jLabel90 = new javax.swing.JLabel();
+        jLabel92 = new javax.swing.JLabel();
+        jLabel93 = new javax.swing.JLabel();
+        jLabel95 = new javax.swing.JLabel();
+        jLabel96 = new javax.swing.JLabel();
+        jLabel98 = new javax.swing.JLabel();
+        jLabel99 = new javax.swing.JLabel();
+        jLabel97 = new javax.swing.JLabel();
+        jLabel100 = new javax.swing.JLabel();
+        Greeting = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1366, 768));
+        setResizable(false);
+
+        Sidebar.setBackground(new java.awt.Color(255, 153, 51));
+
+        logo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        logo1.setForeground(new java.awt.Color(255, 255, 255));
+        logo1.setText("Arasaka Social Media ");
+
+        logo2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        logo2.setForeground(new java.awt.Color(255, 255, 255));
+        logo2.setText("Project Management");
+
+        dashboard.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard.setText("DASHBOARD");
+
+        project.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        project.setForeground(new java.awt.Color(255, 255, 255));
+        project.setText("PROJECT");
+
+        logout.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        logout.setForeground(new java.awt.Color(255, 255, 255));
+        logout.setText("LOGOUT");
+
+        task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        task.setForeground(new java.awt.Color(255, 255, 255));
+        task.setText("TASK");
+
+        javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
+        Sidebar.setLayout(SidebarLayout);
+        SidebarLayout.setHorizontalGroup(
+            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(garis2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(garis1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(SidebarLayout.createSequentialGroup()
+                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(logout))
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(task)
+                            .addComponent(dashboard)
+                            .addComponent(project)
+                            .addComponent(logo2)
+                            .addComponent(logo1))))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+        SidebarLayout.setVerticalGroup(
+            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(logo1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logo2)
+                .addGap(93, 93, 93)
+                .addComponent(dashboard)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(garis1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(project)
+                .addGap(18, 18, 18)
+                .addComponent(task)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(garis2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logout)
+                .addGap(91, 91, 91))
+        );
+
+        MainContent.setBackground(new java.awt.Color(255, 153, 51));
+
+        OverdueTask1.setBackground(new java.awt.Color(204, 255, 102));
+
+        txt1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txt1.setText("RECENT POINT");
+
+        jLabel69.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel69.setText("1.");
+
+        jLabel71.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel71.setText("Redesign Landing page");
+
+        jLabel74.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel74.setText("10");
+
+        javax.swing.GroupLayout OverdueTask1Layout = new javax.swing.GroupLayout(OverdueTask1);
+        OverdueTask1.setLayout(OverdueTask1Layout);
+        OverdueTask1Layout.setHorizontalGroup(
+            OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OverdueTask1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(OverdueTask1Layout.createSequentialGroup()
+                        .addComponent(txt1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(OverdueTask1Layout.createSequentialGroup()
+                        .addComponent(jLabel69)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel71)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel74)
+                        .addGap(24, 24, 24))))
+        );
+        OverdueTask1Layout.setVerticalGroup(
+            OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OverdueTask1Layout.createSequentialGroup()
+                .addGroup(OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(OverdueTask1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel74))
+                    .addGroup(OverdueTask1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(txt1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel69)
+                            .addComponent(jLabel71))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        TotalUser1.setBackground(new java.awt.Color(204, 255, 102));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel16.setText("20");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel17.setText("TASK");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel18.setText("ASSIGN");
+
+        javax.swing.GroupLayout TotalUser1Layout = new javax.swing.GroupLayout(TotalUser1);
+        TotalUser1.setLayout(TotalUser1Layout);
+        TotalUser1Layout.setHorizontalGroup(
+            TotalUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalUser1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addComponent(jLabel16)
+                .addGap(42, 42, 42))
+            .addGroup(TotalUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TotalUser1Layout.createSequentialGroup()
+                    .addGap(30, 30, 30)
+                    .addComponent(jLabel17)
+                    .addContainerGap(160, Short.MAX_VALUE)))
+        );
+        TotalUser1Layout.setVerticalGroup(
+            TotalUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TotalUser1Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel16)
+                .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalUser1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel18)
+                .addGap(42, 42, 42))
+            .addGroup(TotalUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TotalUser1Layout.createSequentialGroup()
+                    .addGap(35, 35, 35)
+                    .addComponent(jLabel17)
+                    .addContainerGap(66, Short.MAX_VALUE)))
+        );
+
+        TotalTask1.setBackground(new java.awt.Color(204, 255, 102));
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel29.setText("3");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel30.setText("TASK");
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel31.setText("OVERDUE");
+
+        javax.swing.GroupLayout TotalTask1Layout = new javax.swing.GroupLayout(TotalTask1);
+        TotalTask1.setLayout(TotalTask1Layout);
+        TotalTask1Layout.setHorizontalGroup(
+            TotalTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalTask1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addComponent(jLabel29)
+                .addGap(42, 42, 42))
+            .addGroup(TotalTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TotalTask1Layout.createSequentialGroup()
+                    .addGap(30, 30, 30)
+                    .addComponent(jLabel30)
+                    .addContainerGap(178, Short.MAX_VALUE)))
+        );
+        TotalTask1Layout.setVerticalGroup(
+            TotalTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TotalTask1Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel29)
+                .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalTask1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel31)
+                .addGap(42, 42, 42))
+            .addGroup(TotalTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TotalTask1Layout.createSequentialGroup()
+                    .addGap(35, 35, 35)
+                    .addComponent(jLabel30)
+                    .addContainerGap(66, Short.MAX_VALUE)))
+        );
+
+        TotalProject1.setBackground(new java.awt.Color(204, 255, 102));
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel32.setText("5");
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel33.setText("TASK IN");
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel34.setText("PROGRESS");
+
+        javax.swing.GroupLayout TotalProject1Layout = new javax.swing.GroupLayout(TotalProject1);
+        TotalProject1.setLayout(TotalProject1Layout);
+        TotalProject1Layout.setHorizontalGroup(
+            TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalProject1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addComponent(jLabel32)
+                .addGap(42, 42, 42))
+            .addGroup(TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TotalProject1Layout.createSequentialGroup()
+                    .addGap(30, 30, 30)
+                    .addComponent(jLabel33)
+                    .addContainerGap(196, Short.MAX_VALUE)))
+        );
+        TotalProject1Layout.setVerticalGroup(
+            TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TotalProject1Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel32)
+                .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalProject1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel34)
+                .addGap(42, 42, 42))
+            .addGroup(TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TotalProject1Layout.createSequentialGroup()
+                    .addGap(35, 35, 35)
+                    .addComponent(jLabel33)
+                    .addContainerGap(66, Short.MAX_VALUE)))
+        );
+
+        AllUser1.setBackground(new java.awt.Color(204, 255, 102));
+
+        jLabel77.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel77.setText("RECENT ACTIVITY");
+
+        jLabel78.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel78.setText("Today");
+
+        jLabel81.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel81.setText("Mamy Sehat");
+
+        jLabel83.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel83.setText("Fix payment gateway hub");
+
+        jLabel84.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel84.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel84.setText("Change to in progress");
+
+        jLabel85.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel85.setText("Fix payment gateway hub");
+
+        jLabel82.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel82.setText("Mamy Sehat");
+
+        jLabel86.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel86.setText("Change to in progress");
+
+        jLabel88.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel88.setText("Fix payment gateway hub");
+
+        jLabel89.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel89.setText("Mamy Sehat");
+
+        jLabel91.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel91.setText("Change to in progress");
+
+        javax.swing.GroupLayout AllUser1Layout = new javax.swing.GroupLayout(AllUser1);
+        AllUser1.setLayout(AllUser1Layout);
+        AllUser1Layout.setHorizontalGroup(
+            AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AllUser1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AllUser1Layout.createSequentialGroup()
+                        .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, AllUser1Layout.createSequentialGroup()
+                                .addComponent(jLabel81)
+                                .addGap(217, 217, 217)
+                                .addComponent(jLabel83)
+                                .addGap(267, 267, 267)
+                                .addComponent(jLabel84)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(AllUser1Layout.createSequentialGroup()
+                                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(AllUser1Layout.createSequentialGroup()
+                                        .addComponent(jLabel82)
+                                        .addGap(217, 217, 217)
+                                        .addComponent(jLabel85)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel86))
+                                    .addGroup(AllUser1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jLabel89)
+                                        .addGap(217, 217, 217)
+                                        .addComponent(jLabel88)
+                                        .addGap(267, 267, 267)
+                                        .addComponent(jLabel91)))
+                                .addGap(16, 16, 16)))
+                        .addGap(247, 247, 247))
+                    .addGroup(AllUser1Layout.createSequentialGroup()
+                        .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel78)
+                            .addComponent(jLabel77))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        AllUser1Layout.setVerticalGroup(
+            AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AllUser1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel77)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel78)
+                .addGap(17, 17, 17)
+                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel81)
+                    .addComponent(jLabel83)
+                    .addComponent(jLabel84))
+                .addGap(12, 12, 12)
+                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel82)
+                    .addComponent(jLabel85)
+                    .addComponent(jLabel86))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel89)
+                    .addComponent(jLabel88)
+                    .addComponent(jLabel91))
+                .addContainerGap(62, Short.MAX_VALUE))
+        );
+
+        TopUser1.setBackground(new java.awt.Color(204, 255, 102));
+
+        jLabel90.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel90.setText("USERS");
+
+        jLabel92.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel92.setText("Name");
+
+        jLabel93.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel93.setText("Total Points");
+
+        jLabel95.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel95.setText("Role");
+
+        jLabel96.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel96.setText(": entongeuy@gmail.com");
+
+        jLabel98.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel98.setText("Email");
+
+        jLabel99.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel99.setText(": Entong");
+
+        jLabel97.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel97.setText(": assignee");
+
+        jLabel100.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel100.setText(": 10");
+
+        javax.swing.GroupLayout TopUser1Layout = new javax.swing.GroupLayout(TopUser1);
+        TopUser1.setLayout(TopUser1Layout);
+        TopUser1Layout.setHorizontalGroup(
+            TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TopUser1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TopUser1Layout.createSequentialGroup()
+                        .addComponent(jLabel90)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(TopUser1Layout.createSequentialGroup()
+                        .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel92)
+                            .addComponent(jLabel98)
+                            .addComponent(jLabel95)
+                            .addComponent(jLabel93))
+                        .addGap(66, 66, 66)
+                        .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel100)
+                            .addComponent(jLabel96)
+                            .addComponent(jLabel99)
+                            .addComponent(jLabel97))
+                        .addGap(0, 189, Short.MAX_VALUE))))
+        );
+        TopUser1Layout.setVerticalGroup(
+            TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TopUser1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel90)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel92)
+                    .addComponent(jLabel99))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel98)
+                    .addComponent(jLabel96))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel95)
+                    .addComponent(jLabel97))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel93)
+                    .addComponent(jLabel100))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
+        MainContent.setLayout(MainContentLayout);
+        MainContentLayout.setHorizontalGroup(
+            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainContentLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(MainContentLayout.createSequentialGroup()
+                        .addComponent(TotalUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(TotalProject1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TotalTask1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(MainContentLayout.createSequentialGroup()
+                        .addComponent(TopUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(OverdueTask1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(AllUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+        MainContentLayout.setVerticalGroup(
+            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainContentLayout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TotalTask1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TotalProject1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TotalUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(TopUser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(OverdueTask1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AllUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+
+        Greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Greeting.setText("Hello, Bella! Here's what happening today");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Greeting)
+                    .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(Sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(Greeting)
+                .addGap(24, 24, 24)
+                .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,5 +612,55 @@ public class DashboardUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AllUser1;
+    private javax.swing.JLabel Greeting;
+    private javax.swing.JPanel MainContent;
+    private javax.swing.JPanel OverdueTask1;
+    private javax.swing.JPanel Sidebar;
+    private javax.swing.JPanel TopUser1;
+    private javax.swing.JPanel TotalProject1;
+    private javax.swing.JPanel TotalTask1;
+    private javax.swing.JPanel TotalUser1;
+    private javax.swing.JLabel dashboard;
+    private javax.swing.JSeparator garis1;
+    private javax.swing.JSeparator garis2;
+    private javax.swing.JLabel jLabel100;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel69;
+    private javax.swing.JLabel jLabel71;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel81;
+    private javax.swing.JLabel jLabel82;
+    private javax.swing.JLabel jLabel83;
+    private javax.swing.JLabel jLabel84;
+    private javax.swing.JLabel jLabel85;
+    private javax.swing.JLabel jLabel86;
+    private javax.swing.JLabel jLabel88;
+    private javax.swing.JLabel jLabel89;
+    private javax.swing.JLabel jLabel90;
+    private javax.swing.JLabel jLabel91;
+    private javax.swing.JLabel jLabel92;
+    private javax.swing.JLabel jLabel93;
+    private javax.swing.JLabel jLabel95;
+    private javax.swing.JLabel jLabel96;
+    private javax.swing.JLabel jLabel97;
+    private javax.swing.JLabel jLabel98;
+    private javax.swing.JLabel jLabel99;
+    private javax.swing.JLabel logo1;
+    private javax.swing.JLabel logo2;
+    private javax.swing.JLabel logout;
+    private javax.swing.JLabel project;
+    private javax.swing.JLabel task;
+    private javax.swing.JLabel txt1;
     // End of variables declaration//GEN-END:variables
 }
