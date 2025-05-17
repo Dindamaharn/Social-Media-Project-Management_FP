@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Kuliah/Semester%204/OOP/FP/src/arasakasocialmediaprojectmanagement/ArasakaSocialMediaProjectManagement.java</file>
-            <file>file:/D:/Kuliah/Semester%204/OOP/FP/src/arasakasocialmediaprojectmanagement/CRUDProject.java</file>
-            <file>file:/D:/Kuliah/Semester%204/OOP/FP/src/arasakasocialmediaprojectmanagement/DashboardAdmin.java</file>
-            <file>file:/D:/Kuliah/Semester%204/OOP/FP/src/arasakasocialmediaprojectmanagement/AddProject.java</file>
+            <file>file:/D:/latihan/FP_PBO/src/Admin/CRUDUser.java</file>
+            <file>file:/D:/latihan/FP_PBO/src/Admin/EditUser.java</file>
+            <file>file:/D:/latihan/FP_PBO/src/Admin/AddUser.java</file>
+            <file>file:/D:/latihan/FP_PBO/src/Login/Login.java</file>
         </group>
     </open-files>
 </project-private>
