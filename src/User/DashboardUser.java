@@ -78,7 +78,6 @@ public class DashboardUser extends javax.swing.JFrame {
         Greeting = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
         setResizable(false);
 
         Sidebar.setBackground(new java.awt.Color(255, 153, 51));
@@ -519,9 +518,9 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(MainContentLayout.createSequentialGroup()
                         .addComponent(TotalUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addComponent(TotalProject1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(17, 17, 17)
                         .addComponent(TotalTask1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(MainContentLayout.createSequentialGroup()
                         .addComponent(TopUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -548,7 +547,7 @@ public class DashboardUser extends javax.swing.JFrame {
         );
 
         Greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Greeting.setText("Hello, Bella! Here's what happening today");
+        Greeting.setText("Hello, {user}! Here's what happening today");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
