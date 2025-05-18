@@ -26,21 +26,290 @@ public class CRUDTask extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Sidebar = new javax.swing.JPanel();
+        logo1 = new javax.swing.JLabel();
+        logo2 = new javax.swing.JLabel();
+        dashboard = new javax.swing.JLabel();
+        project = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
+        task = new javax.swing.JLabel();
+        garis1 = new javax.swing.JSeparator();
+        garis2 = new javax.swing.JSeparator();
+        Task = new javax.swing.JLabel();
+        MainContent = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        ProjectName = new javax.swing.JLabel();
+        Action = new javax.swing.JLabel();
+        Description = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        garis3 = new javax.swing.JSeparator();
+        garis4 = new javax.swing.JSeparator();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        Action1 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        Action2 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        Sidebar.setBackground(new java.awt.Color(255, 153, 51));
+
+        logo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        logo1.setForeground(new java.awt.Color(255, 255, 255));
+        logo1.setText("Arasaka Social Media ");
+
+        logo2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        logo2.setForeground(new java.awt.Color(255, 255, 255));
+        logo2.setText("Project Management");
+
+        dashboard.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard.setText("DASHBOARD");
+
+        project.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        project.setForeground(new java.awt.Color(255, 255, 255));
+        project.setText("PROJECT");
+
+        logout.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        logout.setForeground(new java.awt.Color(255, 255, 255));
+        logout.setText("LOGOUT");
+
+        task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        task.setForeground(new java.awt.Color(255, 255, 255));
+        task.setText("TASK");
+
+        javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
+        Sidebar.setLayout(SidebarLayout);
+        SidebarLayout.setHorizontalGroup(
+            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(garis2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(garis1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(SidebarLayout.createSequentialGroup()
+                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(logout))
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(task)
+                            .addComponent(dashboard)
+                            .addComponent(project)
+                            .addComponent(logo2)
+                            .addComponent(logo1))))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+        SidebarLayout.setVerticalGroup(
+            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(logo1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logo2)
+                .addGap(93, 93, 93)
+                .addComponent(dashboard)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(garis1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(project)
+                .addGap(18, 18, 18)
+                .addComponent(task)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
+                .addComponent(garis2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logout)
+                .addGap(91, 91, 91))
+        );
+
+        Task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Task.setText("TASK");
+
+        MainContent.setBackground(new java.awt.Color(255, 153, 51));
+
+        jPanel10.setBackground(new java.awt.Color(204, 255, 102));
+
+        ProjectName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        ProjectName.setText("Task ");
+
+        Action.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Action.setText("Point");
+
+        Description.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Description.setText("Project Name");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel12.setText("Mamy Sehat");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel13.setText("Design Reels");
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel14.setText("Atur Feed Ig");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel15.setText("Mamy Sakit ");
+
+        Action1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Action1.setText("Action");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel16.setText("25 Mei 2025");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel17.setText("5");
+
+        Action2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Action2.setText("Deadline");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel18.setText("24 Apr 2025");
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel19.setText("5");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(140, 140, 140)
+                        .addComponent(jLabel15)
+                        .addGap(181, 181, 181)
+                        .addComponent(jLabel16)
+                        .addGap(116, 116, 116)
+                        .addComponent(jLabel19)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(ProjectName)
+                                .addGap(182, 182, 182)
+                                .addComponent(Description)
+                                .addGap(129, 129, 129)
+                                .addComponent(Action2)
+                                .addGap(92, 92, 92)
+                                .addComponent(Action)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                                .addComponent(Action1)
+                                .addGap(19, 19, 19))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(133, 133, 133)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel18)
+                                .addGap(118, 118, 118)
+                                .addComponent(jLabel17)
+                                .addGap(230, 230, 230))
+                            .addComponent(garis3)
+                            .addComponent(garis4))
+                        .addContainerGap(60, Short.MAX_VALUE))))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProjectName)
+                    .addComponent(Description)
+                    .addComponent(Action1)
+                    .addComponent(Action)
+                    .addComponent(Action2))
+                .addGap(9, 9, 9)
+                .addComponent(garis3, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18))
+                .addGap(18, 18, 18)
+                .addComponent(garis4, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel19))
+                .addContainerGap(378, Short.MAX_VALUE))
+        );
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setText("Add Task");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
+        MainContent.setLayout(MainContentLayout);
+        MainContentLayout.setHorizontalGroup(
+            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainContentLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
+        );
+        MainContentLayout.setVerticalGroup(
+            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainContentLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
+
+        jButton1.getAccessibleContext().setAccessibleName("Add Task");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(Task)
+                        .addGap(0, 1050, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(Sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(Task)
+                .addGap(18, 18, 18)
+                .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +347,33 @@ public class CRUDTask extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Action;
+    private javax.swing.JLabel Action1;
+    private javax.swing.JLabel Action2;
+    private javax.swing.JLabel Description;
+    private javax.swing.JPanel MainContent;
+    private javax.swing.JLabel ProjectName;
+    private javax.swing.JPanel Sidebar;
+    private javax.swing.JLabel Task;
+    private javax.swing.JLabel dashboard;
+    private javax.swing.JSeparator garis1;
+    private javax.swing.JSeparator garis2;
+    private javax.swing.JSeparator garis3;
+    private javax.swing.JSeparator garis4;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JLabel logo1;
+    private javax.swing.JLabel logo2;
+    private javax.swing.JLabel logout;
+    private javax.swing.JLabel project;
+    private javax.swing.JLabel task;
     // End of variables declaration//GEN-END:variables
 }
