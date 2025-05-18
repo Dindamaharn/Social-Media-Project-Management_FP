@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Login;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,9 +36,9 @@ public class Login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        TxtName = new javax.swing.JTextField();
+        PwField = new javax.swing.JPasswordField();
+        ButtonLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -48,17 +55,22 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("LOGIN");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 28, -1, -1));
 
-        jTextField1.setText("email");
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 78, 300, 30));
+        TxtName.setText("email");
+        jPanel2.add(TxtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 78, 300, 30));
 
-        jPasswordField1.setText("jPasswordField1");
-        jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 126, 300, 30));
+        PwField.setText("jPasswordField1");
+        jPanel2.add(PwField, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 126, 300, 30));
 
-        jButton1.setBackground(new java.awt.Color(50, 103, 177));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(247, 210, 50));
-        jButton1.setText("Login");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 174, 300, 40));
+        ButtonLogin.setBackground(new java.awt.Color(50, 103, 177));
+        ButtonLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ButtonLogin.setForeground(new java.awt.Color(247, 210, 50));
+        ButtonLogin.setText("Login");
+        ButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLoginActionPerformed(evt);
+            }
+        });
+        jPanel2.add(ButtonLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 174, 300, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 259, 400, 250));
 
@@ -66,6 +78,51 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoginActionPerformed
+         String name = TxtName.getText();
+        String password = String.valueOf(PwField.getPassword());
+
+    try {
+        Connection conn = Database.DatabaseConnection.getConnection();
+
+        // Cek di tabel admins
+        String sqlAdmin = "SELECT * FROM admins WHERE name=? AND password=?";
+        PreparedStatement pstAdmin = conn.prepareStatement(sqlAdmin);
+        pstAdmin.setString(1, name);
+        pstAdmin.setString(2, password);
+        ResultSet rsAdmin = pstAdmin.executeQuery();
+
+        if (rsAdmin.next()) {
+             new Admin.DashboardAdmin().setVisible(true);
+            this.dispose();
+        } else {
+            // Cek di assignees
+            String sqlAssignees = "SELECT * FROM assignees WHERE name=? AND password=?";
+            PreparedStatement pstAssignees = conn.prepareStatement(sqlAssignees);
+            pstAssignees.setString(1, name);
+            pstAssignees.setString(2, password);
+            ResultSet rsAssignees = pstAssignees.executeQuery();
+
+            if (rsAssignees.next()) {
+                new User.DashboardUser().setVisible(true);  
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Username atau Password salah!");
+            }
+
+            rsAssignees.close();
+            pstAssignees.close();
+        }
+
+        rsAdmin.close();
+        pstAdmin.close();
+        conn.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
+    }
+    }//GEN-LAST:event_ButtonLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,11 +160,11 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton ButtonLogin;
+    private javax.swing.JPasswordField PwField;
+    private javax.swing.JTextField TxtName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
