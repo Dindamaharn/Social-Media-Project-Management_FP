@@ -4,15 +4,6 @@
  */
 package User;
 
-
-
-
-//GK KEPAKE KEMUNGKINANNNNNNNNNNNNNNNNNNNNN
-
-
-
-
-
 /**
  *
  * @author fikra
@@ -256,13 +247,12 @@ public class AssigneProject extends javax.swing.JFrame {
                         .addGap(26, 26, 26)))
                 .addComponent(garis4, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel18)
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel16)
-                        .addComponent(jLabel18)
-                        .addComponent(jLabel17)))
+                    .addComponent(jLabel17))
                 .addContainerGap(388, Short.MAX_VALUE))
         );
 
