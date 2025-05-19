@@ -4,6 +4,7 @@
  */
 package Admin;
 
+import javax.swing.JOptionPane;
 /**
  *
  * @author NOVA
@@ -15,6 +16,60 @@ public class DashboardAdmin extends javax.swing.JFrame {
      */
     public DashboardAdmin() {
         initComponents();
+        
+        //TxtDahboard
+        TxtDashboard.setOpaque(true);
+        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
+        
+        // TxtProject
+        TxtProject.setOpaque(true);
+        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
+
+        // TxtTask
+        TxtTask.setOpaque(true);
+        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
+        
+        // TxtLogout
+        TxtLogout.setOpaque(true);
+        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
     }
 
     /**
@@ -26,16 +81,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Sidebar = new javax.swing.JPanel();
-        logo1 = new javax.swing.JLabel();
-        logo2 = new javax.swing.JLabel();
-        dashboard = new javax.swing.JLabel();
-        user = new javax.swing.JLabel();
-        project = new javax.swing.JLabel();
-        logout = new javax.swing.JLabel();
-        task = new javax.swing.JLabel();
-        garis1 = new javax.swing.JSeparator();
-        garis = new javax.swing.JSeparator();
         Greeting = new javax.swing.JLabel();
         MainContent = new javax.swing.JPanel();
         OverdueTask = new javax.swing.JPanel();
@@ -86,84 +131,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
+        SidebarPanel1 = new javax.swing.JPanel();
+        TxtDashboard1 = new javax.swing.JLabel();
+        TxtProject1 = new javax.swing.JLabel();
+        TxtLogout1 = new javax.swing.JLabel();
+        TxtTask1 = new javax.swing.JLabel();
+        LineSidebar2 = new javax.swing.JSeparator();
+        LineSidebar3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Sidebar.setBackground(new java.awt.Color(255, 153, 51));
-
-        logo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        logo1.setForeground(new java.awt.Color(255, 255, 255));
-        logo1.setText("Arasaka Social Media ");
-
-        logo2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        logo2.setForeground(new java.awt.Color(255, 255, 255));
-        logo2.setText("Project Management");
-
-        dashboard.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        dashboard.setForeground(new java.awt.Color(255, 255, 255));
-        dashboard.setText("DASHBOARD");
-
-        user.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        user.setForeground(new java.awt.Color(255, 255, 255));
-        user.setText("USER");
-
-        project.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        project.setForeground(new java.awt.Color(255, 255, 255));
-        project.setText("PROJECT");
-
-        logout.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        logout.setForeground(new java.awt.Color(255, 255, 255));
-        logout.setText("LOGOUT");
-
-        task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        task.setForeground(new java.awt.Color(255, 255, 255));
-        task.setText("TASK");
-
-        javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
-        Sidebar.setLayout(SidebarLayout);
-        SidebarLayout.setHorizontalGroup(
-            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(garis, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(garis1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SidebarLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(logout))
-                    .addGroup(SidebarLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(task)
-                            .addComponent(user)
-                            .addComponent(dashboard)
-                            .addComponent(project)
-                            .addComponent(logo2)
-                            .addComponent(logo1))))
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
-        SidebarLayout.setVerticalGroup(
-            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(logo1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(logo2)
-                .addGap(93, 93, 93)
-                .addComponent(dashboard)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(garis1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(user)
-                .addGap(18, 18, 18)
-                .addComponent(project)
-                .addGap(18, 18, 18)
-                .addComponent(task)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(garis, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(logout)
-                .addGap(91, 91, 91))
-        );
 
         Greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Greeting.setText("Hello, Bella! Here's what happening today");
@@ -623,31 +599,160 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
+        SidebarPanel1.setBackground(new java.awt.Color(211, 211, 211));
+        SidebarPanel1.setPreferredSize(new java.awt.Dimension(220, 420));
+
+        TxtDashboard1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtDashboard1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtDashboard1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icondashboard.png"))); // NOI18N
+        TxtDashboard1.setText("DASHBOARD");
+        TxtDashboard1.setIconTextGap(15);
+        TxtDashboard1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtDashboard1MouseClicked(evt);
+            }
+        });
+
+        TxtProject1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtProject1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtProject1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconproject.png"))); // NOI18N
+        TxtProject1.setText("PROJECT");
+        TxtProject1.setIconTextGap(15);
+        TxtProject1.setInheritsPopupMenu(false);
+        TxtProject1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtProject1MouseClicked(evt);
+            }
+        });
+
+        TxtLogout1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtLogout1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtLogout1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconlogout.png"))); // NOI18N
+        TxtLogout1.setText("LOGOUT");
+        TxtLogout1.setIconTextGap(15);
+        TxtLogout1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtLogout1MouseClicked(evt);
+            }
+        });
+
+        TxtTask1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtTask1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtTask1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icontask.png"))); // NOI18N
+        TxtTask1.setText("TASK");
+        TxtTask1.setIconTextGap(15);
+        TxtTask1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtTask1MouseClicked(evt);
+            }
+        });
+
+        LineSidebar2.setForeground(new java.awt.Color(0, 0, 0));
+
+        LineSidebar3.setForeground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout SidebarPanel1Layout = new javax.swing.GroupLayout(SidebarPanel1);
+        SidebarPanel1.setLayout(SidebarPanel1Layout);
+        SidebarPanel1Layout.setHorizontalGroup(
+            SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LineSidebar2)
+                            .addComponent(LineSidebar3)))
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(TxtDashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtProject1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtTask1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 30, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(TxtLogout1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        SidebarPanel1Layout.setVerticalGroup(
+            SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                .addGap(246, 246, 246)
+                .addComponent(TxtDashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LineSidebar2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TxtProject1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TxtTask1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LineSidebar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TxtLogout1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Greeting)
                     .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(Greeting)
                 .addGap(38, 38, 38)
                 .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
+            .addComponent(SidebarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TxtDashboard1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboard1MouseClicked
+        DashboardAdmin dashboard = new DashboardAdmin();
+        dashboard.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtDashboard1MouseClicked
+
+    private void TxtProject1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProject1MouseClicked
+        CRUDProject project = new CRUDProject();
+        project.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtProject1MouseClicked
+
+    private void TxtLogout1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogout1MouseClicked
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure want to exit?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm ==JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_TxtLogout1MouseClicked
+
+    private void TxtTask1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTask1MouseClicked
+        CRUDTask task = new CRUDTask();
+        task.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtTask1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -687,16 +792,26 @@ public class DashboardAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AllUser;
     private javax.swing.JLabel Greeting;
+    private javax.swing.JSeparator LineSidebar;
+    private javax.swing.JSeparator LineSidebar1;
+    private javax.swing.JSeparator LineSidebar2;
+    private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JPanel MainContent;
     private javax.swing.JPanel OverdueTask;
-    private javax.swing.JPanel Sidebar;
+    private javax.swing.JPanel SidebarPanel;
+    private javax.swing.JPanel SidebarPanel1;
     private javax.swing.JPanel TopUser;
     private javax.swing.JPanel TotalProject;
     private javax.swing.JPanel TotalTask;
     private javax.swing.JPanel TotalUser;
-    private javax.swing.JLabel dashboard;
-    private javax.swing.JSeparator garis;
-    private javax.swing.JSeparator garis1;
+    private javax.swing.JLabel TxtDashboard;
+    private javax.swing.JLabel TxtDashboard1;
+    private javax.swing.JLabel TxtLogout;
+    private javax.swing.JLabel TxtLogout1;
+    private javax.swing.JLabel TxtProject;
+    private javax.swing.JLabel TxtProject1;
+    private javax.swing.JLabel TxtTask;
+    private javax.swing.JLabel TxtTask1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -738,12 +853,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
-    private javax.swing.JLabel logo1;
-    private javax.swing.JLabel logo2;
-    private javax.swing.JLabel logout;
-    private javax.swing.JLabel project;
-    private javax.swing.JLabel task;
     private javax.swing.JLabel txt;
-    private javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
 }

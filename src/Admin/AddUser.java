@@ -4,6 +4,7 @@
  */
 package Admin;
 
+import javax.swing.JOptionPane;
 /**
  *
  * @author LENOVO
@@ -15,6 +16,60 @@ public class AddUser extends javax.swing.JFrame {
      */
     public AddUser() {
         initComponents();
+        
+        //TxtDahboard
+        TxtDashboard.setOpaque(true);
+        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
+        
+        // TxtProject
+        TxtProject.setOpaque(true);
+        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
+
+        // TxtTask
+        TxtTask.setOpaque(true);
+        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
+        
+        // TxtLogout
+        TxtLogout.setOpaque(true);
+        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+        }
+        });
     }
 
     /**
@@ -35,6 +90,13 @@ public class AddUser extends javax.swing.JFrame {
         jPasswordField2 = new javax.swing.JPasswordField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        SidebarPanel = new javax.swing.JPanel();
+        TxtDashboard = new javax.swing.JLabel();
+        TxtProject = new javax.swing.JLabel();
+        TxtLogout = new javax.swing.JLabel();
+        TxtTask = new javax.swing.JLabel();
+        LineSidebar = new javax.swing.JSeparator();
+        LineSidebar1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,6 +181,106 @@ public class AddUser extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, 480, 360));
 
+        SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
+        SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
+
+        TxtDashboard.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtDashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icondashboard.png"))); // NOI18N
+        TxtDashboard.setText("DASHBOARD");
+        TxtDashboard.setIconTextGap(15);
+        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtDashboardMouseClicked(evt);
+            }
+        });
+
+        TxtProject.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtProject.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconproject.png"))); // NOI18N
+        TxtProject.setText("PROJECT");
+        TxtProject.setIconTextGap(15);
+        TxtProject.setInheritsPopupMenu(false);
+        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtProjectMouseClicked(evt);
+            }
+        });
+
+        TxtLogout.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtLogout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconlogout.png"))); // NOI18N
+        TxtLogout.setText("LOGOUT");
+        TxtLogout.setIconTextGap(15);
+        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtLogoutMouseClicked(evt);
+            }
+        });
+
+        TxtTask.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtTask.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icontask.png"))); // NOI18N
+        TxtTask.setText("TASK");
+        TxtTask.setIconTextGap(15);
+        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtTaskMouseClicked(evt);
+            }
+        });
+
+        LineSidebar.setForeground(new java.awt.Color(0, 0, 0));
+
+        LineSidebar1.setForeground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout SidebarPanelLayout = new javax.swing.GroupLayout(SidebarPanel);
+        SidebarPanel.setLayout(SidebarPanelLayout);
+        SidebarPanelLayout.setHorizontalGroup(
+            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LineSidebar)
+                            .addComponent(LineSidebar1)))
+                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 30, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        SidebarPanelLayout.setVerticalGroup(
+            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                .addGap(255, 255, 255)
+                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LineSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
+        );
+
+        jPanel1.add(SidebarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 770));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,6 +306,37 @@ public class AddUser extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
+        DashboardAdmin dashboard = new DashboardAdmin();
+        dashboard.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtDashboardMouseClicked
+
+    private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
+        CRUDProject project = new CRUDProject();
+        project.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtProjectMouseClicked
+
+    private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure want to exit?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm ==JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_TxtLogoutMouseClicked
+
+    private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
+        CRUDTask task = new CRUDTask();
+        task.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtTaskMouseClicked
 
     /**
      * @param args the command line arguments
@@ -181,6 +374,13 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSeparator LineSidebar;
+    private javax.swing.JSeparator LineSidebar1;
+    private javax.swing.JPanel SidebarPanel;
+    private javax.swing.JLabel TxtDashboard;
+    private javax.swing.JLabel TxtLogout;
+    private javax.swing.JLabel TxtProject;
+    private javax.swing.JLabel TxtTask;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
