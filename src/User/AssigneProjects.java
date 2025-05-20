@@ -18,10 +18,10 @@ import Database.DatabaseConnection;
  */
 public class AssigneProjects extends JFrame {
     private JPanel projectPanel;
-//    private String assigneeName;
+    private int assigneeId;
 
-    public AssigneProjects() { //nanti ditambah parameter
-//        this.assigneeName = assigneeName;
+    public AssigneProjects(int assigneeId) { 
+        this.assigneeId = assigneeId;
         setTitle("Assignee Projects");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 600);
@@ -273,6 +273,6 @@ public class AssigneProjects extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new AssigneProjects().setVisible(true));
+        SwingUtilities.invokeLater(() -> new AssigneProjects(1).setVisible(true));
     }
 }
