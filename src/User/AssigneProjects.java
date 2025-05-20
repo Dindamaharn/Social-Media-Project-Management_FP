@@ -19,6 +19,7 @@ import Database.DatabaseConnection;
 public class AssigneProjects extends JFrame {
     private JPanel projectPanel;
     private int assigneeId;
+    private JLabel headerLabel;
 
     public AssigneProjects(int assigneeId) { 
         this.assigneeId = assigneeId;
@@ -45,7 +46,7 @@ public class AssigneProjects extends JFrame {
         JButton dashboardButton = createSidebarButton("DASHBOARD");
         dashboardButton.addActionListener(e -> {
             dispose();
-            new DashboardUser().setVisible(true);
+            new DashboardUserUI(assigneeId).setVisible(true);
         });
         sidebar.add(dashboardButton);
         sidebar.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -76,7 +77,7 @@ public class AssigneProjects extends JFrame {
         contentPanel.setBackground(Color.WHITE);
         add(contentPanel, BorderLayout.CENTER);
 
-        JLabel headerLabel = new JLabel("{user} Assignee Project"); //nanti diganti namanya
+        headerLabel = new JLabel("{user} Assignee Project"); //nanti diganti namanya
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24));
         headerLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         contentPanel.add(headerLabel, BorderLayout.NORTH);
@@ -138,8 +139,9 @@ public class AssigneProjects extends JFrame {
         projectPanel.add(headerPanel);
     }
 
-    private void addProjectRow(String projectName, int progress, String remainingTime, int projectId) {
+    private void addProjectRow(String projectName, int progress, String remainingTime, int projectId, int assigneeId) {
     final int currentProjectId = projectId;
+    int assigneeIdProjects = assigneeId;
     JPanel rowPanel = new JPanel(new GridLayout(1, 4));
     rowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
     rowPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.LIGHT_GRAY));
@@ -164,7 +166,7 @@ public class AssigneProjects extends JFrame {
     detailsButton.addActionListener(e -> {
         dispose();
 //        System.out.println("DEBUG: Mengklik project ID " + currentProjectId);
-        new ProjectDetailsUI(currentProjectId).setVisible(true);
+        new ProjectDetailsUI(currentProjectId, assigneeIdProjects).setVisible(true);
     });
 
     rowPanel.add(nameLabel);
@@ -176,11 +178,16 @@ public class AssigneProjects extends JFrame {
     projectPanel.add(rowPanel);
     }
     private void loadProjects() {
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            String query = "SELECT id, name FROM projects";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+        try (Connection conn = DatabaseConnection.getConnection()){
+            String query = """
+            SELECT DISTINCT p.id, p.name
+            FROM projects p
+            JOIN tasks t ON p.id = t.projects_id
+            WHERE t.assignees_id = ?
+            """;
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, assigneeId);
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 final int projectId = rs.getInt("id");
@@ -191,11 +198,25 @@ public class AssigneProjects extends JFrame {
 
                 int progress = getProjectProgress(projectId);
 
-                addProjectRow(name, progress, remainingStr, projectId);
+                addProjectRow(name, progress, remainingStr, projectId, this.assigneeId);
             }
 
             rs.close();
-            stmt.close();
+            ps.close();
+            
+            //nama user header
+            String queryUserHeaderName = "SELECT name FROM assignees WHERE id = ? ";
+            PreparedStatement stmtUserHeaderName = conn.prepareStatement(queryUserHeaderName);
+            stmtUserHeaderName.setInt(1, assigneeId);
+            ResultSet rsUserHeaderName = stmtUserHeaderName.executeQuery();
+            if (rsUserHeaderName.next()){
+                String username = rsUserHeaderName.getString("name");
+                headerLabel.setText(username +" Assignee Project");
+                
+            }
+            rsUserHeaderName.close();
+            stmtUserHeaderName.close();
+            
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -270,9 +291,5 @@ public class AssigneProjects extends JFrame {
         }
 
         return remainingDays;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new AssigneProjects(1).setVisible(true));
     }
 }

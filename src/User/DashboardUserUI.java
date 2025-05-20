@@ -42,28 +42,49 @@ public class DashboardUserUI extends JFrame {
         setSize(1200, 700);
         setLayout(new BorderLayout());
 
-        // SIDEBAR
+        // Sidebar kiri
         JPanel sidebar = new JPanel();
-        sidebar.setPreferredSize(new Dimension(200, getHeight()));
-        sidebar.setBackground(new Color(230, 230, 230));
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+        sidebar.setBackground(new Color(255, 153, 51)); // orange
+        sidebar.setPreferredSize(new Dimension(220, getHeight()));
+        sidebar.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
 
-        JLabel logo = new JLabel("<html><center><img src='' width='64'><br>Arasaka<br>Social Media<br>Project Management</center></html>", JLabel.CENTER);
+        JLabel logo = new JLabel("<html><div style='text-align:center; padding-left:25px;'>Arasaka Social Media<br>Project Management</div></html>");
+        logo.setFont(new Font("Arial", Font.BOLD, 14));
+        logo.setForeground(Color.WHITE);
         logo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        sidebar.add(Box.createVerticalStrut(20));
         sidebar.add(logo);
-        sidebar.add(Box.createVerticalStrut(30));
+        sidebar.add(Box.createRigidArea(new Dimension(0, 30)));
 
-        String[] menuItems = {"DASHBOARD", "PROJECT", "TASK", "LOGOUT"};
-        for (String item : menuItems) {
-            JButton btn = new JButton(item);
-            btn.setMaximumSize(new Dimension(180, 40));
-            btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-            sidebar.add(btn);
-            sidebar.add(Box.createVerticalStrut(10));
-        }
+        JButton dashboardButton = createSidebarButton("DASHBOARD");
+        dashboardButton.setEnabled(false);
+        sidebar.add(dashboardButton);
+        sidebar.add(Box.createRigidArea(new Dimension(0, 10)));
 
+        JButton projectButton = createSidebarButton("PROJECT");
+        projectButton.addActionListener(e -> {
+            dispose();
+            new AssigneProjects(assigneeId).setVisible(true);
+        });
+        sidebar.add(projectButton);
+        sidebar.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        JButton taskButton = createSidebarButton("TASK");
+        taskButton.addActionListener(e -> {
+            dispose();
+//            new AssigneTasks().setVisible(true); // belum ada assignee task
+        });
+        sidebar.add(taskButton);
+        sidebar.add(Box.createVerticalGlue());
+
+        JButton logoutButton = createSidebarButton("LOGOUT");
+//        logoutButton.addActionListener(e -> {
+//            dispose(); 
+//            new LoginPage().setVisible(true); 
+//        });
+        sidebar.add(logoutButton);
         add(sidebar, BorderLayout.WEST);
+
 
         // MAIN PANEL
         JPanel mainPanel = new JPanel();
@@ -169,8 +190,21 @@ public class DashboardUserUI extends JFrame {
         loadTaskSummary();
     }
     
+    private JButton createSidebarButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setMaximumSize(new Dimension(180, 40));
+        button.setBackground(new Color(255, 153, 51));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        return button;
+    }
+    
     private void loadTaskSummary() {
         try (Connection conn = DatabaseConnection.getConnection()) {
+            
             //nama user header
             String queryUserHeaderName = "SELECT name FROM assignees WHERE id = ? ";
             PreparedStatement stmtUserHeaderName = conn.prepareStatement(queryUserHeaderName);
@@ -181,6 +215,8 @@ public class DashboardUserUI extends JFrame {
                 greeting.setText("Hello, " + username +" Here's what happening today");
                 
             }
+            rsUserHeaderName.close();
+            stmtUserHeaderName.close();
             
             // Task Assign
             String queryAssign = "SELECT COUNT(*) FROM tasks WHERE assignees_id = ?";
@@ -350,7 +386,8 @@ public class DashboardUserUI extends JFrame {
        }
     }
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new DashboardUserUI(1).setVisible(true));
+        int testUserId = 3; // buat ngetest 
+        SwingUtilities.invokeLater(() -> new DashboardUserUI(testUserId).setVisible(true));
     }
 }
 

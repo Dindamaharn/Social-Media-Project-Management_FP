@@ -25,10 +25,13 @@ public class ProjectDetailsUI extends JFrame {
     private JLabel progressStatus;
     private int projectId;
     private JPanel taskListPanel;
+    private int assigneeIdProjects;
+    private JLabel userLabel;
     
-    public ProjectDetailsUI(int projectId) {
+    public ProjectDetailsUI(int projectId, int assigneeIdProjects) {
 //        System.out.println("DEBUG: Received projectId = " + projectId);
         this.projectId = projectId;
+        this.assigneeIdProjects = assigneeIdProjects;
 //        System.out.println("DEBUG: Constructor - this.projectId = " + this.projectId);
         setTitle("Project Details");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,7 +61,7 @@ public class ProjectDetailsUI extends JFrame {
         JButton dashboardButton = createSidebarButton("DASHBOARD");
         dashboardButton.addActionListener(e -> {
             dispose();
-            new DashboardUser().setVisible(true);
+            new DashboardUserUI(assigneeIdProjects).setVisible(true);
         });
         sidebar.add(dashboardButton);
         sidebar.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -66,7 +69,7 @@ public class ProjectDetailsUI extends JFrame {
         JButton projectButton = createSidebarButton("PROJECT");
         projectButton.addActionListener(e -> {
             dispose();
-            new AssigneProjects().setVisible(true);
+            new AssigneProjects(assigneeIdProjects).setVisible(true);
         });
         sidebar.add(projectButton);
         sidebar.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -89,7 +92,7 @@ public class ProjectDetailsUI extends JFrame {
 
         // Header user
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel userLabel = new JLabel("{user}");
+        userLabel = new JLabel("{user}");
         userLabel.setFont(new Font("Arial", Font.BOLD, 18));
         JLabel detailLabel = new JLabel("Project Details");
         detailLabel.setFont(new Font("Arial", Font.BOLD, 22));
@@ -245,8 +248,19 @@ public class ProjectDetailsUI extends JFrame {
     }
     
     private void loadProjectData() {
-    try {
-        Connection conn = DatabaseConnection.getConnection();
+    try (Connection conn = DatabaseConnection.getConnection()){
+        String queryUserHeaderName = "SELECT name FROM assignees WHERE id = ? ";
+        PreparedStatement stmtUserHeaderName = conn.prepareStatement(queryUserHeaderName);
+        stmtUserHeaderName.setInt(1, assigneeIdProjects);
+        ResultSet rsUserHeaderName = stmtUserHeaderName.executeQuery();
+        if (rsUserHeaderName.next()){
+            String username = rsUserHeaderName.getString("name");
+            userLabel.setText(username);
+                
+        }
+        rsUserHeaderName.close();
+        stmtUserHeaderName.close();
+        
         String query = "SELECT name, `desc` FROM projects WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setInt(1, projectId);
@@ -297,15 +311,14 @@ public class ProjectDetailsUI extends JFrame {
 
         // Set progress bar
         int progress = totalTasks > 0 ? (doneTasks * 100 / totalTasks) : 0;
-        progressBar.setValue(progress);
-        if (progress < 100 ){
-            progressStatus.setText("onGoing");
+        if (progress == 100) {
+            progressStatus.setText("Completed");
+        } else if (progress > 0) {
+            progressStatus.setText("On Going");
         } else {
-           progressStatus.setText("Completed");
+            progressStatus.setText("Not Started");
         }
-        
-        
-        
+     
         conn.close();
     } catch (Exception e) {
         e.printStackTrace();
@@ -319,9 +332,10 @@ public class ProjectDetailsUI extends JFrame {
             String query = "SELECT t.id AS task_id, t.name, t.deadline, st.status " +
                            "FROM tasks t " +
                            "LEFT JOIN status_tracks st ON t.id = st.tasks_id " +
-                           "WHERE t.projects_id = ?";
+                           "WHERE t.projects_id = ? AND t.assignees_id = ? ";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, projectId);
+            stmt.setInt(2, assigneeIdProjects);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
