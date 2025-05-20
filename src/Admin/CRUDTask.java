@@ -89,6 +89,10 @@ public class CRUDTask extends javax.swing.JFrame {
         TxtTask = new javax.swing.JLabel();
         LineSidebar = new javax.swing.JSeparator();
         LineSidebar1 = new javax.swing.JSeparator();
+        LogoArasaka = new javax.swing.JLabel();
+        TxtArasaka = new javax.swing.JLabel();
+        TxtSocialMedia = new javax.swing.JLabel();
+        TxtProjectManagement = new javax.swing.JLabel();
         Task = new javax.swing.JLabel();
         MainContent = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -163,6 +167,17 @@ public class CRUDTask extends javax.swing.JFrame {
 
         LineSidebar1.setForeground(new java.awt.Color(0, 0, 0));
 
+        LogoArasaka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconarasaka.png"))); // NOI18N
+
+        TxtArasaka.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
+        TxtArasaka.setText("Arasaka");
+
+        TxtSocialMedia.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
+        TxtSocialMedia.setText("Social Media ");
+
+        TxtProjectManagement.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
+        TxtProjectManagement.setText("Project Management");
+
         javax.swing.GroupLayout SidebarPanelLayout = new javax.swing.GroupLayout(SidebarPanel);
         SidebarPanel.setLayout(SidebarPanelLayout);
         SidebarPanelLayout.setHorizontalGroup(
@@ -175,26 +190,48 @@ public class CRUDTask extends javax.swing.JFrame {
                             .addComponent(LineSidebar)
                             .addComponent(LineSidebar1)))
                     .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(6, 6, 6)
+                                .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
+                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addComponent(LogoArasaka)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 30, Short.MAX_VALUE)))
+                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                        .addComponent(TxtArasaka, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap())
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         SidebarPanelLayout.setVerticalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(255, 255, 255)
+                .addGap(70, 70, 70)
+                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LogoArasaka)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                        .addComponent(TxtArasaka)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TxtSocialMedia)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtProjectManagement)
+                .addGap(76, 76, 76)
                 .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LineSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,14 +400,15 @@ public class CRUDTask extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                        .addGap(29, 29, 29)
                         .addComponent(Task)
-                        .addGap(0, 1051, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
                         .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
@@ -465,13 +503,17 @@ public class CRUDTask extends javax.swing.JFrame {
     private javax.swing.JLabel Description;
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
+    private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel MainContent;
     private javax.swing.JLabel ProjectName;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JLabel Task;
+    private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
     private javax.swing.JLabel TxtLogout;
     private javax.swing.JLabel TxtProject;
+    private javax.swing.JLabel TxtProjectManagement;
+    private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JSeparator garis3;
     private javax.swing.JSeparator garis4;
