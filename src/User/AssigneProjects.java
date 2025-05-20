@@ -43,6 +43,10 @@ public class AssigneProjects extends JFrame {
         sidebar.add(Box.createRigidArea(new Dimension(0, 30)));
 
         JButton dashboardButton = createSidebarButton("DASHBOARD");
+        dashboardButton.addActionListener(e -> {
+            dispose();
+            new DashboardUser().setVisible(true);
+        });
         sidebar.add(dashboardButton);
         sidebar.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -105,7 +109,7 @@ public class AssigneProjects extends JFrame {
     private void addProjectHeader() {
          JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new GridLayout(1, 4));
-        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         headerPanel.setBackground(new Color(210, 255, 100));
         headerPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
 
@@ -135,40 +139,42 @@ public class AssigneProjects extends JFrame {
     }
 
     private void addProjectRow(String projectName, int progress, String remainingTime, int projectId) {
-        JPanel rowPanel = new JPanel(new GridLayout(1, 4));
-        rowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        rowPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.LIGHT_GRAY));
-        rowPanel.setBackground(new Color(235, 255, 150));
+    final int currentProjectId = projectId;
+    JPanel rowPanel = new JPanel(new GridLayout(1, 4));
+    rowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+    rowPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.LIGHT_GRAY));
+    rowPanel.setBackground(new Color(235, 255, 150));
 
-        JLabel nameLabel = new JLabel(projectName);
-        nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
+    JLabel nameLabel = new JLabel(projectName);
+    nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
 
-        // Progress Panel
-        JPanel progressPanel = new JPanel(new BorderLayout());
-        progressPanel.setOpaque(false);
-        JProgressBar progressBar = new JProgressBar(0, 100);
-        progressBar.setValue(progress);
-        progressBar.setStringPainted(false);
-        JLabel progressLabel = new JLabel(progress + "%", SwingConstants.CENTER);
-        progressPanel.add(progressBar, BorderLayout.CENTER);
-        progressPanel.add(progressLabel, BorderLayout.SOUTH);
+    // Progress Panel
+    JPanel progressPanel = new JPanel(new BorderLayout());
+    progressPanel.setOpaque(false);
+    JProgressBar progressBar = new JProgressBar(0, 100);
+    progressBar.setValue(progress);
+    progressBar.setStringPainted(false);
+    JLabel progressLabel = new JLabel(progress + "%", SwingConstants.CENTER);
+    progressPanel.add(progressBar, BorderLayout.CENTER);
+    progressPanel.add(progressLabel, BorderLayout.SOUTH);
 
-        JLabel remainingLabel = new JLabel(remainingTime, SwingConstants.CENTER);
+    JLabel remainingLabel = new JLabel(remainingTime, SwingConstants.CENTER);
 
-        JButton detailsButton = new JButton("Details");
-        detailsButton.addActionListener(e -> {
-            new ProjectDetails().setVisible(true); // sementara belum hover kemana mana
-        });
+    JButton detailsButton = new JButton("Details");
+    detailsButton.addActionListener(e -> {
+        dispose();
+//        System.out.println("DEBUG: Mengklik project ID " + currentProjectId);
+        new ProjectDetailsUI(currentProjectId).setVisible(true);
+    });
 
-        rowPanel.add(nameLabel);
-        rowPanel.add(progressPanel);
-        rowPanel.add(remainingLabel);
-        rowPanel.add(detailsButton);
+    rowPanel.add(nameLabel);
+    rowPanel.add(progressPanel);
+    rowPanel.add(remainingLabel);
+    rowPanel.add(detailsButton);
 
-        projectPanel.add(Box.createVerticalStrut(5)); 
-        projectPanel.add(rowPanel);
+    projectPanel.add(Box.createVerticalStrut(5)); 
+    projectPanel.add(rowPanel);
     }
-
     private void loadProjects() {
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -177,7 +183,7 @@ public class AssigneProjects extends JFrame {
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                int projectId = rs.getInt("id");
+                final int projectId = rs.getInt("id");
                 String name = rs.getString("name");
 
                 int remainingDays = getRemainingTimeForProject(projectId);
