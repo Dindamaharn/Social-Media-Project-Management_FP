@@ -148,6 +148,11 @@ public class CRUDProject extends javax.swing.JFrame {
 
         btnDetails2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnDetails2.setText("Details");
+        btnDetails2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetails2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -212,6 +217,11 @@ public class CRUDProject extends javax.swing.JFrame {
 
         btnAddProject.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAddProject.setText("Add Project");
+        btnAddProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProjectActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
         MainContent.setLayout(MainContentLayout);
@@ -396,7 +406,9 @@ public class CRUDProject extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDetails1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetails1ActionPerformed
-        // TODO add your handling code here:
+        DetailProject detailPage = new DetailProject(); // DetailPage adalah JFrame yang berisi halaman detail
+        detailPage.setVisible(true); // Menampilkan halaman detail
+        this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:
     }//GEN-LAST:event_btnDetails1ActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
@@ -429,6 +441,18 @@ public class CRUDProject extends javax.swing.JFrame {
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
+
+    private void btnAddProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProjectActionPerformed
+        AddProject addproject = new AddProject(); // DetailPage adalah JFrame yang berisi halaman detail
+        addproject.setVisible(true); // Menampilkan halaman detail
+        this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:/ TODO add your handling code here:
+    }//GEN-LAST:event_btnAddProjectActionPerformed
+
+    private void btnDetails2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetails2ActionPerformed
+        DetailProject detailPage = new DetailProject(); // DetailPage adalah JFrame yang berisi halaman detail
+        detailPage.setVisible(true); // Menampilkan halaman detail
+        this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:// TODO add your handling code here:
+    }//GEN-LAST:event_btnDetails2ActionPerformed
 
     /**
      * @param args the command line arguments

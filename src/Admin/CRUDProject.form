@@ -251,6 +251,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Details"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetails2ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -261,6 +264,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Add Project"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddProjectActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Admin;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -89,7 +92,7 @@ public class AddProject extends javax.swing.JFrame {
         Description = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
         Asignee = new javax.swing.JLabel();
-        txtAsignee = new javax.swing.JTextField();
+        txtAssignee = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
         SidebarPanel = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
@@ -143,7 +146,7 @@ public class AddProject extends javax.swing.JFrame {
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(Asignee)
-                        .addComponent(txtAsignee, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAssignee, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Description)
                         .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ProjectName)
@@ -164,7 +167,7 @@ public class AddProject extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(Asignee)
                 .addGap(18, 18, 18)
-                .addComponent(txtAsignee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtAssignee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
@@ -332,9 +335,32 @@ public class AddProject extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+          String projectName = txtProjectName.getText();
+    String description = txtDescription.getText();
+
+    try {
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/arasaka", "name", "password");
+        String query = "INSERT INTO projects (name, `desc`, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, projectName);
+        ps.setString(2, description);
+
+        int rows = ps.executeUpdate();
+        if (rows > 0) {
+            JOptionPane.showMessageDialog(this, "Project berhasil ditambahkan.");
+            this.setVisible(false); // tutup form tambah
+            new AddProject().setVisible(true); // tampilkan list
+        }
+
+        ps.close();
+        conn.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Gagal menambahkan project.");
+    }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    
     private void txtProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProjectNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProjectNameActionPerformed
@@ -423,7 +449,7 @@ public class AddProject extends javax.swing.JFrame {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JButton btnSave;
-    private javax.swing.JTextField txtAsignee;
+    private javax.swing.JTextField txtAssignee;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtProjectName;
     // End of variables declaration//GEN-END:variables

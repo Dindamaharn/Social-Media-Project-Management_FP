@@ -349,7 +349,7 @@ public class EditProject extends javax.swing.JFrame {
     }//GEN-LAST:event_txtProjectNameActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtAsignee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAsignee1ActionPerformed
