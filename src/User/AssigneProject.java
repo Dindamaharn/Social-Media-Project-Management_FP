@@ -4,20 +4,56 @@
  */
 package User;
 
+import Database.DatabaseConnection;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
+import javax.swing.BoxLayout; 
 
 /**
  *
  * @author fikra
  */
-public class AssigneProject extends javax.swing.JFrame {
-
+public class AssigneProject extends JFrame {
+    private int assigneeId;
+    
     /**
      * Creates new form AssigneProject
      */
-    public AssigneProject() {
+    public AssigneProject(int assigneeId) {
+        this.assigneeId = assigneeId;
+        setTitle("Assignee Projects");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1366, 768);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        
+        
         initComponents();
         
+        projectPanel.setLayout(new BoxLayout(projectPanel, BoxLayout.Y_AXIS));
+        add(projectPanel, BorderLayout.CENTER);
+
+
          //TxtDahboard
         TxtDashboard.setOpaque(true);
         TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
@@ -71,6 +107,12 @@ public class AssigneProject extends javax.swing.JFrame {
         TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
         }
         });
+        
+        addProjectHeader();
+        loadProjects();
+        projectPanel.revalidate();
+        projectPanel.repaint();         
+        
     }
 
     /**
@@ -82,24 +124,6 @@ public class AssigneProject extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Greeting = new javax.swing.JLabel();
-        Greeting1 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        ProjectName = new javax.swing.JLabel();
-        Action = new javax.swing.JLabel();
-        Description = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        garis3 = new javax.swing.JSeparator();
-        jLabel15 = new javax.swing.JLabel();
-        btnDetails1 = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        garis4 = new javax.swing.JSeparator();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        btnDetails3 = new javax.swing.JButton();
-        jProgressBar2 = new javax.swing.JProgressBar();
         SidebarPanel = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -111,140 +135,11 @@ public class AssigneProject extends javax.swing.JFrame {
         TxtArasaka = new javax.swing.JLabel();
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
+        projectPanel = new javax.swing.JPanel();
+        Greeting = new javax.swing.JLabel();
+        headerLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Greeting.setText("Assignee Project");
-
-        Greeting1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Greeting1.setText("{user}");
-
-        jPanel10.setBackground(new java.awt.Color(204, 255, 102));
-
-        ProjectName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        ProjectName.setText("Project Name");
-
-        Action.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Action.setText("Remaining Time");
-
-        Description.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Description.setText("Progress");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel12.setText("50%");
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel13.setText("Mamy Sehat");
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel15.setText("2 days");
-
-        btnDetails1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnDetails1.setText("Details");
-        btnDetails1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetails1ActionPerformed(evt);
-            }
-        });
-
-        jProgressBar1.setBackground(new java.awt.Color(255, 153, 0));
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel16.setText("Mamy Sehat");
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel17.setText("30%");
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel18.setText("7 days");
-
-        btnDetails3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnDetails3.setText("Details");
-        btnDetails3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetails3ActionPerformed(evt);
-            }
-        });
-
-        jProgressBar2.setBackground(new java.awt.Color(255, 153, 0));
-        jProgressBar2.setValue(30);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ProjectName)
-                            .addComponent(jLabel13))
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel15)
-                                .addGap(91, 91, 91)
-                                .addComponent(btnDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(161, 161, 161)
-                                .addComponent(Description)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Action)
-                                .addGap(191, 191, 191))))
-                    .addComponent(garis3)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(220, 220, 220)
-                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
-                        .addComponent(jLabel18)
-                        .addGap(91, 91, 91)
-                        .addComponent(btnDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(garis4))
-                .addGap(16, 16, 16))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Action)
-                    .addComponent(ProjectName)
-                    .addComponent(Description))
-                .addGap(18, 18, 18)
-                .addComponent(garis3, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)))
-                .addComponent(garis4, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel16)
-                        .addComponent(jLabel18)
-                        .addComponent(jLabel17)))
-                .addContainerGap(388, Short.MAX_VALUE))
-        );
 
         SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -266,11 +161,6 @@ public class AssigneProject extends javax.swing.JFrame {
         TxtProject.setText("PROJECT");
         TxtProject.setIconTextGap(15);
         TxtProject.setInheritsPopupMenu(false);
-        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TxtProjectMouseClicked(evt);
-            }
-        });
 
         TxtLogout.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TxtLogout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -332,11 +222,6 @@ public class AssigneProject extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
                                 .addComponent(LogoArasaka)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +230,14 @@ public class AssigneProject extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         SidebarPanelLayout.setVerticalGroup(
@@ -375,54 +267,59 @@ public class AssigneProject extends javax.swing.JFrame {
                 .addGap(63, 63, 63))
         );
 
+        projectPanel.setBackground(new java.awt.Color(153, 255, 153));
+
+        javax.swing.GroupLayout projectPanelLayout = new javax.swing.GroupLayout(projectPanel);
+        projectPanel.setLayout(projectPanelLayout);
+        projectPanelLayout.setHorizontalGroup(
+            projectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1329, Short.MAX_VALUE)
+        );
+        projectPanelLayout.setVerticalGroup(
+            projectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 665, Short.MAX_VALUE)
+        );
+
+        Greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Greeting.setText("Assignee Project");
+
+        headerLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        headerLabel.setText("{user}");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(projectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Greeting)
-                    .addComponent(Greeting1)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61))
+                    .addComponent(headerLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addComponent(Greeting1)
+                .addGap(12, 12, 12)
+                .addComponent(headerLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Greeting)
-                .addGap(33, 33, 33)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(projectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnDetails1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetails1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDetails1ActionPerformed
-
-    private void btnDetails3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetails3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDetails3ActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
         DashboardUser dashboard = new DashboardUser();
         dashboard.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtDashboardMouseClicked
-
-    private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
-        AssigneProject project = new AssigneProject();
-        project.setVisible(true);
-        this.dispose(); // Menutup form saat ini jika perlu
-    }//GEN-LAST:event_TxtProjectMouseClicked
 
     private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
         int confirm = JOptionPane.showConfirmDialog(
@@ -442,7 +339,200 @@ public class AssigneProject extends javax.swing.JFrame {
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
+    
+    private void addProjectHeader() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new GridLayout(1, 4));
+        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        headerPanel.setOpaque(false);
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        JLabel nameHeader = new JLabel("Project Name");
+        nameHeader.setFont(new Font("SansSerif", Font.BOLD, 13));
+        nameHeader.setHorizontalAlignment(SwingConstants.LEFT);
+
+        JPanel progressHeaderPanel = new JPanel(new BorderLayout());
+        progressHeaderPanel.setOpaque(false);
+        JLabel progressHeader = new JLabel("Progress", SwingConstants.CENTER);
+        progressHeader.setFont(new Font("SansSerif", Font.BOLD, 13));
+        progressHeaderPanel.add(progressHeader, BorderLayout.CENTER);
+
+        JLabel remainingHeader = new JLabel("Remaining Time", SwingConstants.CENTER);
+        remainingHeader.setFont(new Font("SansSerif", Font.BOLD, 13));
+        remainingHeader.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel actionHeader = new JLabel(""); 
+        actionHeader.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        headerPanel.add(nameHeader);
+        headerPanel.add(progressHeaderPanel);
+        headerPanel.add(remainingHeader);
+        headerPanel.add(actionHeader);
+
+        projectPanel.add(headerPanel);
+    }
+    
+    private void addProjectRow(String projectName, int progress, String remainingTime, int projectId, int assigneeId) {
+        final int currentProjectId = projectId;
+        int assigneeIdProjects = assigneeId;
+        JPanel rowPanel = new JPanel(new GridLayout(1, 4));
+        rowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        rowPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+        rowPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        rowPanel.setOpaque(false);
+
+        JLabel nameLabel = new JLabel(projectName);
+        nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
+
+        // Progress Panel
+        JPanel progressPanel = new JPanel(new BorderLayout());
+        progressPanel.setOpaque(false);
+
+        JProgressBar progressBar = new JProgressBar(0, 100);
+        progressBar.setValue(progress);
+        progressBar.setStringPainted(false);
+
+        JLabel progressLabel = new JLabel(progress + "%", SwingConstants.CENTER);
+        progressPanel.add(progressBar, BorderLayout.CENTER);
+        progressPanel.add(progressLabel, BorderLayout.SOUTH);
+
+        JLabel remainingLabel = new JLabel(remainingTime, SwingConstants.CENTER);
+
+        JButton detailsButton = new JButton("Details");
+        detailsButton.addActionListener(e -> {
+            dispose();
+    //        System.out.println("DEBUG: Mengklik project ID " + currentProjectId);
+            new ProjectDetailsUI(currentProjectId, assigneeIdProjects).setVisible(true);
+        });
+
+        rowPanel.add(nameLabel);
+        rowPanel.add(progressPanel);
+        rowPanel.add(remainingLabel);
+        rowPanel.add(detailsButton);
+
+        projectPanel.add(Box.createVerticalStrut(5)); 
+        projectPanel.add(rowPanel);
+        projectPanel.revalidate();
+        projectPanel.repaint();
+        
+    }
+    
+    private void loadProjects() {
+        try (Connection conn = DatabaseConnection.getConnection()){
+            String query = """
+            SELECT DISTINCT p.id, p.name
+            FROM projects p
+            JOIN tasks t ON p.id = t.projects_id
+            WHERE t.assignees_id = ?
+            """;
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, assigneeId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                final int projectId = rs.getInt("id");
+                String name = rs.getString("name");
+
+                int remainingDays = getRemainingTimeForProject(projectId);
+                String remainingStr = (remainingDays >= 0) ? remainingDays + " days" : "No deadline";
+
+                int progress = getProjectProgress(projectId);
+
+                addProjectRow(name, progress, remainingStr, projectId, this.assigneeId);
+            }
+
+            rs.close();
+            ps.close();
+            
+            //nama user header
+            String queryUserHeaderName = "SELECT name FROM assignees WHERE id = ? ";
+            PreparedStatement stmtUserHeaderName = conn.prepareStatement(queryUserHeaderName);
+            stmtUserHeaderName.setInt(1, assigneeId);
+            ResultSet rsUserHeaderName = stmtUserHeaderName.executeQuery();
+            if (rsUserHeaderName.next()){
+                String username = rsUserHeaderName.getString("name");
+                headerLabel.setText(username);
+                
+            }
+            rsUserHeaderName.close();
+            stmtUserHeaderName.close();
+            
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private int getProjectProgress(int projectId) {
+        int totalTasks = 0;
+        int completedTasks = 0;
+
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+
+            String totalQuery = "SELECT COUNT(*) AS total FROM tasks WHERE projects_id = ?";
+            PreparedStatement psTotal = conn.prepareStatement(totalQuery);
+            psTotal.setInt(1, projectId);
+            ResultSet rsTotal = psTotal.executeQuery();
+            if (rsTotal.next()) {
+                totalTasks = rsTotal.getInt("total");
+            }
+            rsTotal.close();
+            psTotal.close();
+
+            String completedQuery = """
+                SELECT COUNT(*) AS completed 
+                FROM tasks t 
+                JOIN status_tracks s ON t.id = s.tasks_id 
+                WHERE t.projects_id = ? AND s.status = 'completed'
+            """;
+            PreparedStatement psCompleted = conn.prepareStatement(completedQuery);
+            psCompleted.setInt(1, projectId);
+            ResultSet rsCompleted = psCompleted.executeQuery();
+            if (rsCompleted.next()) {
+                completedTasks = rsCompleted.getInt("completed");
+            }
+            rsCompleted.close();
+            psCompleted.close();
+
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+    }
+
+    if (totalTasks == 0) return 0;
+    return (int) (((double) completedTasks / totalTasks) * 100);
+    }
+
+    private int getRemainingTimeForProject(int projectId) {
+        int remainingDays = -1;
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            String query = "SELECT MAX(deadline) AS max_deadline FROM tasks WHERE projects_id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, projectId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Date maxDeadline = rs.getDate("max_deadline");
+                if (maxDeadline != null) {
+                    LocalDate deadline = maxDeadline.toLocalDate();
+                    LocalDate today = LocalDate.now();
+                    remainingDays = (int) ChronoUnit.DAYS.between(today, deadline);
+                }
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return remainingDays;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -473,20 +563,16 @@ public class AssigneProject extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AssigneProject().setVisible(true);
+                new AssigneProject(1).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Action;
-    private javax.swing.JLabel Description;
     private javax.swing.JLabel Greeting;
-    private javax.swing.JLabel Greeting1;
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
-    private javax.swing.JLabel ProjectName;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
@@ -495,18 +581,7 @@ public class AssigneProject extends javax.swing.JFrame {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JButton btnDetails1;
-    private javax.swing.JButton btnDetails3;
-    private javax.swing.JSeparator garis3;
-    private javax.swing.JSeparator garis4;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
+    private javax.swing.JLabel headerLabel;
+    private javax.swing.JPanel projectPanel;
     // End of variables declaration//GEN-END:variables
 }

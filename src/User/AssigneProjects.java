@@ -29,6 +29,60 @@ public class AssigneProjects extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        
+//         //TxtDahboard
+//        TxtDashboard.setOpaque(true);
+//        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+//        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+//
+//        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+//        public void mouseEntered(java.awt.event.MouseEvent evt) {
+//            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
+//        }
+//        
+//        public void mouseExited(java.awt.event.MouseEvent evt) {
+//        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+//        }
+//        });
+//        
+//        // TxtProject
+//        TxtProject.setOpaque(true);
+//        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+//        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+//        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
+//        public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
+//        }
+//        public void mouseExited(java.awt.event.MouseEvent evt) {
+//        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+//        }
+//        });
+//
+//        // TxtTask
+//        TxtTask.setOpaque(true);
+//        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+//        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+//        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
+//        public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
+//        }
+//        public void mouseExited(java.awt.event.MouseEvent evt) {
+//        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+//        }
+//        });
+//        
+//        // TxtLogout
+//        TxtLogout.setOpaque(true);
+//        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+//        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+//        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+//        public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
+//        }
+//        public void mouseExited(java.awt.event.MouseEvent evt) {
+//        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+//        }
+//        });
         // Sidebar kiri
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
@@ -153,9 +207,11 @@ public class AssigneProjects extends JFrame {
     // Progress Panel
     JPanel progressPanel = new JPanel(new BorderLayout());
     progressPanel.setOpaque(false);
+    
     JProgressBar progressBar = new JProgressBar(0, 100);
     progressBar.setValue(progress);
     progressBar.setStringPainted(false);
+    
     JLabel progressLabel = new JLabel(progress + "%", SwingConstants.CENTER);
     progressPanel.add(progressBar, BorderLayout.CENTER);
     progressPanel.add(progressLabel, BorderLayout.SOUTH);
