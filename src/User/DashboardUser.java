@@ -5,17 +5,38 @@
 package User;
 
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.Random;
+import Database.DatabaseConnection;
+import javax.swing.border.EmptyBorder;
 /**
  *
  * @author fikra
  */
-public class DashboardUser extends javax.swing.JFrame {
-
+public class DashboardUser extends JFrame {
+    private int assigneeId;
+    private JPanel activityPanelDetails;
     /**
      * Creates new form DashboardUser
      */
-    public DashboardUser() {
+    public DashboardUser(int assigneeId) {
+        this.assigneeId = assigneeId;
+        setTitle("Dashboard");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(1366, 768);
+        setLayout(new BorderLayout());
         initComponents();
+        
+        
+        activityPanel.setLayout(new BoxLayout(activityPanel, BoxLayout.Y_AXIS));
+        activityPanel.setBorder(new EmptyBorder(10, 10, 150, 10)); // top, left, bottom, right
+        recentActivityLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
         
         //TxtDahboard
         TxtDashboard.setOpaque(true);
@@ -70,6 +91,8 @@ public class DashboardUser extends javax.swing.JFrame {
         TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
         }
         });
+        
+        loadTaskSummary();
     }
 
     /**
@@ -84,44 +107,32 @@ public class DashboardUser extends javax.swing.JFrame {
         MainContent = new javax.swing.JPanel();
         OverdueTask1 = new javax.swing.JPanel();
         txt1 = new javax.swing.JLabel();
-        jLabel69 = new javax.swing.JLabel();
-        jLabel71 = new javax.swing.JLabel();
-        jLabel74 = new javax.swing.JLabel();
+        recentPoints = new javax.swing.JLabel();
         TotalUser1 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
+        taskAssignLabel = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         TotalTask1 = new javax.swing.JPanel();
-        jLabel29 = new javax.swing.JLabel();
+        taskOverdueLabel = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        TotalProject1 = new javax.swing.JPanel();
-        jLabel32 = new javax.swing.JLabel();
+        taskInProgressPanel = new javax.swing.JPanel();
+        taskInProgressLabel = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        AllUser1 = new javax.swing.JPanel();
-        jLabel77 = new javax.swing.JLabel();
-        jLabel78 = new javax.swing.JLabel();
-        jLabel81 = new javax.swing.JLabel();
-        jLabel83 = new javax.swing.JLabel();
-        jLabel84 = new javax.swing.JLabel();
-        jLabel85 = new javax.swing.JLabel();
-        jLabel82 = new javax.swing.JLabel();
-        jLabel86 = new javax.swing.JLabel();
-        jLabel88 = new javax.swing.JLabel();
-        jLabel89 = new javax.swing.JLabel();
-        jLabel91 = new javax.swing.JLabel();
+        activityPanel = new javax.swing.JPanel();
+        recentActivityLabel = new javax.swing.JLabel();
         TopUser1 = new javax.swing.JPanel();
         jLabel90 = new javax.swing.JLabel();
         jLabel92 = new javax.swing.JLabel();
         jLabel93 = new javax.swing.JLabel();
         jLabel95 = new javax.swing.JLabel();
-        jLabel96 = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
         jLabel98 = new javax.swing.JLabel();
-        jLabel99 = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
         jLabel97 = new javax.swing.JLabel();
-        jLabel100 = new javax.swing.JLabel();
-        Greeting = new javax.swing.JLabel();
+        totalPoints = new javax.swing.JLabel();
+        greeting = new javax.swing.JLabel();
         SidebarPanel = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -144,14 +155,8 @@ public class DashboardUser extends javax.swing.JFrame {
         txt1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txt1.setText("RECENT POINT");
 
-        jLabel69.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel69.setText("1.");
-
-        jLabel71.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel71.setText("Redesign Landing page");
-
-        jLabel74.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel74.setText("10");
+        recentPoints.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        recentPoints.setText("No Recent Points");
 
         javax.swing.GroupLayout OverdueTask1Layout = new javax.swing.GroupLayout(OverdueTask1);
         OverdueTask1.setLayout(OverdueTask1Layout);
@@ -160,38 +165,24 @@ public class DashboardUser extends javax.swing.JFrame {
             .addGroup(OverdueTask1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(OverdueTask1Layout.createSequentialGroup()
-                        .addComponent(txt1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(OverdueTask1Layout.createSequentialGroup()
-                        .addComponent(jLabel69)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel71)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel74)
-                        .addGap(24, 24, 24))))
+                    .addComponent(recentPoints)
+                    .addComponent(txt1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         OverdueTask1Layout.setVerticalGroup(
             OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(OverdueTask1Layout.createSequentialGroup()
-                .addGroup(OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(OverdueTask1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel74))
-                    .addGroup(OverdueTask1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(txt1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(OverdueTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel69)
-                            .addComponent(jLabel71))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(txt1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(recentPoints)
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         TotalUser1.setBackground(new java.awt.Color(204, 255, 102));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel16.setText("20");
+        taskAssignLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        taskAssignLabel.setText("0");
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel17.setText("TASK");
@@ -207,7 +198,7 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
-                .addComponent(jLabel16)
+                .addComponent(taskAssignLabel)
                 .addGap(42, 42, 42))
             .addGroup(TotalUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(TotalUser1Layout.createSequentialGroup()
@@ -219,7 +210,7 @@ public class DashboardUser extends javax.swing.JFrame {
             TotalUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TotalUser1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(jLabel16)
+                .addComponent(taskAssignLabel)
                 .addContainerGap(47, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalUser1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -234,8 +225,8 @@ public class DashboardUser extends javax.swing.JFrame {
 
         TotalTask1.setBackground(new java.awt.Color(204, 255, 102));
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel29.setText("3");
+        taskOverdueLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        taskOverdueLabel.setText("0");
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel30.setText("TASK");
@@ -251,7 +242,7 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel31)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
-                .addComponent(jLabel29)
+                .addComponent(taskOverdueLabel)
                 .addGap(42, 42, 42))
             .addGroup(TotalTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(TotalTask1Layout.createSequentialGroup()
@@ -263,7 +254,7 @@ public class DashboardUser extends javax.swing.JFrame {
             TotalTask1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TotalTask1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(jLabel29)
+                .addComponent(taskOverdueLabel)
                 .addContainerGap(47, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalTask1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -276,10 +267,10 @@ public class DashboardUser extends javax.swing.JFrame {
                     .addContainerGap(66, Short.MAX_VALUE)))
         );
 
-        TotalProject1.setBackground(new java.awt.Color(204, 255, 102));
+        taskInProgressPanel.setBackground(new java.awt.Color(204, 255, 102));
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel32.setText("5");
+        taskInProgressLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        taskInProgressLabel.setText("0");
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel33.setText("TASK IN");
@@ -287,137 +278,59 @@ public class DashboardUser extends javax.swing.JFrame {
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel34.setText("PROGRESS");
 
-        javax.swing.GroupLayout TotalProject1Layout = new javax.swing.GroupLayout(TotalProject1);
-        TotalProject1.setLayout(TotalProject1Layout);
-        TotalProject1Layout.setHorizontalGroup(
-            TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalProject1Layout.createSequentialGroup()
+        javax.swing.GroupLayout taskInProgressPanelLayout = new javax.swing.GroupLayout(taskInProgressPanel);
+        taskInProgressPanel.setLayout(taskInProgressPanelLayout);
+        taskInProgressPanelLayout.setHorizontalGroup(
+            taskInProgressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, taskInProgressPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel34)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addComponent(jLabel32)
+                .addComponent(taskInProgressLabel)
                 .addGap(42, 42, 42))
-            .addGroup(TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(TotalProject1Layout.createSequentialGroup()
+            .addGroup(taskInProgressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(taskInProgressPanelLayout.createSequentialGroup()
                     .addGap(30, 30, 30)
                     .addComponent(jLabel33)
                     .addContainerGap(196, Short.MAX_VALUE)))
         );
-        TotalProject1Layout.setVerticalGroup(
-            TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TotalProject1Layout.createSequentialGroup()
+        taskInProgressPanelLayout.setVerticalGroup(
+            taskInProgressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(taskInProgressPanelLayout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(jLabel32)
+                .addComponent(taskInProgressLabel)
                 .addContainerGap(47, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalProject1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, taskInProgressPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel34)
                 .addGap(42, 42, 42))
-            .addGroup(TotalProject1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(TotalProject1Layout.createSequentialGroup()
+            .addGroup(taskInProgressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(taskInProgressPanelLayout.createSequentialGroup()
                     .addGap(35, 35, 35)
                     .addComponent(jLabel33)
                     .addContainerGap(66, Short.MAX_VALUE)))
         );
 
-        AllUser1.setBackground(new java.awt.Color(204, 255, 102));
+        activityPanel.setBackground(new java.awt.Color(204, 255, 102));
 
-        jLabel77.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel77.setText("RECENT ACTIVITY");
+        recentActivityLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        recentActivityLabel.setText("RECENT ACTIVITY");
 
-        jLabel78.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel78.setText("Today");
-
-        jLabel81.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel81.setText("Mamy Sehat");
-
-        jLabel83.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel83.setText("Fix payment gateway hub");
-
-        jLabel84.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel84.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel84.setText("Change to in progress");
-
-        jLabel85.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel85.setText("Fix payment gateway hub");
-
-        jLabel82.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel82.setText("Mamy Sehat");
-
-        jLabel86.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel86.setText("Change to in progress");
-
-        jLabel88.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel88.setText("Fix payment gateway hub");
-
-        jLabel89.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel89.setText("Mamy Sehat");
-
-        jLabel91.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel91.setText("Change to in progress");
-
-        javax.swing.GroupLayout AllUser1Layout = new javax.swing.GroupLayout(AllUser1);
-        AllUser1.setLayout(AllUser1Layout);
-        AllUser1Layout.setHorizontalGroup(
-            AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AllUser1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AllUser1Layout.createSequentialGroup()
-                        .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, AllUser1Layout.createSequentialGroup()
-                                .addComponent(jLabel81)
-                                .addGap(217, 217, 217)
-                                .addComponent(jLabel83)
-                                .addGap(267, 267, 267)
-                                .addComponent(jLabel84)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(AllUser1Layout.createSequentialGroup()
-                                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(AllUser1Layout.createSequentialGroup()
-                                        .addComponent(jLabel82)
-                                        .addGap(217, 217, 217)
-                                        .addComponent(jLabel85)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel86))
-                                    .addGroup(AllUser1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel89)
-                                        .addGap(217, 217, 217)
-                                        .addComponent(jLabel88)
-                                        .addGap(267, 267, 267)
-                                        .addComponent(jLabel91)))
-                                .addGap(16, 16, 16)))
-                        .addGap(247, 247, 247))
-                    .addGroup(AllUser1Layout.createSequentialGroup()
-                        .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel78)
-                            .addComponent(jLabel77))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        javax.swing.GroupLayout activityPanelLayout = new javax.swing.GroupLayout(activityPanel);
+        activityPanel.setLayout(activityPanelLayout);
+        activityPanelLayout.setHorizontalGroup(
+            activityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(activityPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(recentActivityLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        AllUser1Layout.setVerticalGroup(
-            AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AllUser1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel77)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel78)
-                .addGap(17, 17, 17)
-                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel81)
-                    .addComponent(jLabel83)
-                    .addComponent(jLabel84))
-                .addGap(12, 12, 12)
-                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel82)
-                    .addComponent(jLabel85)
-                    .addComponent(jLabel86))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(AllUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel89)
-                    .addComponent(jLabel88)
-                    .addComponent(jLabel91))
-                .addContainerGap(62, Short.MAX_VALUE))
+        activityPanelLayout.setVerticalGroup(
+            activityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(activityPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(recentActivityLabel)
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         TopUser1.setBackground(new java.awt.Color(204, 255, 102));
@@ -434,20 +347,20 @@ public class DashboardUser extends javax.swing.JFrame {
         jLabel95.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel95.setText("Role");
 
-        jLabel96.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel96.setText(": entongeuy@gmail.com");
+        emailLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        emailLabel.setText(": entongeuy@gmail.com");
 
         jLabel98.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel98.setText("Email");
 
-        jLabel99.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel99.setText(": Entong");
+        nameLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        nameLabel.setText(": Entong");
 
         jLabel97.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel97.setText(": assignee");
 
-        jLabel100.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel100.setText(": 10");
+        totalPoints.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        totalPoints.setText(": 10");
 
         javax.swing.GroupLayout TopUser1Layout = new javax.swing.GroupLayout(TopUser1);
         TopUser1.setLayout(TopUser1Layout);
@@ -467,9 +380,9 @@ public class DashboardUser extends javax.swing.JFrame {
                             .addComponent(jLabel93))
                         .addGap(66, 66, 66)
                         .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel100)
-                            .addComponent(jLabel96)
-                            .addComponent(jLabel99)
+                            .addComponent(totalPoints)
+                            .addComponent(emailLabel)
+                            .addComponent(nameLabel)
                             .addComponent(jLabel97))
                         .addGap(0, 189, Short.MAX_VALUE))))
         );
@@ -481,11 +394,11 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel92)
-                    .addComponent(jLabel99))
+                    .addComponent(nameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel98)
-                    .addComponent(jLabel96))
+                    .addComponent(emailLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel95)
@@ -493,7 +406,7 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(TopUser1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel93)
-                    .addComponent(jLabel100))
+                    .addComponent(totalPoints))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -507,14 +420,14 @@ public class DashboardUser extends javax.swing.JFrame {
                     .addGroup(MainContentLayout.createSequentialGroup()
                         .addComponent(TotalUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(TotalProject1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(taskInProgressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17)
                         .addComponent(TotalTask1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(MainContentLayout.createSequentialGroup()
                         .addComponent(TopUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(OverdueTask1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(AllUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(activityPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         MainContentLayout.setVerticalGroup(
@@ -523,19 +436,19 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TotalTask1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TotalProject1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(taskInProgressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TotalUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TopUser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(OverdueTask1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(AllUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(activityPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        Greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Greeting.setText("Hello, {user}! Here's what happening today");
+        greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        greeting.setText("Hello, {user}! Here's what happening today");
 
         SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -545,11 +458,6 @@ public class DashboardUser extends javax.swing.JFrame {
         TxtDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icondashboard.png"))); // NOI18N
         TxtDashboard.setText("DASHBOARD");
         TxtDashboard.setIconTextGap(15);
-        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TxtDashboardMouseClicked(evt);
-            }
-        });
 
         TxtProject.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TxtProject.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -623,11 +531,6 @@ public class DashboardUser extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
                                 .addComponent(LogoArasaka)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -636,7 +539,14 @@ public class DashboardUser extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         SidebarPanelLayout.setVerticalGroup(
@@ -674,15 +584,15 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Greeting)
+                    .addComponent(greeting)
                     .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(Greeting)
+                .addComponent(greeting)
                 .addGap(24, 24, 24)
                 .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
@@ -692,14 +602,8 @@ public class DashboardUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
-        DashboardUser dashboard = new DashboardUser();
-        dashboard.setVisible(true);
-        this.dispose(); // Menutup form saat ini jika perlu
-    }//GEN-LAST:event_TxtDashboardMouseClicked
-
     private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
-        AssigneProject project = new AssigneProject();
+        AssigneProject project = new AssigneProject(assigneeId);
         project.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtProjectMouseClicked
@@ -723,6 +627,216 @@ public class DashboardUser extends javax.swing.JFrame {
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
 
+    private void loadTaskSummary() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            
+            //nama user header
+            String queryUserHeaderName = "SELECT name FROM assignees WHERE id = ? ";
+            PreparedStatement stmtUserHeaderName = conn.prepareStatement(queryUserHeaderName);
+            stmtUserHeaderName.setInt(1, assigneeId);
+            ResultSet rsUserHeaderName = stmtUserHeaderName.executeQuery();
+            if (rsUserHeaderName.next()){
+                String username = rsUserHeaderName.getString("name");
+                greeting.setText("Hello, " + username +" Here's what happening today");
+                
+            }
+            rsUserHeaderName.close();
+            stmtUserHeaderName.close();
+            
+            // Task Assign
+            String queryAssign = "SELECT COUNT(*) FROM tasks WHERE assignees_id = ?";
+            PreparedStatement stmtAssign = conn.prepareStatement(queryAssign);
+            stmtAssign.setInt(1, assigneeId);
+            ResultSet rsAssign = stmtAssign.executeQuery();
+            if (rsAssign.next()) {
+                int taskAssignCount = rsAssign.getInt(1);
+                taskAssignLabel.setText(String.valueOf(taskAssignCount));
+            }
+            rsAssign.close();
+            stmtAssign.close();
+
+            // Task Overdue
+            String queryOverdue = "SELECT COUNT(*) FROM tasks WHERE assignees_id = ? AND deadline < ?";
+            PreparedStatement stmtOverdue = conn.prepareStatement(queryOverdue);
+            stmtOverdue.setInt(1, assigneeId);
+            stmtOverdue.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
+            ResultSet rsOverdue = stmtOverdue.executeQuery();
+            if (rsOverdue.next()) {
+                int overdueCount = rsOverdue.getInt(1);
+                taskOverdueLabel.setText(String.valueOf(overdueCount));
+            }
+            rsOverdue.close();
+            stmtOverdue.close();
+
+            // Task In Progress
+            String queryInProgress = "SELECT COUNT(DISTINCT st.tasks_id) " +
+                                     "FROM status_tracks st " +
+                                     "JOIN tasks t ON st.tasks_id = t.id " +
+                                     "WHERE t.assignees_id = ? AND st.status = 'in progress'";
+            PreparedStatement stmtProgress = conn.prepareStatement(queryInProgress);
+            stmtProgress.setInt(1, assigneeId);
+            ResultSet rsProgress = stmtProgress.executeQuery();
+            if (rsProgress.next()) {
+                int inProgressCount = rsProgress.getInt(1);
+                taskInProgressLabel.setText(String.valueOf(inProgressCount));
+            }
+            rsProgress.close();
+            stmtProgress.close();
+            
+            //user name dan email
+            String userInformation = "SELECT id, name, email FROM assignees WHERE id= ?";
+            PreparedStatement stmtInformation = conn.prepareStatement(userInformation);
+            stmtInformation.setInt(1, assigneeId);
+            ResultSet rsInformation = stmtInformation.executeQuery();
+            if (rsInformation.next()){
+                String name = rsInformation.getString("name");
+                String email = rsInformation.getString("email");
+
+                nameLabel.setText(": " + name);
+                emailLabel.setText(": " + email);
+            }
+            rsInformation.close();
+            stmtInformation.close();
+            
+            //total pointnya
+            String queryPoints = 
+                    "SELECT SUM(t.point) AS total_points " +
+                    "FROM tasks t " +
+                    "JOIN ( " +
+                    "    SELECT st.tasks_id " +
+                    "    FROM status_tracks st " +
+                    "    JOIN ( " +
+                    "        SELECT tasks_id, MAX(created_at) AS latest_time " +
+                    "        FROM status_tracks " +
+                    "        GROUP BY tasks_id " +
+                    "    ) latest ON st.tasks_id = latest.tasks_id AND st.created_at = latest.latest_time " +
+                    "    WHERE st.status = 'completed' " +
+                    ") completed_tasks ON t.id = completed_tasks.tasks_id " +
+                    "WHERE t.assignees_id = ?";
+
+            PreparedStatement stmtPoints = conn.prepareStatement(queryPoints);
+            stmtPoints.setInt(1, assigneeId);
+            ResultSet rsPoints = stmtPoints.executeQuery();
+            if (rsPoints.next()) {
+                int totalPointsQuery = rsPoints.getInt("total_points");
+                totalPoints.setText(": " + totalPointsQuery);
+            }
+            rsPoints.close();
+            stmtPoints.close();
+            
+            //recent pointnnya
+            String queryRecentPoints = 
+                "SELECT * FROM ( " +
+                "    SELECT t.name, t.point, recent_completed.created_at " +
+                "    FROM tasks t " +
+                "    JOIN ( " +
+                "        SELECT st.tasks_id, st.created_at " +
+                "        FROM status_tracks st " +
+                "        JOIN ( " +
+                "            SELECT tasks_id, MAX(created_at) AS latest_time " +
+                "            FROM status_tracks " +
+                "            GROUP BY tasks_id " +
+                "        ) latest ON st.tasks_id = latest.tasks_id AND st.created_at = latest.latest_time " +
+                "        WHERE st.status = 'completed' AND st.created_at >= ? " +
+                "    ) recent_completed ON t.id = recent_completed.tasks_id " +
+                "    WHERE t.assignees_id = ? " +
+                "    ORDER BY recent_completed.created_at DESC " +
+                ") AS recent_limited " +
+                "LIMIT 5";
+
+            PreparedStatement stmtRecent = conn.prepareStatement(queryRecentPoints);
+            stmtRecent.setDate(1, java.sql.Date.valueOf(LocalDate.now().minusDays(7)));
+            stmtRecent.setInt(2, assigneeId);
+            ResultSet rsRecent = stmtRecent.executeQuery();
+
+            StringBuilder recentText = new StringBuilder("<html>");
+            boolean hasRecent = false;
+            while (rsRecent.next()) {
+                hasRecent = true;
+                String taskName = rsRecent.getString("name");
+                int point = rsRecent.getInt("point");
+                LocalDateTime completedAt = rsRecent.getTimestamp("created_at").toLocalDateTime();
+                recentText.append(taskName).append(" (+").append(point).append(" pts)").append("<br>");
+            }
+            recentText.append("</html>");
+            recentPoints.setText(hasRecent ? recentText.toString() : "No Recent Points");
+            rsRecent.close();
+            stmtRecent.close();
+            
+            // RECENT ACTIVITY
+            String queryRecentActivity = 
+                "SELECT p.name AS project_name, t.name AS task_name, st.status, st.updated_at " +
+                "FROM status_tracks st " +
+                "JOIN tasks t ON st.tasks_id = t.id " +
+                "JOIN projects p ON t.projects_id = p.id " +
+                "JOIN ( " +
+                "    SELECT tasks_id, MAX(updated_at) AS latest_time " +
+                "    FROM status_tracks " +
+                "    GROUP BY tasks_id " +
+                ") latest ON st.tasks_id = latest.tasks_id AND st.updated_at = latest.latest_time " +
+                "WHERE t.assignees_id = ? " +
+                "ORDER BY st.updated_at DESC " +
+                "LIMIT 6";
+
+            PreparedStatement stmtRecentActivity = conn.prepareStatement(queryRecentActivity);
+            stmtRecentActivity.setInt(1, assigneeId);
+            ResultSet rsActivity = stmtRecentActivity.executeQuery();
+
+            Component[] components = activityPanel.getComponents();
+            // hapus row sebelunya (header - index 0 to 2)
+            for (int i = components.length - 1; i >= 3; i--) {
+                activityPanel.remove(components[i]);
+            }
+
+            while (rsActivity.next()) {
+                activityPanelDetails = new JPanel();
+                activityPanelDetails.setLayout(new GridLayout(1, 3)); 
+                activityPanelDetails.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+                activityPanelDetails.setOpaque(false);
+                
+                String projectName = rsActivity.getString("project_name");
+                String taskName = rsActivity.getString("task_name");
+                String status = rsActivity.getString("status");
+                
+                
+                
+                JLabel projectLabel = new JLabel(projectName);
+                projectLabel.setHorizontalAlignment(SwingConstants.LEFT);
+                
+                JPanel taskPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0)); // Panel dengan layout tengah
+                JLabel taskLabel = new JLabel(taskName); // Tidak perlu align, karena panel sudah center
+                taskPanel.add(taskLabel);
+
+                JLabel statusLabel = new JLabel("Changed to " + status);
+                statusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+                
+                activityPanelDetails.add(projectLabel);
+                activityPanelDetails.add(taskLabel);
+                activityPanelDetails.add(statusLabel);
+                
+                for (Component comp : activityPanelDetails.getComponents()) {
+                    if (comp instanceof JLabel) {
+                        comp.setFont(new Font("Tahoma", Font.PLAIN, 18));
+                    }
+                }
+                
+                activityPanel.add(activityPanelDetails);
+            }
+
+            activityPanel.revalidate();
+            activityPanel.repaint();
+
+            rsActivity.close();
+            stmtRecentActivity.close();
+
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+       }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -753,14 +867,12 @@ public class DashboardUser extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DashboardUser().setVisible(true);
+                new DashboardUser(2).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel AllUser1;
-    private javax.swing.JLabel Greeting;
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
@@ -768,7 +880,6 @@ public class DashboardUser extends javax.swing.JFrame {
     private javax.swing.JPanel OverdueTask1;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JPanel TopUser1;
-    private javax.swing.JPanel TotalProject1;
     private javax.swing.JPanel TotalTask1;
     private javax.swing.JPanel TotalUser1;
     private javax.swing.JLabel TxtArasaka;
@@ -778,38 +889,29 @@ public class DashboardUser extends javax.swing.JFrame {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JLabel jLabel100;
-    private javax.swing.JLabel jLabel16;
+    private javax.swing.JPanel activityPanel;
+    private javax.swing.JLabel emailLabel;
+    private javax.swing.JLabel greeting;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel69;
-    private javax.swing.JLabel jLabel71;
-    private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel77;
-    private javax.swing.JLabel jLabel78;
-    private javax.swing.JLabel jLabel81;
-    private javax.swing.JLabel jLabel82;
-    private javax.swing.JLabel jLabel83;
-    private javax.swing.JLabel jLabel84;
-    private javax.swing.JLabel jLabel85;
-    private javax.swing.JLabel jLabel86;
-    private javax.swing.JLabel jLabel88;
-    private javax.swing.JLabel jLabel89;
     private javax.swing.JLabel jLabel90;
-    private javax.swing.JLabel jLabel91;
     private javax.swing.JLabel jLabel92;
     private javax.swing.JLabel jLabel93;
     private javax.swing.JLabel jLabel95;
-    private javax.swing.JLabel jLabel96;
     private javax.swing.JLabel jLabel97;
     private javax.swing.JLabel jLabel98;
-    private javax.swing.JLabel jLabel99;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel recentActivityLabel;
+    private javax.swing.JLabel recentPoints;
+    private javax.swing.JLabel taskAssignLabel;
+    private javax.swing.JLabel taskInProgressLabel;
+    private javax.swing.JPanel taskInProgressPanel;
+    private javax.swing.JLabel taskOverdueLabel;
+    private javax.swing.JLabel totalPoints;
     private javax.swing.JLabel txt1;
     // End of variables declaration//GEN-END:variables
 }

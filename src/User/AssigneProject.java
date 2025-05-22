@@ -7,6 +7,7 @@ package User;
 import Database.DatabaseConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -111,7 +112,9 @@ public class AssigneProject extends JFrame {
         addProjectHeader();
         loadProjects();
         projectPanel.revalidate();
-        projectPanel.repaint();         
+        projectPanel.repaint();  
+        
+  
         
     }
 
@@ -260,24 +263,24 @@ public class AssigneProject extends JFrame {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
                 .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
 
-        projectPanel.setBackground(new java.awt.Color(153, 255, 153));
+        projectPanel.setBackground(new java.awt.Color(255, 153, 51));
 
         javax.swing.GroupLayout projectPanelLayout = new javax.swing.GroupLayout(projectPanel);
         projectPanel.setLayout(projectPanelLayout);
         projectPanelLayout.setHorizontalGroup(
             projectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1329, Short.MAX_VALUE)
+            .addGap(0, 1297, Short.MAX_VALUE)
         );
         projectPanelLayout.setVerticalGroup(
             projectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 665, Short.MAX_VALUE)
+            .addGap(0, 648, Short.MAX_VALUE)
         );
 
         Greeting.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -294,10 +297,10 @@ public class AssigneProject extends JFrame {
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(projectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Greeting)
-                    .addComponent(headerLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(headerLabel)
+                    .addComponent(projectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,14 +312,14 @@ public class AssigneProject extends JFrame {
                 .addComponent(Greeting)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(projectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
-        DashboardUser dashboard = new DashboardUser();
+        DashboardUser dashboard = new DashboardUser(assigneeId);
         dashboard.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtDashboardMouseClicked
@@ -348,17 +351,17 @@ public class AssigneProject extends JFrame {
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JLabel nameHeader = new JLabel("Project Name");
-        nameHeader.setFont(new Font("SansSerif", Font.BOLD, 13));
+        nameHeader.setFont(new Font("Tahoma", Font.BOLD, 18));
         nameHeader.setHorizontalAlignment(SwingConstants.LEFT);
 
         JPanel progressHeaderPanel = new JPanel(new BorderLayout());
         progressHeaderPanel.setOpaque(false);
         JLabel progressHeader = new JLabel("Progress", SwingConstants.CENTER);
-        progressHeader.setFont(new Font("SansSerif", Font.BOLD, 13));
+        progressHeader.setFont(new Font("Tahoma", Font.BOLD, 18));
         progressHeaderPanel.add(progressHeader, BorderLayout.CENTER);
 
         JLabel remainingHeader = new JLabel("Remaining Time", SwingConstants.CENTER);
-        remainingHeader.setFont(new Font("SansSerif", Font.BOLD, 13));
+        remainingHeader.setFont(new Font("Tahoma", Font.BOLD, 18));
         remainingHeader.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel actionHeader = new JLabel(""); 
@@ -382,7 +385,7 @@ public class AssigneProject extends JFrame {
         rowPanel.setOpaque(false);
 
         JLabel nameLabel = new JLabel(projectName);
-        nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         // Progress Panel
         JPanel progressPanel = new JPanel(new BorderLayout());
@@ -393,10 +396,12 @@ public class AssigneProject extends JFrame {
         progressBar.setStringPainted(false);
 
         JLabel progressLabel = new JLabel(progress + "%", SwingConstants.CENTER);
+        progressLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         progressPanel.add(progressBar, BorderLayout.CENTER);
         progressPanel.add(progressLabel, BorderLayout.SOUTH);
 
         JLabel remainingLabel = new JLabel(remainingTime, SwingConstants.CENTER);
+        remainingLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JButton detailsButton = new JButton("Details");
         detailsButton.addActionListener(e -> {
@@ -435,6 +440,7 @@ public class AssigneProject extends JFrame {
 
                 int remainingDays = getRemainingTimeForProject(projectId);
                 String remainingStr = (remainingDays >= 0) ? remainingDays + " days" : "No deadline";
+                
 
                 int progress = getProjectProgress(projectId);
 
@@ -536,37 +542,7 @@ public class AssigneProject extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AssigneProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AssigneProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AssigneProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AssigneProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AssigneProject(1).setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Greeting;
