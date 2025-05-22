@@ -3,8 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Admin;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import Database.DatabaseConnection;
+
 /**
  *
  * @author LENOVO
@@ -84,12 +88,12 @@ public class AddUser extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        txtEmail = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        txtConfirmPassword = new javax.swing.JPasswordField();
+        txtPassword = new javax.swing.JPasswordField();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
         SidebarPanel = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -114,34 +118,39 @@ public class AddUser extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(50, 103, 177));
         jLabel1.setText("ADD USER");
 
-        jTextField1.setText("Email");
-        jTextField1.setPreferredSize(new java.awt.Dimension(300, 35));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.setText("Email");
+        txtEmail.setPreferredSize(new java.awt.Dimension(300, 35));
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
 
-        jTextField2.setText("Full name");
-        jTextField2.setPreferredSize(new java.awt.Dimension(300, 35));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtName.setText("Full name");
+        txtName.setPreferredSize(new java.awt.Dimension(300, 35));
+        txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtNameActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setText("jPasswordField1");
+        txtConfirmPassword.setText("jPasswordField1");
 
-        jPasswordField2.setText("jPasswordField1");
+        txtPassword.setText("jPasswordField1");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
 
-        jButton1.setBackground(new java.awt.Color(50, 103, 177));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(247, 210, 50));
-        jButton1.setText("Save");
-        jButton1.setBorderPainted(false);
-        jButton1.setOpaque(true);
+        saveButton.setBackground(new java.awt.Color(50, 103, 177));
+        saveButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        saveButton.setForeground(new java.awt.Color(247, 210, 50));
+        saveButton.setText("Save");
+        saveButton.setBorderPainted(false);
+        saveButton.setOpaque(true);
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -155,12 +164,12 @@ public class AddUser extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(93, 93, 93))
         );
         jPanel2Layout.setVerticalGroup(
@@ -169,17 +178,17 @@ public class AddUser extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
                 .addGap(13, 13, 13)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -340,13 +349,13 @@ public class AddUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtNameActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
         DashboardAdmin dashboard = new DashboardAdmin();
@@ -378,6 +387,37 @@ public class AddUser extends javax.swing.JFrame {
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+    String name = txtName.getText();  // ubah sesuai nama field di form
+    String email = txtEmail.getText();
+    String password = new String(txtPassword.getPassword());
+    String confirmPassword = new String(txtConfirmPassword.getPassword());
+
+    if (!password.equals(confirmPassword)) {
+        JOptionPane.showMessageDialog(this, "Password dan konfirmasi tidak cocok!");
+        return;
+    }
+
+    try {
+        Connection conn = DatabaseConnection.getConnection();
+        String sql = "INSERT INTO assignees (name, password, email, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, name);
+        stmt.setString(2, password); // sebaiknya hash jika untuk aplikasi nyata
+        stmt.setString(3, email);
+
+        int rowsInserted = stmt.executeUpdate();
+        if (rowsInserted > 0) {
+            JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
+            // Kosongkan form kalau perlu
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal menambahkan data.");
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -426,14 +466,14 @@ public class AddUser extends javax.swing.JFrame {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JPasswordField txtConfirmPassword;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
