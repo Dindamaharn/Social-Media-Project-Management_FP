@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import Database.DatabaseConnection;
 import javax.swing.JOptionPane;
 
 /**
@@ -75,6 +78,38 @@ public class AddProject extends javax.swing.JFrame {
         }
         });
     }
+    
+private void saveProject() {
+    String name = txtProjectName.getText();
+    String desc = txtDescription.getText();
+    String assignee = txtAssignee.getText();
+
+    if (name.isEmpty() || desc.isEmpty() || assignee.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Semua field harus diisi!", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    Connection conn = DatabaseConnection.getConnection();
+
+    try {
+        String sql = "INSERT INTO project (nama, deskripsi, assignee) VALUES (?, ?, ?)";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, name);
+        pst.setString(2, desc);
+        pst.setString(3, assignee);
+        pst.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Project berhasil disimpan!");
+
+        // Setelah simpan, kembali ke CRUDProject
+        CRUDProject main = new CRUDProject();
+        main.setVisible(true);
+        this.dispose();
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error menyimpan: " + e.getMessage());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -335,28 +370,32 @@ public class AddProject extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-          String projectName = txtProjectName.getText();
-    String description = txtDescription.getText();
+          String name = txtProjectName.getText();
+           String desc = txtDescription.getText();
+
+    if (name.isEmpty() || desc.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Nama dan Deskripsi harus diisi!");
+        return;
+    }
+
+    Connection conn = DatabaseConnection.getConnection();
 
     try {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/arasaka", "name", "password");
-        String query = "INSERT INTO projects (name, `desc`, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
-        PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, projectName);
-        ps.setString(2, description);
+        String sql = "INSERT INTO projects (name, `desc`, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, name);
+        pst.setString(2, desc);
+        pst.executeUpdate();
 
-        int rows = ps.executeUpdate();
-        if (rows > 0) {
-            JOptionPane.showMessageDialog(this, "Project berhasil ditambahkan.");
-            this.setVisible(false); // tutup form tambah
-            new AddProject().setVisible(true); // tampilkan list
-        }
+        JOptionPane.showMessageDialog(this, "Project berhasil ditambahkan!");
+        
+        // Kembali ke halaman CRUDProject
+        CRUDProject crud = new CRUDProject();
+        crud.setVisible(true);
+        this.dispose();
 
-        ps.close();
-        conn.close();
     } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Gagal menambahkan project.");
+        JOptionPane.showMessageDialog(this, "Gagal menyimpan data: " + ex.getMessage());
     }
     }//GEN-LAST:event_btnSaveActionPerformed
 
