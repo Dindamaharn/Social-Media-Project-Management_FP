@@ -14,7 +14,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.TableCellRenderer;
-
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -99,6 +102,45 @@ public class CRUDTask extends javax.swing.JFrame {
         }
 
         TabelCRUDTask.setModel(model);
+        
+        // Atur warna teks semua sel
+        TabelCRUDTask.setForeground(Color.BLACK); // Warna tulisan
+
+        // Atur warna latar belakang baris biasa
+        TabelCRUDTask.setBackground(Color.WHITE); // Latar belakang umum
+
+        // Atur warna baris yang dipilih
+        TabelCRUDTask.setSelectionBackground(new Color(171, 203, 202)); 
+        TabelCRUDTask.setSelectionForeground(Color.BLACK); // Warna teks saat dipilih
+
+        // Atur warna header tabel
+        TabelCRUDTask.getTableHeader().setForeground(Color.WHITE);
+       
+        // Atur font seluruh tabel
+        TabelCRUDTask.setFont(new Font("Segoe UI", Font.PLAIN, 16)); // Font isi tabel
+        //Atur Header
+        TabelCRUDTask.getTableHeader().setPreferredSize(new Dimension(TabelCRUDTask.getWidth(),40));
+        DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
+        centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER); // teks di tengah
+        centerHeaderRenderer.setForeground(Color.BLACK);                    // warna teks
+        centerHeaderRenderer.setBackground(Color.LIGHT_GRAY);                // warna latar
+        centerHeaderRenderer.setFont(new Font("Segoe UI", Font.BOLD, 32));  // font header
+
+        // Pasang renderer ke semua kolom header
+        for (int i = 0; i < TabelCRUDTask.getColumnModel().getColumnCount(); i++) {
+            TabelCRUDTask.getColumnModel().getColumn(i).setHeaderRenderer(centerHeaderRenderer);
+        }
+        // Atur tinggi baris (misalnya 30 piksel)
+        TabelCRUDTask.setRowHeight(40);
+
+        // Atur lebar kolom
+        TabelCRUDTask.getColumnModel().getColumn(0).setPreferredWidth(150);
+        TabelCRUDTask.getColumnModel().getColumn(1).setPreferredWidth(100);
+        TabelCRUDTask.getColumnModel().getColumn(2).setPreferredWidth(100);
+        TabelCRUDTask.getColumnModel().getColumn(3).setPreferredWidth(120);
+        TabelCRUDTask.getColumnModel().getColumn(4).setPreferredWidth(50);
+        TabelCRUDTask.getColumnModel().getColumn(5).setPreferredWidth(120);
+
         TabelCRUDTask.getColumn("Action").setCellRenderer(new ButtonRendererTask());
         TabelCRUDTask.getColumn("Action").setCellEditor(new ButtonEditorTask(new JCheckBox(), this));
     } catch (SQLException e) {
@@ -217,7 +259,6 @@ class ButtonEditorTask extends DefaultCellEditor {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1366, 768));
-        setResizable(false);
 
         SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -351,9 +392,10 @@ class ButtonEditorTask extends DefaultCellEditor {
         );
 
         Task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Task.setForeground(new java.awt.Color(12, 44, 71));
         Task.setText("TASK");
 
-        MainContent.setBackground(new java.awt.Color(255, 153, 51));
+        MainContent.setBackground(new java.awt.Color(12, 44, 71));
 
         jPanel10.setBackground(new java.awt.Color(204, 255, 102));
 
@@ -394,11 +436,11 @@ class ButtonEditorTask extends DefaultCellEditor {
         MainContentLayout.setHorizontalGroup(
             MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1018, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(413, 413, 413))
         );
         MainContentLayout.setVerticalGroup(
             MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,9 +450,9 @@ class ButtonEditorTask extends DefaultCellEditor {
                         .addGap(67, 67, 67)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(MainContentLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -428,28 +470,25 @@ class ButtonEditorTask extends DefaultCellEditor {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
                         .addComponent(Task)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45))))
+                        .addGap(902, 902, 902)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, 1087, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Task)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
