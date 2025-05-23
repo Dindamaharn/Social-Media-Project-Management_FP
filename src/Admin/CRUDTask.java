@@ -3,8 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Admin;
-
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+import Database.DatabaseConnection;
+
 
 /**
  *
@@ -18,61 +24,72 @@ public class CRUDTask extends javax.swing.JFrame {
     public CRUDTask() {
         initComponents();
         
-        //TxtDahboard
-        TxtDashboard.setOpaque(true);
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-        
-        // TxtProject
-        TxtProject.setOpaque(true);
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-
-        // TxtTask
-        TxtTask.setOpaque(true);
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-        
-        // TxtLogout
-        TxtLogout.setOpaque(true);
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
+        // Pengaturan efek hover dan kursor pada label sidebar
+        setupSidebarLabel(TxtDashboard);
+        setupSidebarLabel(TxtProject);
+        setupSidebarLabel(TxtTask);
+        setupSidebarLabel(TxtLogout);
+        loadTaskData();
     }
 
+    // Method untuk mengatur efek hover dan kursor label sidebar agar tidak mengulang kode
+    private void setupSidebarLabel(javax.swing.JLabel label) {
+        label.setOpaque(true);
+        label.setBackground(new java.awt.Color(211, 211, 211));
+        label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label.setBackground(new java.awt.Color(191, 191, 191));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label.setBackground(new java.awt.Color(211, 211, 211));
+            }
+        });
+    }
+    
+    // Method untuk loaddata tabel
+    private void loadTaskData() {
+    DefaultTableModel model = (DefaultTableModel) TabelCRUDTask.getModel();
+    model.setRowCount(0); // clear existing data
+    String query = """
+        SELECT 
+            tasks.id,
+            tasks.name AS task_name,
+            tasks.desc,
+            tasks.point,
+            tasks.deadline,
+            projects.name AS project_name,
+            assignees.name AS assignee_name
+        FROM 
+            tasks
+        JOIN 
+            projects ON tasks.projects_id = projects.id
+        JOIN 
+            assignees ON tasks.assignees_id = assignees.id
+    """;
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement pst = conn.prepareStatement(query);
+         ResultSet rs = pst.executeQuery()) {
+
+        while (rs.next()) {
+            Object[] row = {
+                rs.getString("task_name"),        // pakai alias task_name
+                rs.getString("project_name"),
+                rs.getString("deadline"),
+                rs.getString("assignee_name"),    // pakai alias assignee_name
+                rs.getInt("point"),
+                ""
+            };
+            model.addRow(row);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Failed to load tasks: " + e.getMessage());
+    }
+}
+   
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,24 +113,13 @@ public class CRUDTask extends javax.swing.JFrame {
         Task = new javax.swing.JLabel();
         MainContent = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
-        ProjectName = new javax.swing.JLabel();
-        Action = new javax.swing.JLabel();
-        Description = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        garis3 = new javax.swing.JSeparator();
-        garis4 = new javax.swing.JSeparator();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        Action1 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        Action2 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TabelCRUDTask = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1366, 768));
+        setResizable(false);
 
         SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -204,9 +210,7 @@ public class CRUDTask extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(SidebarPanelLayout.createSequentialGroup()
                                 .addComponent(LogoArasaka)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,7 +243,7 @@ public class CRUDTask extends javax.swing.JFrame {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
                 .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,114 +257,60 @@ public class CRUDTask extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(204, 255, 102));
 
-        ProjectName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        ProjectName.setText("Task ");
-
-        Action.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Action.setText("Point");
-
-        Description.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Description.setText("Project Name");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel12.setText("Mamy Sehat");
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel13.setText("Design Reels");
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel14.setText("Atur Feed Ig");
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel15.setText("Mamy Sakit ");
-
-        Action1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Action1.setText("Action");
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel16.setText("25 Mei 2025");
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel17.setText("5");
-
-        Action2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Action2.setText("Deadline");
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel18.setText("24 Apr 2025");
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel19.setText("5");
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(140, 140, 140)
-                        .addComponent(jLabel15)
-                        .addGap(181, 181, 181)
-                        .addComponent(jLabel16)
-                        .addGap(116, 116, 116)
-                        .addComponent(jLabel19)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(ProjectName)
-                                .addGap(182, 182, 182)
-                                .addComponent(Description)
-                                .addGap(129, 129, 129)
-                                .addComponent(Action2)
-                                .addGap(92, 92, 92)
-                                .addComponent(Action)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                                .addComponent(Action1)
-                                .addGap(19, 19, 19))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(133, 133, 133)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel18)
-                                .addGap(118, 118, 118)
-                                .addComponent(jLabel17)
-                                .addGap(230, 230, 230))
-                            .addComponent(garis3)
-                            .addComponent(garis4))
-                        .addContainerGap(60, Short.MAX_VALUE))))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ProjectName)
-                    .addComponent(Description)
-                    .addComponent(Action1)
-                    .addComponent(Action)
-                    .addComponent(Action2))
-                .addGap(9, 9, 9)
-                .addComponent(garis3, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18))
-                .addGap(18, 18, 18)
-                .addComponent(garis4, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel19))
-                .addContainerGap(378, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        TabelCRUDTask.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Name", "Project Name", "Deadline", "Assignee", "Point", "Action"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TabelCRUDTask);
+
+        javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
+        MainContent.setLayout(MainContentLayout);
+        MainContentLayout.setHorizontalGroup(
+            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1099, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+        MainContentLayout.setVerticalGroup(
+            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainContentLayout.createSequentialGroup()
+                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MainContentLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(MainContentLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -370,30 +320,6 @@ public class CRUDTask extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
-        MainContent.setLayout(MainContentLayout);
-        MainContentLayout.setHorizontalGroup(
-            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))))
-        );
-        MainContentLayout.setVerticalGroup(
-            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainContentLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -405,22 +331,26 @@ public class CRUDTask extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(Task)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(Task)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Task)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
+            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
         pack();
@@ -497,16 +427,12 @@ public class CRUDTask extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Action;
-    private javax.swing.JLabel Action1;
-    private javax.swing.JLabel Action2;
-    private javax.swing.JLabel Description;
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel MainContent;
-    private javax.swing.JLabel ProjectName;
     private javax.swing.JPanel SidebarPanel;
+    private javax.swing.JTable TabelCRUDTask;
     private javax.swing.JLabel Task;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
@@ -515,17 +441,8 @@ public class CRUDTask extends javax.swing.JFrame {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JSeparator garis3;
-    private javax.swing.JSeparator garis4;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
