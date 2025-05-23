@@ -7,6 +7,11 @@ import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import Database.DatabaseConnection;
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.table.TableCellRenderer;
+
 /**
  *
  * @author NOVA
@@ -18,6 +23,7 @@ public class CRUDProject extends javax.swing.JFrame {
      */
     public CRUDProject() {
         initComponents();
+         loadProjectData();
         
         //TxtDahboard
         TxtDashboard.setOpaque(true);
@@ -73,34 +79,131 @@ public class CRUDProject extends javax.swing.JFrame {
         }
         });
     }
-    public void loadData() {
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("ID");
-    model.addColumn("Name");
-    model.addColumn("Desc");
-    model.addColumn("Created At");
-    model.addColumn("Updated At");
+    private void loadProjectData() {
+    DefaultTableModel model = new DefaultTableModel() {
+        public boolean isCellEditable(int row, int column) {
+            return column == 3 || column == 4; // kolom edit dan delete bisa diklik
+        }
+    };
+
+    model.addColumn("ID"); // hidden
+    model.addColumn("Project Name");
+    model.addColumn("Description");
+    model.addColumn("Edit");
+    model.addColumn("Delete");
 
     try {
-        Connection conn = DatabaseConnection.getConnection();
+        Connection conn = Database.DatabaseConnection.getConnection();
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM projects"); // Ganti dengan nama tabel yang kamu pakai, misalnya: 'produk'
+        ResultSet rs = stmt.executeQuery("SELECT * FROM projects");
 
         while (rs.next()) {
-            model.addRow(new Object[]{
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("desc"),
-                rs.getString("created_at"),
-                rs.getString("updated_at")
-            });
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String desc = rs.getString("desc");
+
+            model.addRow(new Object[]{id, name, desc, "Edit", "Delete"});
         }
 
-        tableData.setModel(model);
+        conn.close();
+
     } catch (SQLException e) {
-        System.out.println("Error mengambil data: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Gagal mengambil data: " + e.getMessage());
+    }
+
+    tableData.setModel(model);
+
+    // Sembunyikan kolom ID
+    tableData.getColumnModel().getColumn(0).setMinWidth(0);
+    tableData.getColumnModel().getColumn(0).setMaxWidth(0);
+    tableData.getColumnModel().getColumn(0).setWidth(0);
+
+    // Render dan Editor tombol
+    tableData.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+    tableData.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), "Edit"));
+
+    tableData.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+    tableData.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), "Delete"));
+}
+    
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+    public ButtonRenderer() {
+        setOpaque(true);
+    }
+
+    public Component getTableCellRendererComponent(JTable table, Object value,
+        boolean isSelected, boolean hasFocus, int row, int column) {
+        setText((value == null) ? "" : value.toString());
+        return this;
     }
 }
+
+class ButtonEditor extends DefaultCellEditor {
+    protected JButton button;
+    private String label;
+    private boolean clicked;
+    private int row;
+    private JTable table;
+
+    public ButtonEditor(JCheckBox checkBox, String labelType) {
+        super(checkBox);
+        button = new JButton();
+        button.setOpaque(true);
+        this.label = labelType;
+
+        button.addActionListener(e -> fireEditingStopped());
+    }
+
+    public Component getTableCellEditorComponent(JTable table, Object value,
+        boolean isSelected, int row, int column) {
+        this.table = table;
+        this.row = row;
+        button.setText(label);
+        clicked = true;
+        return button;
+    }
+
+    public Object getCellEditorValue() {
+        if (clicked) {
+            int projectId = (int) table.getValueAt(row, 0); // ambil ID tersembunyi
+            if (label.equals("Edit")) {
+                new EditProject(projectId).setVisible(true); // pastikan ada constructor yg terima ID
+            } else if (label.equals("Delete")) {
+                int confirm = JOptionPane.showConfirmDialog(null, "Yakin ingin menghapus project ini?");
+                if (confirm == JOptionPane.YES_OPTION) {
+                    deleteProject(projectId);
+                }
+            }
+        }
+        clicked = false;
+        return label;
+    }
+
+    public boolean stopCellEditing() {
+        clicked = false;
+        return super.stopCellEditing();
+    }
+
+    protected void fireEditingStopped() {
+        super.fireEditingStopped();
+    }
+
+    private void deleteProject(int projectId) {
+        try {
+            Connection conn = Database.DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM projects WHERE id = ?");
+            stmt.setInt(1, projectId);
+            stmt.executeUpdate();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Project berhasil dihapus!");
+            ((DefaultTableModel) table.getModel()).removeRow(row); // hapus dari tabel
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus project: " + e.getMessage());
+        }
+    }
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -383,7 +486,7 @@ public class CRUDProject extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddProjectActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-         loadData(); // TODO add your handling code here:
+         loadProjectData(); // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     /**

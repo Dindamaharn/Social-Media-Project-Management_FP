@@ -16,8 +16,11 @@ public class EditProject extends javax.swing.JFrame {
     /**
      * Creates new form EditProject
      */
-    public EditProject() {
+    public EditProject(int projectId) {
         initComponents();
+        this.projectId = projectId;
+
+        
         
            this.projectId = 0;
     txtProjectName.setText("");
