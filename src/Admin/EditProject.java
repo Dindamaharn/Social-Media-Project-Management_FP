@@ -3,19 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Admin;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 /**
  *
  * @author NOVA
  */
 public class EditProject extends javax.swing.JFrame {
-
+    private int projectId;
     /**
      * Creates new form EditProject
      */
     public EditProject() {
         initComponents();
+        
+           this.projectId = 0;
+    txtProjectName.setText("");
+    txtDescription.setText("");
         
         //TxtDahboard
         TxtDashboard.setOpaque(true);
@@ -87,10 +93,6 @@ public class EditProject extends javax.swing.JFrame {
         txtProjectName = new javax.swing.JTextField();
         Description = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
-        Asignee = new javax.swing.JLabel();
-        txtAsignee1 = new javax.swing.JTextField();
-        txtAsignee2 = new javax.swing.JTextField();
-        txtAsignee3 = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
         SidebarPanel = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
@@ -123,15 +125,6 @@ public class EditProject extends javax.swing.JFrame {
         Description.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Description.setText("Description");
 
-        Asignee.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Asignee.setText("Asignee");
-
-        txtAsignee1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAsignee1ActionPerformed(evt);
-            }
-        });
-
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -149,14 +142,10 @@ public class EditProject extends javax.swing.JFrame {
                 .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Asignee)
                         .addComponent(Description)
                         .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ProjectName)
-                        .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtAsignee1, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtAsignee2, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtAsignee3, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         MainContentLayout.setVerticalGroup(
@@ -170,15 +159,7 @@ public class EditProject extends javax.swing.JFrame {
                 .addComponent(Description)
                 .addGap(18, 18, 18)
                 .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Asignee)
-                .addGap(18, 18, 18)
-                .addComponent(txtAsignee1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtAsignee2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtAsignee3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
         );
@@ -349,12 +330,35 @@ public class EditProject extends javax.swing.JFrame {
     }//GEN-LAST:event_txtProjectNameActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       
-    }//GEN-LAST:event_btnSaveActionPerformed
+        String name = txtProjectName.getText().trim();
+        String desc = txtDescription.getText().trim();
+        
+        
+        if (name.isEmpty() || desc.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua field harus diisi.");
+            return;
+        }
+         try {
+            Connection conn = Database.DatabaseConnection.getConnection();
+            String sql = "UPDATE projects SET name=?, `desc`=?, updated_at=NOW() WHERE id=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, name);
+            pst.setString(2, desc);
+            pst.setInt(3, projectId);
+ int affected = pst.executeUpdate();
+            if (affected > 0) {
+                JOptionPane.showMessageDialog(this, "Data berhasil diupdate.");
+                new CRUDProject().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal mengupdate data.");
+            }
 
-    private void txtAsignee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAsignee1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAsignee1ActionPerformed
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Kesalahan: " + e.getMessage());
+        }
+         
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
         DashboardAdmin dashboard = new DashboardAdmin();
@@ -417,13 +421,13 @@ public class EditProject extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new EditProject().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Asignee;
     private javax.swing.JLabel Description;
     private javax.swing.JLabel EDITPROJECT;
     private javax.swing.JSeparator LineSidebar;
@@ -440,9 +444,6 @@ public class EditProject extends javax.swing.JFrame {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JButton btnSave;
-    private javax.swing.JTextField txtAsignee1;
-    private javax.swing.JTextField txtAsignee2;
-    private javax.swing.JTextField txtAsignee3;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtProjectName;
     // End of variables declaration//GEN-END:variables

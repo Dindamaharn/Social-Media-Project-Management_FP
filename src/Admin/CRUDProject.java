@@ -112,21 +112,9 @@ public class CRUDProject extends javax.swing.JFrame {
 
         PROJECT = new javax.swing.JLabel();
         MainContent = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        ProjectName = new javax.swing.JLabel();
-        Action = new javax.swing.JLabel();
-        Description = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        garis3 = new javax.swing.JSeparator();
-        garis4 = new javax.swing.JSeparator();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        btnDetails1 = new javax.swing.JButton();
-        btnDetails2 = new javax.swing.JButton();
+        btnAddProject = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableData = new javax.swing.JTable();
-        btnAddProject = new javax.swing.JButton();
         SidebarPanel = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -151,42 +139,11 @@ public class CRUDProject extends javax.swing.JFrame {
 
         MainContent.setBackground(new java.awt.Color(255, 153, 51));
 
-        jPanel10.setBackground(new java.awt.Color(204, 255, 102));
-
-        ProjectName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        ProjectName.setText("Project Name");
-
-        Action.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Action.setText("Action");
-
-        Description.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Description.setText("Description");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel12.setText("akun ig, tiktok dsb");
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel13.setText("Mamy Sehat");
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel14.setText("Mamy Sakit");
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel15.setText("akun ig, tiktok dsb");
-
-        btnDetails1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnDetails1.setText("Details");
-        btnDetails1.addActionListener(new java.awt.event.ActionListener() {
+        btnAddProject.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAddProject.setText("Add Project");
+        btnAddProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetails1ActionPerformed(evt);
-            }
-        });
-
-        btnDetails2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnDetails2.setText("Details");
-        btnDetails2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetails2ActionPerformed(evt);
+                btnAddProjectActionPerformed(evt);
             }
         });
 
@@ -203,100 +160,28 @@ public class CRUDProject extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableData);
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ProjectName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addComponent(Description)
-                                .addGap(135, 135, 135)
-                                .addComponent(Action))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(garis3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(garis4, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addGap(136, 136, 136)
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnDetails2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 67, Short.MAX_VALUE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Action)
-                    .addComponent(ProjectName)
-                    .addComponent(Description))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(garis3, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13)
-                    .addComponent(btnDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addComponent(garis4, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel14)
-                    .addComponent(btnDetails2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(292, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btnAddProject.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnAddProject.setText("Add Project");
-        btnAddProject.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddProjectActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
         MainContent.setLayout(MainContentLayout);
         MainContentLayout.setHorizontalGroup(
             MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainContentLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
                 .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
-                        .addComponent(btnAddProject, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(554, 554, 554)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addGroup(MainContentLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(btnAddProject, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(MainContentLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         MainContentLayout.setVerticalGroup(
             MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainContentLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(btnAddProject, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
@@ -444,7 +329,7 @@ public class CRUDProject extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PROJECT)
                     .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1254, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,17 +339,11 @@ public class CRUDProject extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
+            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnDetails1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetails1ActionPerformed
-        DetailProject detailPage = new DetailProject(); // DetailPage adalah JFrame yang berisi halaman detail
-        detailPage.setVisible(true); // Menampilkan halaman detail
-        this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:
-    }//GEN-LAST:event_btnDetails1ActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
         DashboardAdmin dashboard = new DashboardAdmin();
@@ -502,12 +381,6 @@ public class CRUDProject extends javax.swing.JFrame {
         addproject.setVisible(true); // Menampilkan halaman detail
         this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:/ TODO add your handling code here:
     }//GEN-LAST:event_btnAddProjectActionPerformed
-
-    private void btnDetails2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetails2ActionPerformed
-        DetailProject detailPage = new DetailProject(); // DetailPage adalah JFrame yang berisi halaman detail
-        detailPage.setVisible(true); // Menampilkan halaman detail
-        this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:// TODO add your handling code here:
-    }//GEN-LAST:event_btnDetails2ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
          loadData(); // TODO add your handling code here:
@@ -549,14 +422,11 @@ public class CRUDProject extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Action;
-    private javax.swing.JLabel Description;
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel MainContent;
     private javax.swing.JLabel PROJECT;
-    private javax.swing.JLabel ProjectName;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
@@ -566,15 +436,6 @@ public class CRUDProject extends javax.swing.JFrame {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JButton btnAddProject;
-    private javax.swing.JButton btnDetails1;
-    private javax.swing.JButton btnDetails2;
-    private javax.swing.JSeparator garis3;
-    private javax.swing.JSeparator garis4;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableData;
     // End of variables declaration//GEN-END:variables
