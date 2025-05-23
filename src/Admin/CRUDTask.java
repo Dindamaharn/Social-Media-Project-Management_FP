@@ -10,6 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 import Database.DatabaseConnection;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.table.TableCellRenderer;
 
 
 /**
@@ -49,8 +53,18 @@ public class CRUDTask extends javax.swing.JFrame {
     
     // Method untuk loaddata tabel
     private void loadTaskData() {
-    DefaultTableModel model = (DefaultTableModel) TabelCRUDTask.getModel();
-    model.setRowCount(0); // clear existing data
+    DefaultTableModel model = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return column == 5; // hanya kolom "Action" yang bisa diklik
+        }
+    };
+
+    model.setRowCount(0); // clear data
+    model.setColumnIdentifiers(new Object[]{
+        "Task Name", "Project", "Deadline", "Assignee", "Point", "Action"
+    });
+
     String query = """
         SELECT 
             tasks.id,
@@ -74,19 +88,103 @@ public class CRUDTask extends javax.swing.JFrame {
 
         while (rs.next()) {
             Object[] row = {
-                rs.getString("task_name"),        // pakai alias task_name
+                rs.getString("task_name"),
                 rs.getString("project_name"),
                 rs.getString("deadline"),
-                rs.getString("assignee_name"),    // pakai alias assignee_name
+                rs.getString("assignee_name"),
                 rs.getInt("point"),
-                ""
+                "Edit/Delete"
             };
             model.addRow(row);
         }
+
+        TabelCRUDTask.setModel(model);
+        TabelCRUDTask.getColumn("Action").setCellRenderer(new ButtonRendererTask());
+        TabelCRUDTask.getColumn("Action").setCellEditor(new ButtonEditorTask(new JCheckBox(), this));
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Failed to load tasks: " + e.getMessage());
     }
 }
+class ButtonRendererTask extends JPanel implements TableCellRenderer {
+    private final JButton editButton = new JButton("Edit");
+    private final JButton deleteButton = new JButton("Delete");
+
+    public ButtonRendererTask() {
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+        add(editButton);
+        add(deleteButton);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+        return this;
+    }
+}
+class ButtonEditorTask extends DefaultCellEditor {
+    protected JPanel panel;
+    protected JButton editButton;
+    protected JButton deleteButton;
+    private CRUDTask parent;
+    private JTable table;
+
+    public ButtonEditorTask(JCheckBox checkBox, CRUDTask parent) {
+        super(checkBox);
+        this.parent = parent;
+
+        panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        editButton = new JButton("Edit");
+        deleteButton = new JButton("Delete");
+
+        panel.add(editButton);
+        panel.add(deleteButton);
+
+        editButton.addActionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row != -1) {
+                String taskName = table.getValueAt(row, 0).toString();
+                new EditTask(taskName).setVisible(true); // pastikan EditTask ada
+                parent.dispose(); // tutup jendela saat ini
+            }
+        });
+
+        deleteButton.addActionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row != -1) {
+                String taskName = table.getValueAt(row, 0).toString();
+                int confirm = JOptionPane.showConfirmDialog(null,
+                        "Yakin hapus task \"" + taskName + "\"?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    try {
+                        Connection conn = DatabaseConnection.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement("DELETE FROM tasks WHERE name = ?");
+                        stmt.setString(1, taskName);
+                        stmt.executeUpdate();
+                        conn.close();
+
+                        ((DefaultTableModel) table.getModel()).removeRow(row);
+                        JOptionPane.showMessageDialog(null, "Task berhasil dihapus.");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Gagal hapus: " + ex.getMessage());
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+                                                 int row, int column) {
+        this.table = table;
+        return panel;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return "";
+    }
+}
+
    
 
     
@@ -297,8 +395,8 @@ public class CRUDTask extends javax.swing.JFrame {
             MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1099, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );

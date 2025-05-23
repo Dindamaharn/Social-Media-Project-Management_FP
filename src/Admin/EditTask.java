@@ -14,7 +14,7 @@ public class EditTask extends javax.swing.JFrame {
     /**
      * Creates new form EditTask
      */
-    public EditTask() {
+    public EditTask(String taskName) {
         initComponents();
         
         //TxtDahboard
