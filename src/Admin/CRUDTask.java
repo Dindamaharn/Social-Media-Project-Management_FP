@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Admin;
+
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.Connection;
@@ -36,6 +37,7 @@ public class CRUDTask extends javax.swing.JFrame {
         setupSidebarLabel(TxtProject);
         setupSidebarLabel(TxtTask);
         setupSidebarLabel(TxtLogout);
+        // Untuk menampilkan data
         loadTaskData();
     }
 
@@ -59,11 +61,11 @@ public class CRUDTask extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column == 5; // hanya kolom "Action" yang bisa diklik
+            return column == 5; 
         }
     };
 
-    model.setRowCount(0); // clear data
+    model.setRowCount(0); 
     model.setColumnIdentifiers(new Object[]{
         "Task Name", "Project", "Deadline", "Assignee", "Point", "Action"
     });
@@ -104,7 +106,7 @@ public class CRUDTask extends javax.swing.JFrame {
         TabelCRUDTask.setModel(model);
         
         // Atur warna teks semua sel
-        TabelCRUDTask.setForeground(Color.BLACK); // Warna tulisan
+        TabelCRUDTask.setForeground(Color.BLACK); 
 
         // Atur warna latar belakang baris biasa
         TabelCRUDTask.setBackground(Color.WHITE); // Latar belakang umum
@@ -118,19 +120,20 @@ public class CRUDTask extends javax.swing.JFrame {
        
         // Atur font seluruh tabel
         TabelCRUDTask.setFont(new Font("Segoe UI", Font.PLAIN, 16)); // Font isi tabel
+        
         //Atur Header
         TabelCRUDTask.getTableHeader().setPreferredSize(new Dimension(TabelCRUDTask.getWidth(),40));
         DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
-        centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER); // teks di tengah
-        centerHeaderRenderer.setForeground(Color.BLACK);                    // warna teks
-        centerHeaderRenderer.setBackground(Color.LIGHT_GRAY);                // warna latar
-        centerHeaderRenderer.setFont(new Font("Segoe UI", Font.BOLD, 32));  // font header
+        centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER); 
+        centerHeaderRenderer.setForeground(Color.BLACK);                    
+        centerHeaderRenderer.setBackground(Color.LIGHT_GRAY);                
+        centerHeaderRenderer.setFont(new Font("Segoe UI", Font.BOLD, 36));  
 
-        // Pasang renderer ke semua kolom header
         for (int i = 0; i < TabelCRUDTask.getColumnModel().getColumnCount(); i++) {
             TabelCRUDTask.getColumnModel().getColumn(i).setHeaderRenderer(centerHeaderRenderer);
         }
-        // Atur tinggi baris (misalnya 30 piksel)
+        
+        // Atur tinggi baris 
         TabelCRUDTask.setRowHeight(40);
 
         // Atur lebar kolom
@@ -185,8 +188,8 @@ class ButtonEditorTask extends DefaultCellEditor {
             int row = table.getSelectedRow();
             if (row != -1) {
                 String taskName = table.getValueAt(row, 0).toString();
-                new EditTask(taskName).setVisible(true); // pastikan EditTask ada
-                parent.dispose(); // tutup jendela saat ini
+                new EditTask(taskName).setVisible(true); 
+                parent.dispose(); 
             }
         });
 
@@ -195,7 +198,7 @@ class ButtonEditorTask extends DefaultCellEditor {
             if (row != -1) {
                 String taskName = table.getValueAt(row, 0).toString();
                 int confirm = JOptionPane.showConfirmDialog(null,
-                        "Yakin hapus task \"" + taskName + "\"?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                        "Are you sure to delete this task? \"" + taskName + "\"?", "Confirmation:", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
                         Connection conn = DatabaseConnection.getConnection();
@@ -205,9 +208,9 @@ class ButtonEditorTask extends DefaultCellEditor {
                         conn.close();
 
                         ((DefaultTableModel) table.getModel()).removeRow(row);
-                        JOptionPane.showMessageDialog(null, "Task berhasil dihapus.");
+                        JOptionPane.showMessageDialog(null, "Task was successfully deleted");
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Gagal hapus: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(null, "Failed to delete: " + ex.getMessage());
                     }
                 }
             }
@@ -228,8 +231,6 @@ class ButtonEditorTask extends DefaultCellEditor {
 }
 
    
-
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -251,11 +252,9 @@ class ButtonEditorTask extends DefaultCellEditor {
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
         Task = new javax.swing.JLabel();
-        MainContent = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelCRUDTask = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1366, 768));
@@ -395,20 +394,13 @@ class ButtonEditorTask extends DefaultCellEditor {
         Task.setForeground(new java.awt.Color(12, 44, 71));
         Task.setText("TASK");
 
-        MainContent.setBackground(new java.awt.Color(12, 44, 71));
-
-        jPanel10.setBackground(new java.awt.Color(204, 255, 102));
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setText("Add Task");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         TabelCRUDTask.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -431,38 +423,6 @@ class ButtonEditorTask extends DefaultCellEditor {
         });
         jScrollPane1.setViewportView(TabelCRUDTask);
 
-        javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
-        MainContent.setLayout(MainContentLayout);
-        MainContentLayout.setHorizontalGroup(
-            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1018, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(413, 413, 413))
-        );
-        MainContentLayout.setVerticalGroup(
-            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainContentLayout.createSequentialGroup()
-                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainContentLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(MainContentLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
-
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Add Task");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -470,26 +430,26 @@ class ButtonEditorTask extends DefaultCellEditor {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Task)
-                        .addGap(902, 902, 902)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, 1087, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Task)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Task))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -569,7 +529,6 @@ class ButtonEditorTask extends DefaultCellEditor {
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
-    private javax.swing.JPanel MainContent;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JTable TabelCRUDTask;
     private javax.swing.JLabel Task;
@@ -581,7 +540,6 @@ class ButtonEditorTask extends DefaultCellEditor {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
