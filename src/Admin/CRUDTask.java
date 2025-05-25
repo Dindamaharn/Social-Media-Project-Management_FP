@@ -61,30 +61,41 @@ public class CRUDTask extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column == 5; 
+            return column == 6; 
         }
     };
 
     model.setRowCount(0); 
     model.setColumnIdentifiers(new Object[]{
-        "Task Name", "Project", "Deadline", "Assignee", "Point", "Action"
+        "Task Name", "Project", "Deadline", "Assignee", "Point", "Status", "Action"
     });
 
     String query = """
         SELECT 
-            tasks.id,
-            tasks.name AS task_name,
-            tasks.desc,
-            tasks.point,
-            tasks.deadline,
-            projects.name AS project_name,
-            assignees.name AS assignee_name
-        FROM 
-            tasks
-        JOIN 
-            projects ON tasks.projects_id = projects.id
-        JOIN 
-            assignees ON tasks.assignees_id = assignees.id
+            t.id,
+            t.name AS task_name,
+            t.desc,
+            t.point,
+            t.deadline,
+            p.name AS project_name,
+            a.name AS assignee_name,
+            st.status AS status_name
+       FROM 
+            tasks t
+       JOIN 
+            projects p ON t.projects_id = p.id
+       JOIN 
+            assignees a ON t.assignees_id = a.id
+       LEFT JOIN 
+            (
+                SELECT st1.*
+                FROM status_tracks st1
+                INNER JOIN (
+                        SELECT tasks_id, MAX(created_at) AS latest
+                        FROM status_tracks
+                        GROUP BY tasks_id
+                ) st2 ON st1.tasks_id = st2.tasks_id AND st1.created_at = st2.latest
+            ) st ON st.tasks_id = t.id;
     """;
 
     try (Connection conn = DatabaseConnection.getConnection();
@@ -98,6 +109,7 @@ public class CRUDTask extends javax.swing.JFrame {
                 rs.getString("deadline"),
                 rs.getString("assignee_name"),
                 rs.getInt("point"),
+                rs.getString("status_name"),
                 "Edit/Delete"
             };
             model.addRow(row);
@@ -142,10 +154,96 @@ public class CRUDTask extends javax.swing.JFrame {
         TabelCRUDTask.getColumnModel().getColumn(2).setPreferredWidth(100);
         TabelCRUDTask.getColumnModel().getColumn(3).setPreferredWidth(120);
         TabelCRUDTask.getColumnModel().getColumn(4).setPreferredWidth(50);
-        TabelCRUDTask.getColumnModel().getColumn(5).setPreferredWidth(120);
+        TabelCRUDTask.getColumnModel().getColumn(5).setPreferredWidth(100); 
+        TabelCRUDTask.getColumnModel().getColumn(6).setPreferredWidth(120); 
+
+        TabelCRUDTask.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                    boolean hasFocus, int row, int column) {
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        if (!isSelected) {
+            if (row % 2 == 0) {
+                c.setBackground(new Color(245, 245, 245)); 
+            } else {
+                c.setBackground(new Color(230, 230, 230)); 
+            }
+        } else {
+            c.setBackground(table.getSelectionBackground()); // Tetap pakai warna seleksi jika dipilih
+        }
+
+        c.setForeground(Color.BLACK); 
+        return c;
+    }
+    });
 
         TabelCRUDTask.getColumn("Action").setCellRenderer(new ButtonRendererTask());
         TabelCRUDTask.getColumn("Action").setCellEditor(new ButtonEditorTask(new JCheckBox(), this));
+        
+        //hover kursor kolom status action
+        TabelCRUDTask.addMouseMotionListener(new MouseMotionAdapter() {
+        @Override
+        public void mouseMoved(MouseEvent e) {
+        int row = TabelCRUDTask.rowAtPoint(e.getPoint());
+        int col = TabelCRUDTask.columnAtPoint(e.getPoint());
+
+        if (col == 6) { 
+            TabelCRUDTask.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        } else if (col == 5) { 
+            String status = TabelCRUDTask.getValueAt(row, col).toString();
+            if (status.equalsIgnoreCase("under review")) {
+                TabelCRUDTask.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                return;
+            }
+        }
+        TabelCRUDTask.setCursor(Cursor.getDefaultCursor());
+        }
+        });
+        
+        //kolom status
+        TabelCRUDTask.getColumnModel().getColumn(5).setCellRenderer(new StatusCellRenderer());
+
+        //klik mouse hover
+        TabelCRUDTask.addMouseMotionListener(new MouseMotionAdapter() {
+        @Override
+        public void mouseMoved(MouseEvent e) {
+        int row = TabelCRUDTask.rowAtPoint(e.getPoint());
+        int col = TabelCRUDTask.columnAtPoint(e.getPoint());
+
+        if (col == 6) {
+            // Kolom "Action" selalu cursor tangan
+            TabelCRUDTask.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        } else if (col == 5) {
+            // Kolom "Status" cursor tangan hanya jika status "under review"
+            String status = TabelCRUDTask.getValueAt(row, col).toString();
+            if (status.equalsIgnoreCase("under review")) {
+                TabelCRUDTask.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            } else {
+                TabelCRUDTask.setCursor(Cursor.getDefaultCursor());
+            }
+        } else {
+            TabelCRUDTask.setCursor(Cursor.getDefaultCursor());
+        }
+        }
+        });
+        
+        //klik mouse menuju file
+        TabelCRUDTask.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        int row = TabelCRUDTask.rowAtPoint(e.getPoint());
+        int col = TabelCRUDTask.columnAtPoint(e.getPoint());
+
+        if (col == 5) {
+            String status = TabelCRUDTask.getValueAt(row, col).toString();
+            if (status.equalsIgnoreCase("under review")) {
+                new ReviewTask().setVisible(true);
+            }
+        }
+        }
+        });
+        
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Failed to load tasks: " + e.getMessage());
     }
@@ -156,6 +254,19 @@ class ButtonRendererTask extends JPanel implements TableCellRenderer {
 
     public ButtonRendererTask() {
         setLayout(new FlowLayout(FlowLayout.CENTER));
+        
+        // Style tombol Edit
+        editButton.setBackground(new Color(30, 144, 255)); 
+        editButton.setForeground(Color.WHITE);
+        editButton.setFocusPainted(false);
+        editButton.setBorderPainted(false);
+
+        // Style tombol Delete
+        deleteButton.setBackground(new Color(220, 20, 60)); 
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFocusPainted(false);
+        deleteButton.setBorderPainted(false);
+        
         add(editButton);
         add(deleteButton);
     }
@@ -163,6 +274,15 @@ class ButtonRendererTask extends JPanel implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
+        if (isSelected) {
+        setBackground(table.getSelectionBackground());
+    } else {
+        if (row % 2 == 0) {
+            setBackground(new Color(245, 245, 245)); 
+        } else {
+            setBackground(new Color(230, 230, 230)); 
+        }
+    }
         return this;
     }
 }
@@ -180,6 +300,16 @@ class ButtonEditorTask extends DefaultCellEditor {
         panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         editButton = new JButton("Edit");
         deleteButton = new JButton("Delete");
+        
+        editButton.setBackground(new Color(30, 144, 255));
+        editButton.setForeground(Color.WHITE);
+        editButton.setFocusPainted(false);
+        editButton.setBorderPainted(false);
+
+        deleteButton.setBackground(new Color(220, 20, 60));
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFocusPainted(false);
+        deleteButton.setBorderPainted(false);
 
         panel.add(editButton);
         panel.add(deleteButton);
@@ -220,6 +350,16 @@ class ButtonEditorTask extends DefaultCellEditor {
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
                                                  int row, int column) {
+        panel.setBackground(table.getBackground());
+    if (isSelected) {
+        panel.setBackground(table.getSelectionBackground());
+    } else {
+        if (row % 2 == 0) {
+            panel.setBackground(new Color(245, 245, 245));
+        } else {
+            panel.setBackground(new Color(230, 230, 230));
+        }
+    }
         this.table = table;
         return panel;
     }
@@ -227,6 +367,34 @@ class ButtonEditorTask extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         return "";
+    }
+}
+
+class StatusCellRenderer extends DefaultTableCellRenderer {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+
+        JLabel label = new JLabel(value.toString(), JLabel.CENTER);
+        label.setOpaque(true);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        label.setForeground(Color.WHITE);
+
+        String status = value.toString().toLowerCase();
+        switch (status) {
+            case "pending" -> label.setBackground(new Color(255, 153, 51));      // Oranye
+            case "ongoing" -> label.setBackground(new Color(51, 153, 255));     // Biru
+            case "under review" -> label.setBackground(new Color(204, 153, 255)); // Ungu
+            case "completed" -> label.setBackground(new Color(102, 204, 102));     // Hijau
+            default -> label.setBackground(Color.GRAY);
+        }
+
+        if (isSelected) {
+            label.setBackground(new Color(171, 203, 202)); // warna seleksi
+            label.setForeground(Color.BLACK);
+        }
+
+        return label;
     }
 }
 
@@ -252,12 +420,11 @@ class ButtonEditorTask extends DefaultCellEditor {
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
         Task = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BtnAddTask = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelCRUDTask = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
 
         SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -394,27 +561,27 @@ class ButtonEditorTask extends DefaultCellEditor {
         Task.setForeground(new java.awt.Color(12, 44, 71));
         Task.setText("TASK");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Add Task");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnAddTask.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BtnAddTask.setText("Add Task");
+        BtnAddTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnAddTaskActionPerformed(evt);
             }
         });
 
         TabelCRUDTask.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Name", "Project Name", "Deadline", "Assignee", "Point", "Action"
+                "Name", "Project Name", "Deadline", "Assignee", "Point", "Status", "Action"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -435,7 +602,7 @@ class ButtonEditorTask extends DefaultCellEditor {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Task)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BtnAddTask, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE))
                 .addGap(41, 41, 41))
         );
@@ -445,7 +612,7 @@ class ButtonEditorTask extends DefaultCellEditor {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnAddTask, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Task))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -455,26 +622,28 @@ class ButtonEditorTask extends DefaultCellEditor {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void BtnAddTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddTaskActionPerformed
+        AddTask addTaskForm = new AddTask();
+        addTaskForm.setVisible(true);
+        this.dispose();       
+    }//GEN-LAST:event_BtnAddTaskActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
        DashboardAdmin dashboard = new DashboardAdmin();
        dashboard.setVisible(true);
-       this.dispose(); // Menutup form saat ini jika perlu
+       this.dispose(); // 
     }//GEN-LAST:event_TxtDashboardMouseClicked
 
     private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
         CRUDProject project = new CRUDProject();
         project.setVisible(true);  
-        this.dispose(); // Menutup form saat ini jika perlu
+        this.dispose(); 
     }//GEN-LAST:event_TxtProjectMouseClicked
 
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
         CRUDTask task = new CRUDTask();
         task.setVisible(true);  
-        this.dispose(); // Menutup form saat ini jika perlu
+        this.dispose(); 
     }//GEN-LAST:event_TxtTaskMouseClicked
 
     private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
@@ -526,6 +695,7 @@ class ButtonEditorTask extends DefaultCellEditor {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAddTask;
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
@@ -539,7 +709,6 @@ class ButtonEditorTask extends DefaultCellEditor {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
