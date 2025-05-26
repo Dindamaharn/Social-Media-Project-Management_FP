@@ -867,7 +867,8 @@ public class DashboardUser extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DashboardUser(2).setVisible(true);
+                int userId = 2; // buat test, nanti dihilangin mainnya
+                new DashboardUser(userId).setVisible(true);
             }
         });
     }
