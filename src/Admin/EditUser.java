@@ -9,17 +9,20 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Database.DatabaseConnection;
+import java.sql.ResultSet;
 /**
  *
  * @author LENOVO
  */
 public class EditUser extends javax.swing.JFrame {
-
+    private int userId;
     /**
      * Creates new form EditUser
      */
-    public EditUser() {
-        initComponents();
+    public EditUser(int userId) {
+    initComponents();
+    this.userId = userId;
+    loadUserData(); // untuk isi field dengan data lama
         
         //TxtDahboard
         TxtDashboard.setOpaque(true);
@@ -75,6 +78,25 @@ public class EditUser extends javax.swing.JFrame {
         }
         });
     }
+    
+    private void loadUserData() {
+    try {
+        Connection conn = DatabaseConnection.getConnection();
+        String sql = "SELECT * FROM users WHERE id=?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, userId);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            txtFullName.setText(rs.getString("name"));
+            txtEmail.setText(rs.getString("email"));
+            // password sebaiknya tidak ditampilkan
+            comboStatus.setSelectedItem(rs.getString("status"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -418,6 +440,7 @@ public class EditUser extends javax.swing.JFrame {
             stmt.setString(2, email);
             stmt.setString(3, password); // sebaiknya di-hash
             stmt.setString(4, status);
+            stmt.setInt(5, userId);
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
