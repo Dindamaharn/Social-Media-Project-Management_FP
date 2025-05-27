@@ -270,7 +270,7 @@ public class AssigneProject extends JFrame {
                 .addGap(63, 63, 63))
         );
 
-        projectPanel.setBackground(new java.awt.Color(255, 153, 51));
+        projectPanel.setBackground(new java.awt.Color(204, 255, 102));
 
         javax.swing.GroupLayout projectPanelLayout = new javax.swing.GroupLayout(projectPanel);
         projectPanel.setLayout(projectPanelLayout);
@@ -346,29 +346,29 @@ public class AssigneProject extends JFrame {
     private void addProjectHeader() {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new GridLayout(1, 4));
-        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
         headerPanel.setOpaque(false);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
 
         JLabel nameHeader = new JLabel("Project Name");
-        nameHeader.setFont(new Font("Tahoma", Font.BOLD, 18));
+        nameHeader.setFont(new Font("Tahoma", Font.BOLD, 23));
         nameHeader.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JPanel progressHeaderPanel = new JPanel(new BorderLayout());
-        progressHeaderPanel.setOpaque(false);
+       
         JLabel progressHeader = new JLabel("Progress", SwingConstants.CENTER);
-        progressHeader.setFont(new Font("Tahoma", Font.BOLD, 18));
-        progressHeaderPanel.add(progressHeader, BorderLayout.CENTER);
+        progressHeader.setFont(new Font("Tahoma", Font.BOLD, 23));
+        progressHeader.setHorizontalAlignment(SwingConstants.LEFT);
 
         JLabel remainingHeader = new JLabel("Remaining Time", SwingConstants.CENTER);
-        remainingHeader.setFont(new Font("Tahoma", Font.BOLD, 18));
+        remainingHeader.setFont(new Font("Tahoma", Font.BOLD, 23));
         remainingHeader.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel actionHeader = new JLabel(""); 
         actionHeader.setHorizontalAlignment(SwingConstants.RIGHT);
 
         headerPanel.add(nameHeader);
-        headerPanel.add(progressHeaderPanel);
+        headerPanel.add(progressHeader);
         headerPanel.add(remainingHeader);
         headerPanel.add(actionHeader);
 
@@ -382,20 +382,23 @@ public class AssigneProject extends JFrame {
         rowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         rowPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
         rowPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        
         rowPanel.setOpaque(false);
 
         JLabel nameLabel = new JLabel(projectName);
         nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         // Progress Panel
-        JPanel progressPanel = new JPanel(new BorderLayout());
+//        JPanel progressPanel = new JPanel(new BorderLayout());
+        JPanel progressPanel = new JPanel();
+        progressPanel.setLayout(new GridLayout(1, 2));
         progressPanel.setOpaque(false);
 
         JProgressBar progressBar = new JProgressBar(0, 100);
         progressBar.setValue(progress);
         progressBar.setStringPainted(false);
 
-        JLabel progressLabel = new JLabel(progress + "%", SwingConstants.CENTER);
+        JLabel progressLabel = new JLabel(progress + "%", SwingConstants.LEFT);
         progressLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         progressPanel.add(progressBar, BorderLayout.CENTER);
         progressPanel.add(progressLabel, BorderLayout.SOUTH);
@@ -407,7 +410,7 @@ public class AssigneProject extends JFrame {
         detailsButton.addActionListener(e -> {
             dispose();
     //        System.out.println("DEBUG: Mengklik project ID " + currentProjectId);
-            new ProjectDetailsUI(currentProjectId, assigneeIdProjects).setVisible(true);
+            new ProjectDetails(currentProjectId, assigneeIdProjects).setVisible(true);
         });
 
         rowPanel.add(nameLabel);

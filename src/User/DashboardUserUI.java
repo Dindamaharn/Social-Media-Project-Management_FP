@@ -386,7 +386,7 @@ public class DashboardUserUI extends JFrame {
        }
     }
     public static void main(String[] args) {
-        int testUserId = 3; // buat ngetest 
+        int testUserId = 1; // buat ngetest 
         SwingUtilities.invokeLater(() -> new DashboardUserUI(testUserId).setVisible(true));
     }
 }

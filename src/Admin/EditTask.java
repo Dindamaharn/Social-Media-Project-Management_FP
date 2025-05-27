@@ -14,7 +14,7 @@ public class EditTask extends javax.swing.JFrame {
     /**
      * Creates new form EditTask
      */
-    public EditTask() {
+    public EditTask(String taskName) {
         initComponents();
         
         //TxtDahboard
@@ -92,6 +92,19 @@ public class EditTask extends javax.swing.JFrame {
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
         LogoArasaka = new javax.swing.JLabel();
+        Task = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        ProjectNameData = new javax.swing.JTextField();
+        TaskNameData = new javax.swing.JTextField();
+        AssigneeData = new javax.swing.JTextField();
+        DeadlineData = new javax.swing.JTextField();
+        PointData = new javax.swing.JTextField();
+        BtnSave = new javax.swing.JButton();
+        TxtProjectName = new javax.swing.JLabel();
+        TxtTaskName = new javax.swing.JLabel();
+        TxtDeadline = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        TxtAssignee = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -223,11 +236,136 @@ public class EditTask extends javax.swing.JFrame {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
+        );
+
+        Task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Task.setForeground(new java.awt.Color(12, 44, 71));
+        Task.setText("TASK");
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setForeground(new java.awt.Color(12, 44, 71));
+
+        ProjectNameData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ProjectNameData.setText("jTextField1");
+        ProjectNameData.setPreferredSize(new java.awt.Dimension(105, 30));
+        ProjectNameData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProjectNameDataActionPerformed(evt);
+            }
+        });
+
+        TaskNameData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        TaskNameData.setText("jTextField1");
+        TaskNameData.setPreferredSize(new java.awt.Dimension(105, 30));
+        TaskNameData.setRequestFocusEnabled(false);
+        TaskNameData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TaskNameDataActionPerformed(evt);
+            }
+        });
+
+        AssigneeData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        AssigneeData.setText("jTextField1");
+        AssigneeData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AssigneeDataActionPerformed(evt);
+            }
+        });
+
+        DeadlineData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        DeadlineData.setText("jTextField1");
+        DeadlineData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeadlineDataActionPerformed(evt);
+            }
+        });
+
+        PointData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        PointData.setText("jTextField1");
+
+        BtnSave.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        BtnSave.setText("Save");
+        BtnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSaveActionPerformed(evt);
+            }
+        });
+
+        TxtProjectName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtProjectName.setText("Project Name");
+
+        TxtTaskName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtTaskName.setText("Task Name");
+
+        TxtDeadline.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtDeadline.setText("Deadline");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Point");
+
+        TxtAssignee.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtAssignee.setText("Assignee");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(TxtAssignee, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 898, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(AssigneeData)
+                            .addComponent(TxtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ProjectNameData, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                            .addComponent(DeadlineData)
+                            .addComponent(TxtDeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(80, 80, 80)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TaskNameData, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PointData, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtTaskName))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProjectNameData, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TaskNameData, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtDeadline)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PointData, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeadlineData, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63)
+                .addComponent(TxtAssignee)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(AssigneeData, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -236,11 +374,25 @@ public class EditTask extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1146, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(Task)
+                        .addGap(1069, 1069, 1069))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(Task)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
 
         pack();
@@ -276,6 +428,26 @@ public class EditTask extends javax.swing.JFrame {
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
+
+    private void ProjectNameDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProjectNameDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ProjectNameDataActionPerformed
+
+    private void AssigneeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssigneeDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AssigneeDataActionPerformed
+
+    private void DeadlineDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeadlineDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeadlineDataActionPerformed
+
+    private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnSaveActionPerformed
+
+    private void TaskNameDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaskNameDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TaskNameDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,16 +485,29 @@ public class EditTask extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AssigneeData;
+    private javax.swing.JButton BtnSave;
+    private javax.swing.JTextField DeadlineData;
     private javax.swing.JSeparator LineSidebar;
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
+    private javax.swing.JTextField PointData;
+    private javax.swing.JTextField ProjectNameData;
     private javax.swing.JPanel SidebarPanel;
+    private javax.swing.JLabel Task;
+    private javax.swing.JTextField TaskNameData;
     private javax.swing.JLabel TxtArasaka;
+    private javax.swing.JLabel TxtAssignee;
     private javax.swing.JLabel TxtDashboard;
+    private javax.swing.JLabel TxtDeadline;
     private javax.swing.JLabel TxtLogout;
     private javax.swing.JLabel TxtProject;
     private javax.swing.JLabel TxtProjectManagement;
+    private javax.swing.JLabel TxtProjectName;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
+    private javax.swing.JLabel TxtTaskName;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

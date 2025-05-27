@@ -3,74 +3,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Admin;
-
 import javax.swing.JOptionPane;
 /**
  *
- * @author LENOVO
+ * @author dinda
  */
-public class CRUDUser extends javax.swing.JFrame {
+public class ReviewTask extends javax.swing.JFrame {
 
     /**
-     * Creates new form CRUDUser
+     * Creates new form ReviewTask
      */
-    public CRUDUser() {
+    public ReviewTask() {
         initComponents();
-         //TxtDahboard
-        TxtDashboard.setOpaque(true);
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
-        }
         
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-        
-        // TxtProject
-        TxtProject.setOpaque(true);
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-
-        // TxtTask
-        TxtTask.setOpaque(true);
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-        
-        // TxtLogout
-        TxtLogout.setOpaque(true);
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
+        // Pengaturan efek hover dan kursor pada label sidebar
+        setupSidebarLabel(TxtDashboard);
+        setupSidebarLabel(TxtProject);
+        setupSidebarLabel(TxtTask);
+        setupSidebarLabel(TxtLogout);
     }
 
+    // Method untuk mengatur efek hover dan kursor label sidebar agar tidak mengulang kode
+    private void setupSidebarLabel(javax.swing.JLabel label) {
+        label.setOpaque(true);
+        label.setBackground(new java.awt.Color(211, 211, 211));
+        label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label.setBackground(new java.awt.Color(191, 191, 191));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label.setBackground(new java.awt.Color(211, 211, 211));
+            }
+        });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,8 +47,8 @@ public class CRUDUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        SidebarPanel = new javax.swing.JPanel();
-        TxtDashboard = new javax.swing.JLabel();
+        SidebarPanel2 = new javax.swing.JPanel();
+        TxtDashboard2 = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
         TxtLogout = new javax.swing.JLabel();
         TxtTask = new javax.swing.JLabel();
@@ -91,24 +58,20 @@ public class CRUDUser extends javax.swing.JFrame {
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
         LogoArasaka = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
-        SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
+        SidebarPanel2.setBackground(new java.awt.Color(211, 211, 211));
+        SidebarPanel2.setPreferredSize(new java.awt.Dimension(220, 420));
 
-        TxtDashboard.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        TxtDashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TxtDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icondashboard.png"))); // NOI18N
-        TxtDashboard.setText("DASHBOARD");
-        TxtDashboard.setIconTextGap(15);
-        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+        TxtDashboard2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtDashboard2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtDashboard2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icondashboard.png"))); // NOI18N
+        TxtDashboard2.setText("DASHBOARD");
+        TxtDashboard2.setIconTextGap(15);
+        TxtDashboard2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TxtDashboardMouseClicked(evt);
+                TxtDashboard2MouseClicked(evt);
             }
         });
 
@@ -161,125 +124,104 @@ public class CRUDUser extends javax.swing.JFrame {
 
         LogoArasaka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconarasaka.png"))); // NOI18N
 
-        javax.swing.GroupLayout SidebarPanelLayout = new javax.swing.GroupLayout(SidebarPanel);
-        SidebarPanel.setLayout(SidebarPanelLayout);
-        SidebarPanelLayout.setHorizontalGroup(
-            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout SidebarPanel2Layout = new javax.swing.GroupLayout(SidebarPanel2);
+        SidebarPanel2.setLayout(SidebarPanel2Layout);
+        SidebarPanel2Layout.setHorizontalGroup(
+            SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel2Layout.createSequentialGroup()
+                .addGroup(SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LineSidebar)
                             .addComponent(LineSidebar1)))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                    .addGroup(SidebarPanel2Layout.createSequentialGroup()
+                        .addGroup(SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanel2Layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
-                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addComponent(TxtDashboard2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(SidebarPanel2Layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
-                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                    .addGroup(SidebarPanel2Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGroup(SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanel2Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                            .addGroup(SidebarPanel2Layout.createSequentialGroup()
                                 .addComponent(LogoArasaka)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGroup(SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(SidebarPanel2Layout.createSequentialGroup()
                                         .addComponent(TxtArasaka, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanel2Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap())
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
+            .addGroup(SidebarPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        SidebarPanelLayout.setVerticalGroup(
-            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
+        SidebarPanel2Layout.setVerticalGroup(
+            SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel2Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(SidebarPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LogoArasaka)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanel2Layout.createSequentialGroup()
                         .addComponent(TxtArasaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TxtSocialMedia)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxtProjectManagement)
                 .addGap(76, 76, 76)
-                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtDashboard2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LineSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
 
-        getContentPane().add(SidebarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 768));
-
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Add User");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 40, 120, 36));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Name", "Email", "Poin", "Status", "Action"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 1070, 520));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(SidebarPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1146, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(SidebarPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
+    private void TxtDashboard2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboard2MouseClicked
         DashboardAdmin dashboard = new DashboardAdmin();
         dashboard.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
-    }//GEN-LAST:event_TxtDashboardMouseClicked
+    }//GEN-LAST:event_TxtDashboard2MouseClicked
 
     private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
         CRUDProject project = new CRUDProject();
         project.setVisible(true);
-        this.dispose(); // Menutup form saat ini jika perlu
+        this.dispose(); 
     }//GEN-LAST:event_TxtProjectMouseClicked
 
     private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
@@ -298,12 +240,8 @@ public class CRUDUser extends javax.swing.JFrame {
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
         CRUDTask task = new CRUDTask();
         task.setVisible(true);
-        this.dispose(); // Menutup form saat ini jika perlu
+        this.dispose();
     }//GEN-LAST:event_TxtTaskMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,20 +260,20 @@ public class CRUDUser extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CRUDUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CRUDUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CRUDUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CRUDUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CRUDUser().setVisible(true);
+                new ReviewTask().setVisible(true);
             }
         });
     }
@@ -345,15 +283,16 @@ public class CRUDUser extends javax.swing.JFrame {
     private javax.swing.JSeparator LineSidebar1;
     private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel SidebarPanel;
+    private javax.swing.JPanel SidebarPanel1;
+    private javax.swing.JPanel SidebarPanel2;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
+    private javax.swing.JLabel TxtDashboard1;
+    private javax.swing.JLabel TxtDashboard2;
     private javax.swing.JLabel TxtLogout;
     private javax.swing.JLabel TxtProject;
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
