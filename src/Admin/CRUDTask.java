@@ -25,11 +25,13 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author dinda
  */
 public class CRUDTask extends javax.swing.JFrame {
-
+    private int adminId;
+    
     /**
      * Creates new form CRUDTask
      */
-    public CRUDTask() {
+    public CRUDTask(int adminId) {
+        this.adminId = adminId;
         initComponents();
         
         // Pengaturan efek hover dan kursor pada label sidebar
@@ -67,7 +69,7 @@ public class CRUDTask extends javax.swing.JFrame {
 
     model.setRowCount(0); 
     model.setColumnIdentifiers(new Object[]{
-        "Task Name", "Project", "Deadline", "Assignee", "Point", "Status", "Action"
+        "Task Name", "Project", "Deadline", "Assignee", "Point", "Status", "Action", "Task Id"
     });
 
     String query = """
@@ -110,12 +112,18 @@ public class CRUDTask extends javax.swing.JFrame {
                 rs.getString("assignee_name"),
                 rs.getInt("point"),
                 rs.getString("status_name"),
-                "Edit/Delete"
+                "Edit/Delete",
+                rs.getInt("id")
             };
             model.addRow(row);
         }
 
         TabelCRUDTask.setModel(model);
+        
+        // Sembunyikan kolom terakhir (Task ID)
+        TabelCRUDTask.getColumnModel().getColumn(7).setMinWidth(0);
+        TabelCRUDTask.getColumnModel().getColumn(7).setMaxWidth(0);
+        TabelCRUDTask.getColumnModel().getColumn(7).setWidth(0);
         
         // Atur warna teks semua sel
         TabelCRUDTask.setForeground(Color.BLACK); 
@@ -235,10 +243,11 @@ public class CRUDTask extends javax.swing.JFrame {
         int row = TabelCRUDTask.rowAtPoint(e.getPoint());
         int col = TabelCRUDTask.columnAtPoint(e.getPoint());
 
-        if (col == 5) {
+        if (col == 5) { // kolom status
             String status = TabelCRUDTask.getValueAt(row, col).toString();
             if (status.equalsIgnoreCase("under review")) {
-                new ReviewTask().setVisible(true);
+                int taskId = Integer.parseInt(TabelCRUDTask.getValueAt(row, 7).toString());
+                new ReviewTask(adminId, taskId).setVisible(true);
             }
         }
         }
@@ -317,9 +326,9 @@ class ButtonEditorTask extends DefaultCellEditor {
         editButton.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row != -1) {
-                String taskName = table.getValueAt(row, 0).toString();
-                new EditTask(taskName).setVisible(true); 
-                parent.dispose(); 
+                int taskId = Integer.parseInt(table.getValueAt(row, 7).toString());
+                EditTask editTaskWindow = new EditTask(adminId, taskId);
+                editTaskWindow.setVisible(true);
             }
         });
 
@@ -408,26 +417,60 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        SidebarPanel = new javax.swing.JPanel();
-        TxtDashboard = new javax.swing.JLabel();
-        TxtProject = new javax.swing.JLabel();
-        TxtLogout = new javax.swing.JLabel();
-        TxtTask = new javax.swing.JLabel();
-        LineSidebar = new javax.swing.JSeparator();
-        LineSidebar1 = new javax.swing.JSeparator();
-        LogoArasaka = new javax.swing.JLabel();
-        TxtArasaka = new javax.swing.JLabel();
-        TxtSocialMedia = new javax.swing.JLabel();
-        TxtProjectManagement = new javax.swing.JLabel();
         Task = new javax.swing.JLabel();
         BtnAddTask = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelCRUDTask = new javax.swing.JTable();
+        SidebarPanel1 = new javax.swing.JPanel();
+        TxtDashboard = new javax.swing.JLabel();
+        TxtProject = new javax.swing.JLabel();
+        TxtLogout = new javax.swing.JLabel();
+        TxtTask = new javax.swing.JLabel();
+        LineSidebar2 = new javax.swing.JSeparator();
+        LineSidebar3 = new javax.swing.JSeparator();
+        TxtArasaka = new javax.swing.JLabel();
+        TxtSocialMedia = new javax.swing.JLabel();
+        TxtProjectManagement = new javax.swing.JLabel();
+        LogoArasaka = new javax.swing.JLabel();
+        TxtUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
-        SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
+        Task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Task.setForeground(new java.awt.Color(12, 44, 71));
+        Task.setText("TASK");
+
+        BtnAddTask.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BtnAddTask.setText("Add Task");
+        BtnAddTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAddTaskActionPerformed(evt);
+            }
+        });
+
+        TabelCRUDTask.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Name", "Project Name", "Deadline", "Assignee", "Point", "Status", "Action"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TabelCRUDTask);
+
+        SidebarPanel1.setBackground(new java.awt.Color(211, 211, 211));
+        SidebarPanel1.setPreferredSize(new java.awt.Dimension(220, 420));
 
         TxtDashboard.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TxtDashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -474,11 +517,9 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
             }
         });
 
-        LineSidebar.setForeground(new java.awt.Color(0, 0, 0));
+        LineSidebar2.setForeground(new java.awt.Color(0, 0, 0));
 
-        LineSidebar1.setForeground(new java.awt.Color(0, 0, 0));
-
-        LogoArasaka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconarasaka.png"))); // NOI18N
+        LineSidebar3.setForeground(new java.awt.Color(0, 0, 0));
 
         TxtArasaka.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
         TxtArasaka.setText("Arasaka");
@@ -489,54 +530,72 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
         TxtProjectManagement.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
         TxtProjectManagement.setText("Project Management");
 
-        javax.swing.GroupLayout SidebarPanelLayout = new javax.swing.GroupLayout(SidebarPanel);
-        SidebarPanel.setLayout(SidebarPanelLayout);
-        SidebarPanelLayout.setHorizontalGroup(
-            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+        LogoArasaka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconarasaka.png"))); // NOI18N
+
+        TxtUser.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconuser.png"))); // NOI18N
+        TxtUser.setText("USER");
+        TxtUser.setIconTextGap(15);
+        TxtUser.setInheritsPopupMenu(false);
+        TxtUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtUserMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SidebarPanel1Layout = new javax.swing.GroupLayout(SidebarPanel1);
+        SidebarPanel1.setLayout(SidebarPanel1Layout);
+        SidebarPanel1Layout.setHorizontalGroup(
+            SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LineSidebar)
-                            .addComponent(LineSidebar1)))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LineSidebar2)
+                            .addComponent(LineSidebar3)))
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
                                 .addComponent(LogoArasaka)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
                                         .addComponent(TxtArasaka, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        SidebarPanelLayout.setVerticalGroup(
-            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
+        SidebarPanel1Layout.setVerticalGroup(
+            SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel1Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LogoArasaka)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanel1Layout.createSequentialGroup()
                         .addComponent(TxtArasaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TxtSocialMedia)))
@@ -545,59 +604,27 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
                 .addGap(76, 76, 76)
                 .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LineSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LineSidebar2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
-                .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LineSidebar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
-
-        Task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Task.setForeground(new java.awt.Color(12, 44, 71));
-        Task.setText("TASK");
-
-        BtnAddTask.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BtnAddTask.setText("Add Task");
-        BtnAddTask.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnAddTaskActionPerformed(evt);
-            }
-        });
-
-        TabelCRUDTask.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Name", "Project Name", "Deadline", "Assignee", "Point", "Status", "Action"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(TabelCRUDTask);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Task)
@@ -608,7 +635,6 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -616,90 +642,77 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
                     .addComponent(Task))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
+            .addComponent(SidebarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnAddTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddTaskActionPerformed
-        AddTask addTaskForm = new AddTask();
+        AddTask addTaskForm = new AddTask(adminId);
         addTaskForm.setVisible(true);
         this.dispose();       
     }//GEN-LAST:event_BtnAddTaskActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
-       DashboardAdmin dashboard = new DashboardAdmin();
-       dashboard.setVisible(true);
-       this.dispose(); // 
+        DashboardAdmin dashboard = new DashboardAdmin(adminId);
+        dashboard.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtDashboardMouseClicked
 
     private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
-        CRUDProject project = new CRUDProject();
-        project.setVisible(true);  
-        this.dispose(); 
+        CRUDProject project = new CRUDProject(adminId);
+        project.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtProjectMouseClicked
-
-    private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        CRUDTask task = new CRUDTask();
-        task.setVisible(true);  
-        this.dispose(); 
-    }//GEN-LAST:event_TxtTaskMouseClicked
 
     private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
         int confirm = JOptionPane.showConfirmDialog(
-        this, 
-        "Are you sure want to exit?",
-        "Logout Confirmation",
-        JOptionPane.YES_NO_OPTION
+            this,
+            "Are you sure want to exit?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION
         );
-        
+
         if (confirm ==JOptionPane.YES_OPTION){
             System.exit(0);
         }
     }//GEN-LAST:event_TxtLogoutMouseClicked
 
+    private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
+        CRUDTask task = new CRUDTask(adminId);
+        task.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtTaskMouseClicked
+
+    private void TxtUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtUserMouseClicked
+        CRUDUser task = new CRUDUser(adminId);
+        task.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_TxtUserMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CRUDTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CRUDTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CRUDTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CRUDTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+        
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CRUDTask().setVisible(true);
             }
-        });
-    }
+        });*/
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAddTask;
-    private javax.swing.JSeparator LineSidebar;
-    private javax.swing.JSeparator LineSidebar1;
+    private javax.swing.JSeparator LineSidebar2;
+    private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JLabel LogoArasaka;
-    private javax.swing.JPanel SidebarPanel;
+    private javax.swing.JPanel SidebarPanel1;
     private javax.swing.JTable TabelCRUDTask;
     private javax.swing.JLabel Task;
     private javax.swing.JLabel TxtArasaka;
@@ -709,6 +722,7 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
+    private javax.swing.JLabel TxtUser;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

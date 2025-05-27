@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
  * @author LENOVO
  */
 public class Login extends javax.swing.JFrame {
+    private int usersId;
+    private int adminId;
 
     /**
      * Creates new form Login
@@ -94,7 +96,8 @@ public class Login extends javax.swing.JFrame {
         ResultSet rsAdmin = pstAdmin.executeQuery();
 
         if (rsAdmin.next()) {
-             new Admin.DashboardAdmin().setVisible(true);
+            adminId = rsAdmin.getInt("id");
+            new Admin.DashboardAdmin(adminId).setVisible(true);
             this.dispose();
         } else {
             // Cek di assignees
@@ -105,7 +108,8 @@ public class Login extends javax.swing.JFrame {
             ResultSet rsAssignees = pstAssignees.executeQuery();
 
             if (rsAssignees.next()) {
-                new User.DashboardUser().setVisible(true);  
+                usersId = rsAssignees.getInt("id");
+                new User.DashboardUser(usersId).setVisible(true);  
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Username atau Password salah!");

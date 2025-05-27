@@ -14,68 +14,36 @@ import Database.DatabaseConnection;
  * @author LENOVO
  */
 public class AddUser extends javax.swing.JFrame {
-
+private int adminId;
     /**
      * Creates new form AddUser
      */
-    public AddUser() {
+    public AddUser(int adminId) {
+        this.adminId = adminId;
         initComponents();
         
-        //TxtDahboard
-        TxtDashboard.setOpaque(true);
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-        
-        // TxtProject
-        TxtProject.setOpaque(true);
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-
-        // TxtTask
-        TxtTask.setOpaque(true);
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-        
-        // TxtLogout
-        TxtLogout.setOpaque(true);
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
+        setupSidebarLabel(TxtDashboard);
+        setupSidebarLabel(TxtUser);
+        setupSidebarLabel(TxtProject);
+        setupSidebarLabel(TxtTask);
+        setupSidebarLabel(TxtLogout);
     }
 
+    // Method untuk mengatur efek hover dan kursor label sidebar agar tidak mengulang kode
+    private void setupSidebarLabel(javax.swing.JLabel label) {
+        label.setOpaque(true);
+        label.setBackground(new java.awt.Color(211, 211, 211));
+        label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label.setBackground(new java.awt.Color(191, 191, 191));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label.setBackground(new java.awt.Color(211, 211, 211));
+            }
+        });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,17 +62,18 @@ public class AddUser extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         jComboBox1 = new javax.swing.JComboBox<>();
         saveButton = new javax.swing.JButton();
-        SidebarPanel = new javax.swing.JPanel();
+        SidebarPanel1 = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
         TxtLogout = new javax.swing.JLabel();
         TxtTask = new javax.swing.JLabel();
-        LineSidebar = new javax.swing.JSeparator();
-        LineSidebar1 = new javax.swing.JSeparator();
+        LineSidebar2 = new javax.swing.JSeparator();
+        LineSidebar3 = new javax.swing.JSeparator();
         TxtArasaka = new javax.swing.JLabel();
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
         LogoArasaka = new javax.swing.JLabel();
+        TxtUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,8 +163,8 @@ public class AddUser extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, 480, 360));
 
-        SidebarPanel.setBackground(new java.awt.Color(211, 211, 211));
-        SidebarPanel.setPreferredSize(new java.awt.Dimension(220, 420));
+        SidebarPanel1.setBackground(new java.awt.Color(211, 211, 211));
+        SidebarPanel1.setPreferredSize(new java.awt.Dimension(220, 420));
 
         TxtDashboard.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TxtDashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -242,9 +211,9 @@ public class AddUser extends javax.swing.JFrame {
             }
         });
 
-        LineSidebar.setForeground(new java.awt.Color(0, 0, 0));
+        LineSidebar2.setForeground(new java.awt.Color(0, 0, 0));
 
-        LineSidebar1.setForeground(new java.awt.Color(0, 0, 0));
+        LineSidebar3.setForeground(new java.awt.Color(0, 0, 0));
 
         TxtArasaka.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
         TxtArasaka.setText("Arasaka");
@@ -257,58 +226,70 @@ public class AddUser extends javax.swing.JFrame {
 
         LogoArasaka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconarasaka.png"))); // NOI18N
 
-        javax.swing.GroupLayout SidebarPanelLayout = new javax.swing.GroupLayout(SidebarPanel);
-        SidebarPanel.setLayout(SidebarPanelLayout);
-        SidebarPanelLayout.setHorizontalGroup(
-            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+        TxtUser.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TxtUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/iconuser.png"))); // NOI18N
+        TxtUser.setText("USER");
+        TxtUser.setIconTextGap(15);
+        TxtUser.setInheritsPopupMenu(false);
+        TxtUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtUserMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SidebarPanel1Layout = new javax.swing.GroupLayout(SidebarPanel1);
+        SidebarPanel1.setLayout(SidebarPanel1Layout);
+        SidebarPanel1Layout.setHorizontalGroup(
+            SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LineSidebar)
-                            .addComponent(LineSidebar1)))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LineSidebar2)
+                            .addComponent(LineSidebar3)))
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
                                 .addComponent(LogoArasaka)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
                                         .addComponent(TxtArasaka, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                        .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(SidebarPanel1Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        SidebarPanelLayout.setVerticalGroup(
-            SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
+        SidebarPanel1Layout.setVerticalGroup(
+            SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SidebarPanel1Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(SidebarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LogoArasaka)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanel1Layout.createSequentialGroup()
                         .addComponent(TxtArasaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TxtSocialMedia)))
@@ -317,19 +298,21 @@ public class AddUser extends javax.swing.JFrame {
                 .addGap(76, 76, 76)
                 .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LineSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LineSidebar2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
-                .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                .addComponent(LineSidebar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
 
-        jPanel1.add(SidebarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 770));
+        jPanel1.add(SidebarPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 770));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -356,37 +339,6 @@ public class AddUser extends javax.swing.JFrame {
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
-
-    private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
-        DashboardAdmin dashboard = new DashboardAdmin();
-        dashboard.setVisible(true);
-        this.dispose(); // Menutup form saat ini jika perlu
-    }//GEN-LAST:event_TxtDashboardMouseClicked
-
-    private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
-        CRUDProject project = new CRUDProject();
-        project.setVisible(true);
-        this.dispose(); // Menutup form saat ini jika perlu
-    }//GEN-LAST:event_TxtProjectMouseClicked
-
-    private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
-        int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure want to exit?",
-            "Logout Confirmation",
-            JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm ==JOptionPane.YES_OPTION){
-            System.exit(0);
-        }
-    }//GEN-LAST:event_TxtLogoutMouseClicked
-
-    private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        CRUDTask task = new CRUDTask();
-        task.setVisible(true);
-        this.dispose(); // Menutup form saat ini jika perlu
-    }//GEN-LAST:event_TxtTaskMouseClicked
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
     String name = txtName.getText();  // ubah sesuai nama field di form
@@ -419,46 +371,63 @@ public class AddUser extends javax.swing.JFrame {
     }        // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
+        DashboardAdmin dashboard = new DashboardAdmin(adminId);
+        dashboard.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtDashboardMouseClicked
+
+    private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
+        CRUDProject project = new CRUDProject(adminId);
+        project.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtProjectMouseClicked
+
+    private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure want to exit?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm ==JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_TxtLogoutMouseClicked
+
+    private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
+        CRUDTask task = new CRUDTask(adminId);
+        task.setVisible(true);
+        this.dispose(); // Menutup form saat ini jika perlu
+    }//GEN-LAST:event_TxtTaskMouseClicked
+
+    private void TxtUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtUserMouseClicked
+        CRUDUser task = new CRUDUser(adminId);
+        task.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_TxtUserMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+        
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+       /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AddUser().setVisible(true);
             }
-        });
-    }
+        }); */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSeparator LineSidebar;
-    private javax.swing.JSeparator LineSidebar1;
+    private javax.swing.JSeparator LineSidebar2;
+    private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JLabel LogoArasaka;
-    private javax.swing.JPanel SidebarPanel;
+    private javax.swing.JPanel SidebarPanel1;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
     private javax.swing.JLabel TxtLogout;
@@ -466,6 +435,7 @@ public class AddUser extends javax.swing.JFrame {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
+    private javax.swing.JLabel TxtUser;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
