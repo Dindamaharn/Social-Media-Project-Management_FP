@@ -426,7 +426,7 @@ private void saveProject() {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         
 
@@ -436,7 +436,7 @@ private void saveProject() {
                 new AddProject().setVisible(true);
             }
         });*/
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ADDPROJECT;

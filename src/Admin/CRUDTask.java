@@ -57,9 +57,9 @@ public class CRUDTask extends javax.swing.JFrame {
             }
         });
     }
-    
+     
     // Method untuk loaddata tabel
-    private void loadTaskData() {
+    public void loadTaskData() {
     DefaultTableModel model = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -97,7 +97,10 @@ public class CRUDTask extends javax.swing.JFrame {
                         FROM status_tracks
                         GROUP BY tasks_id
                 ) st2 ON st1.tasks_id = st2.tasks_id AND st1.created_at = st2.latest
-            ) st ON st.tasks_id = t.id;
+            ) st ON st.tasks_id = t.id
+                   
+       ORDER BY 
+            t.id ASC;
     """;
 
     try (Connection conn = DatabaseConnection.getConnection();
@@ -255,81 +258,92 @@ public class CRUDTask extends javax.swing.JFrame {
         
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Failed to load tasks: " + e.getMessage());
-    }
-}
-class ButtonRendererTask extends JPanel implements TableCellRenderer {
-    private final JButton editButton = new JButton("Edit");
-    private final JButton deleteButton = new JButton("Delete");
-
-    public ButtonRendererTask() {
-        setLayout(new FlowLayout(FlowLayout.CENTER));
-        
-        // Style tombol Edit
-        editButton.setBackground(new Color(30, 144, 255)); 
-        editButton.setForeground(Color.WHITE);
-        editButton.setFocusPainted(false);
-        editButton.setBorderPainted(false);
-
-        // Style tombol Delete
-        deleteButton.setBackground(new Color(220, 20, 60)); 
-        deleteButton.setForeground(Color.WHITE);
-        deleteButton.setFocusPainted(false);
-        deleteButton.setBorderPainted(false);
-        
-        add(editButton);
-        add(deleteButton);
-    }
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-        if (isSelected) {
-        setBackground(table.getSelectionBackground());
-    } else {
-        if (row % 2 == 0) {
-            setBackground(new Color(245, 245, 245)); 
-        } else {
-            setBackground(new Color(230, 230, 230)); 
         }
     }
-        return this;
-    }
-}
-class ButtonEditorTask extends DefaultCellEditor {
-    protected JPanel panel;
-    protected JButton editButton;
-    protected JButton deleteButton;
-    private CRUDTask parent;
-    private JTable table;
+    
+    class ButtonRendererTask extends JPanel implements TableCellRenderer {
+        private final JButton editButton = new JButton("Edit");
+        private final JButton deleteButton = new JButton("Delete");
 
-    public ButtonEditorTask(JCheckBox checkBox, CRUDTask parent) {
-        super(checkBox);
-        this.parent = parent;
-
-        panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        editButton = new JButton("Edit");
-        deleteButton = new JButton("Delete");
+        public ButtonRendererTask() {
+            setLayout(new FlowLayout(FlowLayout.CENTER));
         
-        editButton.setBackground(new Color(30, 144, 255));
-        editButton.setForeground(Color.WHITE);
-        editButton.setFocusPainted(false);
-        editButton.setBorderPainted(false);
+            // Style tombol Edit
+            editButton.setBackground(new Color(30, 144, 255)); 
+            editButton.setForeground(Color.WHITE);
+            editButton.setFocusPainted(false);
+            editButton.setBorderPainted(false);
 
-        deleteButton.setBackground(new Color(220, 20, 60));
-        deleteButton.setForeground(Color.WHITE);
-        deleteButton.setFocusPainted(false);
-        deleteButton.setBorderPainted(false);
+            // Style tombol Delete
+            deleteButton.setBackground(new Color(220, 20, 60)); 
+            deleteButton.setForeground(Color.WHITE);
+            deleteButton.setFocusPainted(false);
+            deleteButton.setBorderPainted(false);
+        
+            add(editButton);
+            add(deleteButton);
+        }
 
-        panel.add(editButton);
-        panel.add(deleteButton);
-
-        editButton.addActionListener(e -> {
-            int row = table.getSelectedRow();
-            if (row != -1) {
-                int taskId = Integer.parseInt(table.getValueAt(row, 7).toString());
-                EditTask editTaskWindow = new EditTask(adminId, taskId);
-                editTaskWindow.setVisible(true);
+    @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+        if (isSelected) {
+            setBackground(table.getSelectionBackground());
+        } else {
+            if (row % 2 == 0) {
+                setBackground(new Color(245, 245, 245)); 
+        } else {
+            setBackground(new Color(230, 230, 230)); 
             }
+        }   
+            return this;
+        }
+    }
+    
+    class ButtonEditorTask extends DefaultCellEditor {
+        protected JPanel panel;
+        protected JButton editButton;
+        protected JButton deleteButton;
+        private CRUDTask parent;
+        private JTable table;
+
+        public ButtonEditorTask(JCheckBox checkBox, CRUDTask parent) {
+            super(checkBox);
+            this.parent = parent;
+
+            panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            editButton = new JButton("Edit");
+            deleteButton = new JButton("Delete");
+        
+            editButton.setBackground(new Color(30, 144, 255));
+            editButton.setForeground(Color.WHITE);
+            editButton.setFocusPainted(false);
+            editButton.setBorderPainted(false);
+
+            deleteButton.setBackground(new Color(220, 20, 60));
+            deleteButton.setForeground(Color.WHITE);
+            deleteButton.setFocusPainted(false);
+            deleteButton.setBorderPainted(false);
+
+            panel.add(editButton);
+            panel.add(deleteButton);
+
+            editButton.addActionListener(e -> {
+            int row = table.getSelectedRow();
+            
+        if (row != -1) {
+            int taskId = Integer.parseInt(table.getValueAt(row, 7).toString());
+            EditTask editTaskWindow = new EditTask(adminId, taskId, CRUDTask.this);
+        
+            editTaskWindow.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                loadTaskData(); // method di CRUDTask untuk refresh tabel
+                }
+            });
+        
+            editTaskWindow.setVisible(true);
+        }
         });
 
         deleteButton.addActionListener(e -> {
@@ -354,47 +368,48 @@ class ButtonEditorTask extends DefaultCellEditor {
                 }
             }
         });
-    }
+        }
 
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
                                                  int row, int column) {
-        panel.setBackground(table.getBackground());
-    if (isSelected) {
-        panel.setBackground(table.getSelectionBackground());
-    } else {
-        if (row % 2 == 0) {
-            panel.setBackground(new Color(245, 245, 245));
+            panel.setBackground(table.getBackground());
+        if (isSelected) {
+            panel.setBackground(table.getSelectionBackground());
+        } else {
+            if (row % 2 == 0) {
+                panel.setBackground(new Color(245, 245, 245));
         } else {
             panel.setBackground(new Color(230, 230, 230));
+            }
         }
-    }
         this.table = table;
         return panel;
-    }
+        }
 
     @Override
-    public Object getCellEditorValue() {
-        return "";
+        public Object getCellEditorValue() {
+            return "";
+        }
     }
-}
 
-class StatusCellRenderer extends DefaultTableCellRenderer {
+    class StatusCellRenderer extends DefaultTableCellRenderer {
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
+        public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
 
-        JLabel label = new JLabel(value.toString(), JLabel.CENTER);
+        String text = (value == null) ? "" : value.toString();  // Cek null dulu
+        JLabel label = new JLabel(text, JLabel.CENTER);
         label.setOpaque(true);
         label.setFont(new Font("Segoe UI", Font.BOLD, 14));
         label.setForeground(Color.WHITE);
 
-        String status = value.toString().toLowerCase();
+        String status = text.toLowerCase();
         switch (status) {
             case "pending" -> label.setBackground(new Color(255, 153, 51));      // Oranye
-            case "ongoing" -> label.setBackground(new Color(51, 153, 255));     // Biru
+            case "ongoing" -> label.setBackground(new Color(51, 153, 255));      // Biru
             case "under review" -> label.setBackground(new Color(204, 153, 255)); // Ungu
-            case "completed" -> label.setBackground(new Color(102, 204, 102));     // Hijau
+            case "completed" -> label.setBackground(new Color(102, 204, 102));   // Hijau
             default -> label.setBackground(Color.GRAY);
         }
 
@@ -405,8 +420,8 @@ class StatusCellRenderer extends DefaultTableCellRenderer {
 
         return label;
     }
-}
 
+}
    
     /**
      * This method is called from within the constructor to initialize the form.
