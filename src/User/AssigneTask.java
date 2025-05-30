@@ -26,16 +26,40 @@ import javax.swing.table.DefaultTableModel;
 public class AssigneTask extends javax.swing.JFrame {
  
     private int userId;
-    private javax.swing.JTable taskTable;
+    private String userName;
+
 
     
 
-    public AssigneTask(int userId) {
-        this.userId = userId;
-        initComponents();
-        loadTaskData();
-        setupMenuHoverEffect();
+
+public AssigneTask(int userId) {
+    this.userId = userId;
+    initComponents();
+    fetchUserName(); // Ambil nama user berdasarkan userId
+    welcomeLabel.setText("Welcome, " + userName);
+    loadTaskData();  // Ganti ini dari loadTaskData(userId) menjadi loadTaskData()
+    setupMenuHoverEffect();
+}
+
+    
+private void fetchUserName() {
+    try {
+        Connection conn = Database.DatabaseConnection.getConnection();
+        String sql = "SELECT name FROM assignees WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, userId);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            userName = rs.getString("name"); // Ganti dari "username" ke "name"
+        } else {
+            userName = "User";
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        userName = "User";
     }
+}
+
     private void loadTaskData() {
         try {
             Connection conn = Database.DatabaseConnection.getConnection();
@@ -108,6 +132,7 @@ public class AssigneTask extends javax.swing.JFrame {
         TxtProjectManagement = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         taskTable1 = new javax.swing.JTable();
+        welcomeLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -255,21 +280,30 @@ public class AssigneTask extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(taskTable1);
 
+        welcomeLabel.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
+                .addGap(40, 40, 40)
+                .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -346,5 +380,6 @@ public static void main(String args[]) {
     private javax.swing.JLabel TxtTask;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable taskTable1;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
