@@ -114,7 +114,7 @@ private void saveProject() {
         ADDPROJECT.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         ADDPROJECT.setText("ADD PROJECT");
 
-        MainContent.setBackground(new java.awt.Color(255, 153, 51));
+        MainContent.setBackground(new java.awt.Color(153, 204, 255));
 
         ProjectName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         ProjectName.setText("Project Name");
@@ -331,11 +331,11 @@ private void saveProject() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ADDPROJECT)
                     .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,7 +426,7 @@ private void saveProject() {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         
 
@@ -436,7 +436,7 @@ private void saveProject() {
                 new AddProject().setVisible(true);
             }
         });*/
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ADDPROJECT;

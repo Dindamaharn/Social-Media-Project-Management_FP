@@ -5,6 +5,14 @@
 package Admin;
 
 import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import Database.DatabaseConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author dinda
@@ -19,6 +27,8 @@ public class DetailProject extends javax.swing.JFrame {
         this.adminId = adminId;
         this.projectId = projectId;
         initComponents();
+        
+        loadProjectDetails(projectId);
         
         // Pengaturan efek hover dan kursor pada label sidebar
         setupSidebarLabel(TxtDashboard);
@@ -43,6 +53,68 @@ public class DetailProject extends javax.swing.JFrame {
         });
     }
 
+    
+    // Method untuk load data detail project
+    public void loadProjectDetails(int projectId) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+
+            // Ambil nama & deskripsi project
+            String queryProject = "SELECT name, `desc` FROM projects WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(queryProject);
+            stmt.setInt(1, projectId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                FieldProjectName.setText(rs.getString("name"));
+                AreaDesc.setText(rs.getString("desc"));
+            }
+
+            // Ambil nama assignee, point, dan task completed
+            String queryAssigneeTask = """
+                    SELECT a.name AS assignee_name,
+                         SUM(CASE WHEN st.status = 'completed' THEN t.point ELSE 0 END) AS completed_point,
+                            (
+                              SELECT COUNT(*) 
+                              FROM tasks t2 
+                              WHERE t2.assignees_id = a.id AND t2.projects_id = ?
+                            ) AS total_tasks,
+                           (
+                              SELECT COUNT(*) 
+                              FROM tasks t2
+                              JOIN status_tracks st2 ON t2.id = st2.tasks_id
+                              WHERE t2.assignees_id = a.id AND t2.projects_id = ? AND st2.status = 'completed'
+                            ) AS completed_tasks
+                    FROM assignees a
+                    JOIN tasks t ON a.id = t.assignees_id
+                    LEFT JOIN status_tracks st ON t.id = st.tasks_id AND st.status = 'completed'
+                    WHERE t.projects_id = ?
+                    GROUP BY a.id
+            """;
+
+            PreparedStatement taskStmt = conn.prepareStatement(queryAssigneeTask);
+            taskStmt.setInt(1, projectId); // for total_tasks subquery
+            taskStmt.setInt(2, projectId); // for completed_tasks subquery
+            taskStmt.setInt(3, projectId); // for main WHERE clause
+            ResultSet taskRs = taskStmt.executeQuery();
+
+            DefaultTableModel model = new DefaultTableModel(new Object[]{"Assignee Name", "Point", "Task"}, 0);
+            TblDetailProject.setModel(model); // Tetapkan model baru dengan kolom
+
+            while (taskRs.next()) {
+            String assigneeName = taskRs.getString("assignee_name");
+            int completedPoint = taskRs.getInt("completed_point");
+            int completedTasks = taskRs.getInt("completed_tasks");
+            int totalTasks = taskRs.getInt("total_tasks");
+            String tasks = completedTasks + "/" + totalTasks;
+
+            model.addRow(new Object[]{assigneeName, completedPoint, tasks});
+            }
+
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error loading project details: " + e.getMessage());
+            }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,6 +136,14 @@ public class DetailProject extends javax.swing.JFrame {
         TxtProjectManagement = new javax.swing.JLabel();
         LogoArasaka = new javax.swing.JLabel();
         TxtUser = new javax.swing.JLabel();
+        TxtDetailProject = new javax.swing.JLabel();
+        TxtProjectName = new javax.swing.JLabel();
+        TxtDescription = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        AreaDesc = new javax.swing.JTextArea();
+        FieldProjectName = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TblDetailProject = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,6 +296,39 @@ public class DetailProject extends javax.swing.JFrame {
                 .addGap(63, 63, 63))
         );
 
+        TxtDetailProject.setText("DETAILS PROJECT");
+
+        TxtProjectName.setText("Project Name");
+
+        TxtDescription.setText("Description");
+
+        AreaDesc.setColumns(20);
+        AreaDesc.setRows(5);
+        jScrollPane1.setViewportView(AreaDesc);
+
+        FieldProjectName.setText("jTextField1");
+
+        TblDetailProject.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Assignee Name", "Point", "Task"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(TblDetailProject);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -223,10 +336,43 @@ public class DetailProject extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 1146, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(346, 346, 346)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(TxtDetailProject, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(TxtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(113, 113, 113)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(TxtDescription)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(366, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SidebarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(162, 162, 162)
+                    .addComponent(TxtDetailProject)
+                    .addGap(66, 66, 66)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(TxtProjectName)
+                        .addComponent(TxtDescription))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(162, Short.MAX_VALUE)))
         );
 
         pack();
@@ -284,17 +430,25 @@ public class DetailProject extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea AreaDesc;
+    private javax.swing.JTextField FieldProjectName;
     private javax.swing.JSeparator LineSidebar2;
     private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel SidebarPanel1;
+    private javax.swing.JTable TblDetailProject;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
+    private javax.swing.JLabel TxtDescription;
+    private javax.swing.JLabel TxtDetailProject;
     private javax.swing.JLabel TxtLogout;
     private javax.swing.JLabel TxtProject;
     private javax.swing.JLabel TxtProjectManagement;
+    private javax.swing.JLabel TxtProjectName;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

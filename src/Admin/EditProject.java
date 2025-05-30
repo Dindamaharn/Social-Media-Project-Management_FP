@@ -387,7 +387,7 @@ public class EditProject extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         
 
@@ -398,7 +398,7 @@ public class EditProject extends javax.swing.JFrame {
                 new EditProject().setVisible(true);
             }
         }); */
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Description;
