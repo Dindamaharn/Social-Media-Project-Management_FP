@@ -4,73 +4,87 @@
  */
 package User;
 
-import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+
+
+
+
+
 /**
  *
  * @author dinda
  */
+
+
 public class AssigneTask extends javax.swing.JFrame {
+ 
+    private int userId;
+    private javax.swing.JTable taskTable;
 
-    /**
-     * Creates new form AssigneTask
-     */
-    public AssigneTask() {
+    
+
+    public AssigneTask(int userId) {
+        this.userId = userId;
         initComponents();
-        
-        //TxtDahboard
-        TxtDashboard.setOpaque(true);
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loadTaskData();
+        setupMenuHoverEffect();
+    }
+    private void loadTaskData() {
+        try {
+            Connection conn = Database.DatabaseConnection.getConnection();
+            String sql = "SELECT id, name, 'desc' , point, deadline FROM tasks WHERE assignees_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
 
-        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("ID");
+            model.addColumn("NAME");
+            model.addColumn("Description");
+            model.addColumn("Point");
+            model.addColumn("Deadline");
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("desc"),
+                     rs.getString("deadline"),
+                    rs.getDate("deadline")
+                });
+            }
+
+            taskTable1.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    private void setupMenuHoverEffect() {
+    // TxtDashboard
+    TxtDashboard.setOpaque(true);
+    TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+    TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseEntered(java.awt.event.MouseEvent evt) {
             TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
         }
-        
         public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+            TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
         }
-        });
-        
-        // TxtProject
-        TxtProject.setOpaque(true);
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
+    });
 
-        // TxtTask
-        TxtTask.setOpaque(true);
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-        
-        // TxtLogout
-        TxtLogout.setOpaque(true);
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        }
-        });
-    }
+    // Ulangi untuk TxtProject, TxtTask, TxtLogout...
+}
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,6 +106,8 @@ public class AssigneTask extends javax.swing.JFrame {
         TxtArasaka = new javax.swing.JLabel();
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        taskTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -181,11 +197,6 @@ public class AssigneTask extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(SidebarPanelLayout.createSequentialGroup()
                                 .addComponent(LogoArasaka)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +205,14 @@ public class AssigneTask extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(TxtSocialMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(TxtProjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(TxtDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         SidebarPanelLayout.setVerticalGroup(
@@ -217,12 +235,25 @@ public class AssigneTask extends javax.swing.JFrame {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
                 .addComponent(LineSidebar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
+
+        taskTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(taskTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -230,11 +261,17 @@ public class AssigneTask extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1146, Short.MAX_VALUE))
+                .addGap(117, 117, 117)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -274,37 +311,26 @@ public class AssigneTask extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+public static void main(String args[]) {
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AssigneTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AssigneTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AssigneTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AssigneTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AssigneTask().setVisible(true);
-            }
-        });
+    } catch (Exception ex) {
+        java.util.logging.Logger.getLogger(AssigneTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            int userId = 1; // ⬅️ ganti dengan id user yang sesuai
+            new AssigneTask(userId).setVisible(true); // ✅ constructor with userId
+        }
+    });
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator LineSidebar;
@@ -318,5 +344,7 @@ public class AssigneTask extends javax.swing.JFrame {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable taskTable1;
     // End of variables declaration//GEN-END:variables
 }
