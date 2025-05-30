@@ -12,6 +12,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.SwingConstants;
+
 
 /**
  *
@@ -90,6 +93,44 @@ public class CRUDProject extends javax.swing.JFrame {
     tableData.getColumnModel().getColumn(0).setMinWidth(0);
     tableData.getColumnModel().getColumn(0).setMaxWidth(0);
     tableData.getColumnModel().getColumn(0).setWidth(0);
+    
+     // Atur warna teks semua sel
+        tableData.setForeground(Color.BLACK); 
+
+        // Atur warna latar belakang baris biasa
+        tableData.setBackground(Color.WHITE); // Latar belakang umum
+
+        // Atur warna baris yang dipilih
+        tableData.setSelectionBackground(new Color(171, 203, 202)); 
+        tableData.setSelectionForeground(Color.BLACK); // Warna teks saat dipilih
+
+        // Atur warna header tabel
+        tableData.getTableHeader().setForeground(Color.WHITE);
+       
+        // Atur font seluruh tabel
+        tableData.setFont(new Font("Segoe UI", Font.PLAIN, 16)); // Font isi tabel
+        
+              //Atur Header
+        tableData.getTableHeader().setPreferredSize(new Dimension(tableData.getWidth(),40));
+        DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
+        centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER); 
+        centerHeaderRenderer.setForeground(Color.BLACK);                    
+        centerHeaderRenderer.setBackground(Color.LIGHT_GRAY);                
+        centerHeaderRenderer.setFont(new Font("Segoe UI", Font.BOLD, 36));  
+        
+          for (int i = 0; i < tableData.getColumnModel().getColumnCount(); i++) {
+            tableData.getColumnModel().getColumn(i).setHeaderRenderer(centerHeaderRenderer);
+        }
+
+           // Atur tinggi baris 
+        tableData.setRowHeight(40);
+
+        // Atur lebar kolom
+        tableData.getColumnModel().getColumn(1).setPreferredWidth(300);
+        tableData.getColumnModel().getColumn(2).setPreferredWidth(300);
+        tableData.getColumnModel().getColumn(3).setPreferredWidth(300);
+        tableData.getColumnModel().getColumn(4).setPreferredWidth(300);
+            
 
     // Render dan Editor untuk kolom Actions
     tableData.getColumnModel().getColumn(3).setCellRenderer(new ActionsRenderer());
@@ -99,6 +140,8 @@ public class CRUDProject extends javax.swing.JFrame {
     tableData.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
     tableData.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), "Details"));
 }
+    
+    
 
     class ButtonRenderer extends JButton implements TableCellRenderer {
     public ButtonRenderer() {
@@ -159,10 +202,25 @@ public class CRUDProject extends javax.swing.JFrame {
 }
 
     class ActionsRenderer extends JPanel implements TableCellRenderer {
+         private final JButton editButton = new JButton("Edit");
+    private final JButton deleteButton = new JButton("Delete");
+
     public ActionsRenderer() {
         setLayout(new FlowLayout(FlowLayout.CENTER));
         JButton editButton = new JButton("Edit");
         JButton deleteButton = new JButton("Delete");
+         // Style tombol Edit
+        editButton.setBackground(new Color(30, 144, 255)); // biru
+        editButton.setForeground(Color.WHITE);
+        editButton.setFocusPainted(false);
+        editButton.setBorderPainted(false);
+
+        // Style tombol Delete
+        deleteButton.setBackground(new Color(220, 20, 60)); // merah
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFocusPainted(false);
+        deleteButton.setBorderPainted(false);
+        
         add(editButton);
         add(deleteButton);
     }
@@ -241,10 +299,9 @@ public class CRUDProject extends javax.swing.JFrame {
     private void initComponents() {
 
         PROJECT = new javax.swing.JLabel();
-        MainContent = new javax.swing.JPanel();
-        btnAddProject = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableData = new javax.swing.JTable();
+        btnAddProject = new javax.swing.JButton();
         SidebarPanel1 = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -268,16 +325,6 @@ public class CRUDProject extends javax.swing.JFrame {
         PROJECT.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         PROJECT.setText("PROJECT");
 
-        MainContent.setBackground(new java.awt.Color(255, 153, 51));
-
-        btnAddProject.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnAddProject.setText("Add Project");
-        btnAddProject.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddProjectActionPerformed(evt);
-            }
-        });
-
         tableData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -291,29 +338,13 @@ public class CRUDProject extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableData);
 
-        javax.swing.GroupLayout MainContentLayout = new javax.swing.GroupLayout(MainContent);
-        MainContent.setLayout(MainContentLayout);
-        MainContentLayout.setHorizontalGroup(
-            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainContentLayout.createSequentialGroup()
-                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainContentLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(btnAddProject, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(MainContentLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
-        );
-        MainContentLayout.setVerticalGroup(
-            MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainContentLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(btnAddProject, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
-        );
+        btnAddProject.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAddProject.setText("Add Project");
+        btnAddProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProjectActionPerformed(evt);
+            }
+        });
 
         SidebarPanel1.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel1.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -457,7 +488,7 @@ public class CRUDProject extends javax.swing.JFrame {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
                 .addComponent(LineSidebar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -470,31 +501,30 @@ public class CRUDProject extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PROJECT)
-                    .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 1254, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PROJECT)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddProject, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(PROJECT)
-                .addGap(29, 29, 29)
-                .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PROJECT)
+                    .addComponent(btnAddProject, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(SidebarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAddProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProjectActionPerformed
-        AddProject addproject = new AddProject(adminId); // DetailPage adalah JFrame yang berisi halaman detail
-        addproject.setVisible(true); // Menampilkan halaman detail
-        this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:/ TODO add your handling code here:
-    }//GEN-LAST:event_btnAddProjectActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
          loadProjectData(); // TODO add your handling code here:
@@ -537,6 +567,12 @@ public class CRUDProject extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_TxtUserMouseClicked
 
+    private void btnAddProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProjectActionPerformed
+        AddProject addproject = new AddProject(adminId); // DetailPage adalah JFrame yang berisi halaman detail
+        addproject.setVisible(true); // Menampilkan halaman detail
+        this.dispose(); // Menutup frame saat ini jika diperlukan// TODO add your handling code here:/ TODO add your handling code here:
+    }//GEN-LAST:event_btnAddProjectActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -556,7 +592,6 @@ public class CRUDProject extends javax.swing.JFrame {
     private javax.swing.JSeparator LineSidebar2;
     private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JLabel LogoArasaka;
-    private javax.swing.JPanel MainContent;
     private javax.swing.JLabel PROJECT;
     private javax.swing.JPanel SidebarPanel1;
     private javax.swing.JLabel TxtArasaka;
