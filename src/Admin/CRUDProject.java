@@ -139,18 +139,46 @@ public class CRUDProject extends javax.swing.JFrame {
     // Render dan Editor untuk kolom Details
     tableData.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
     tableData.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), "Details"));
+    
+    tableData.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+    public void mouseMoved(java.awt.event.MouseEvent evt) {
+        int col = tableData.columnAtPoint(evt.getPoint());
+        if (col == 3 || col == 4) {
+            tableData.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        } else {
+            tableData.setCursor(Cursor.getDefaultCursor());
+        }
+    }
+    
+    
+});
+    
+    // Set alternating row color renderer untuk semua kolom kecuali Actions dan Details
+    AlternatingRowRenderer alternatingRenderer = new AlternatingRowRenderer();
+        for (int i = 1; i <= 2; i++) { // Kolom Project Name dan Description
+    tableData.getColumnModel().getColumn(i).setCellRenderer(alternatingRenderer);
+    }
+
 }
     
-    
-
     class ButtonRenderer extends JButton implements TableCellRenderer {
-    public ButtonRenderer() {
+     public ButtonRenderer() {
         setOpaque(true);
+        setFont(new Font("Segoe UI", Font.PLAIN, 14)); // Ukuran font
+        setPreferredSize(new Dimension(100, 30));      // Ukuran tombol
+        setBackground(new Color(100, 149, 237));        // Warna biru lembut
+        setForeground(Color.WHITE);
+        setFocusPainted(false);
+        setBorderPainted(false);
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value,
         boolean isSelected, boolean hasFocus, int row, int column) {
+
         setText((value == null) ? "" : value.toString());
+
+        setBackground(new Color(100, 149, 237)); // Cornflower blue
+        setForeground(Color.WHITE);
         return this;
     }
 }
@@ -166,13 +194,19 @@ public class CRUDProject extends javax.swing.JFrame {
         super(checkBox);
         button = new JButton();
         button.setOpaque(true);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        button.setBackground(new Color(100, 149, 237));
+        button.setForeground(Color.WHITE);
         this.label = labelType;
 
         button.addActionListener(e -> fireEditingStopped());
     }
 
     public Component getTableCellEditorComponent(JTable table, Object value,
-        boolean isSelected, int row, int column) {
+            boolean isSelected, int row, int column) {
         this.table = table;
         this.row = row;
         button.setText(label);
@@ -182,9 +216,9 @@ public class CRUDProject extends javax.swing.JFrame {
 
     public Object getCellEditorValue() {
         if (clicked) {
-            int projectId = (int) table.getValueAt(row, 0); // ID tersembunyi
+            int projectId = (int) table.getValueAt(row, 0);
             if (label.equals("Details")) {
-                new DetailProject(adminId, projectId).setVisible(true); // asumsi ada konstruktor dengan ID
+                new DetailProject(adminId, projectId).setVisible(true);
             }
         }
         clicked = false;
@@ -201,32 +235,32 @@ public class CRUDProject extends javax.swing.JFrame {
     }
 }
 
+
     class ActionsRenderer extends JPanel implements TableCellRenderer {
          private final JButton editButton = new JButton("Edit");
-    private final JButton deleteButton = new JButton("Delete");
+         private final JButton deleteButton = new JButton("Delete");
 
     public ActionsRenderer() {
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        JButton editButton = new JButton("Edit");
-        JButton deleteButton = new JButton("Delete");
-         // Style tombol Edit
-        editButton.setBackground(new Color(30, 144, 255)); // biru
+        editButton.setBackground(new Color(30, 144, 255));
         editButton.setForeground(Color.WHITE);
         editButton.setFocusPainted(false);
         editButton.setBorderPainted(false);
 
-        // Style tombol Delete
-        deleteButton.setBackground(new Color(220, 20, 60)); // merah
+        deleteButton.setBackground(new Color(220, 20, 60));
         deleteButton.setForeground(Color.WHITE);
         deleteButton.setFocusPainted(false);
         deleteButton.setBorderPainted(false);
-        
+
         add(editButton);
         add(deleteButton);
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value,
-        boolean isSelected, boolean hasFocus, int row, int column) {
+         boolean isSelected, boolean hasFocus, int row, int column) {
+
+        setBackground(!isSelected ? (row % 2 == 0 ? new Color(245, 245, 245) : Color.WHITE)
+                                  : table.getSelectionBackground());
         return this;
     }
     }
@@ -288,6 +322,26 @@ public class CRUDProject extends javax.swing.JFrame {
     }
 }
 
+    class AlternatingRowRenderer extends DefaultTableCellRenderer {
+    private final Color evenColor = new Color(245, 245, 245); // Warna baris genap
+    private final Color oddColor = new Color(255, 255, 255);  // Warna baris ganjil
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        if (!isSelected) {
+            c.setBackground(row % 2 == 0 ? evenColor : oddColor);
+        } else {
+            c.setBackground(table.getSelectionBackground());
+            c.setForeground(table.getSelectionForeground());
+        }
+
+        return c;
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

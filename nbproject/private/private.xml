@@ -15,16 +15,11 @@
             <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Database/DatabaseConnection.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/EditProject.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/CRUDProject.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/AddProject.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/ArasakaSocialMediaProjectManagement.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Login/Login.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/CRUDTask.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/CRUDUser.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/AddTask.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Admin/AddUser.java</file>
-            <file>file:/C:/Users/NOVA/Documents/NetBeansProjects/new/src/Database/DatabaseConnection.java</file>
+            <file>file:/C:/Users/dinda/OneDrive/Documents/COOLEYAH/SEMESTER%204/PBO%20F/GIT31/src/Admin/CRUDProject.java</file>
+            <file>file:/C:/Users/dinda/OneDrive/Documents/COOLEYAH/SEMESTER%204/PBO%20F/GIT31/src/Admin/CRUDTask.java</file>
+            <file>file:/C:/Users/dinda/OneDrive/Documents/COOLEYAH/SEMESTER%204/PBO%20F/GIT31/src/Admin/DashboardAdmin.java</file>
+            <file>file:/C:/Users/dinda/OneDrive/Documents/COOLEYAH/SEMESTER%204/PBO%20F/GIT31/src/Admin/AddProject.java</file>
+            <file>file:/C:/Users/dinda/OneDrive/Documents/COOLEYAH/SEMESTER%204/PBO%20F/GIT31/src/Admin/EditTask.java</file>
         </group>
     </open-files>
 </project-private>
