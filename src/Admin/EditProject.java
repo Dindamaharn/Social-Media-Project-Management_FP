@@ -84,21 +84,27 @@ public class EditProject extends javax.swing.JFrame {
         EDITPROJECT.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         EDITPROJECT.setText("EDIT PROJECT");
 
-        MainContent.setBackground(new java.awt.Color(153, 204, 255));
+        MainContent.setBackground(new java.awt.Color(214, 201, 197));
 
-        ProjectName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        ProjectName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         ProjectName.setText("Project Name");
 
+        txtProjectName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtProjectName.setText("Type Project Name Here");
         txtProjectName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProjectNameActionPerformed(evt);
             }
         });
 
-        Description.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Description.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         Description.setText("Description");
+        Description.setToolTipText("");
 
-        btnSave.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtDescription.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtDescription.setText("Type Your Description Here");
+
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

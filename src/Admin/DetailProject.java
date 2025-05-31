@@ -137,13 +137,15 @@ public class DetailProject extends javax.swing.JFrame {
         LogoArasaka = new javax.swing.JLabel();
         TxtUser = new javax.swing.JLabel();
         TxtDetailProject = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         TxtProjectName = new javax.swing.JLabel();
-        TxtDescription = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        AreaDesc = new javax.swing.JTextArea();
         FieldProjectName = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         TblDetailProject = new javax.swing.JTable();
+        TxtDescription = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        AreaDesc = new javax.swing.JTextArea();
+        BtnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -289,24 +291,29 @@ public class DetailProject extends javax.swing.JFrame {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
                 .addComponent(LineSidebar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
 
-        TxtDetailProject.setText("DETAILS PROJECT");
+        TxtDetailProject.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        TxtDetailProject.setText("DETAIL PROJECT");
 
+        jPanel2.setBackground(new java.awt.Color(214, 201, 197));
+        jPanel2.setPreferredSize(new java.awt.Dimension(972, 631));
+
+        TxtProjectName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         TxtProjectName.setText("Project Name");
 
-        TxtDescription.setText("Description");
-
-        AreaDesc.setColumns(20);
-        AreaDesc.setRows(5);
-        jScrollPane1.setViewportView(AreaDesc);
-
-        FieldProjectName.setText("jTextField1");
+        FieldProjectName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldProjectName.setText("Project Name Here");
+        FieldProjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldProjectNameActionPerformed(evt);
+            }
+        });
 
         TblDetailProject.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -329,50 +336,83 @@ public class DetailProject extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(TblDetailProject);
 
+        TxtDescription.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtDescription.setText("Description");
+        TxtDescription.setToolTipText("");
+
+        AreaDesc.setColumns(20);
+        AreaDesc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AreaDesc.setRows(5);
+        AreaDesc.setText("Description Project Here");
+        jScrollPane1.setViewportView(AreaDesc);
+
+        BtnBack.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        BtnBack.setText("Back");
+        BtnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBackActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BtnBack)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane2)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(TxtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(166, 166, 166)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TxtDescription)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtProjectName)
+                    .addComponent(TxtDescription))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(BtnBack)
+                .addGap(36, 36, 36))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1146, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(346, 346, 346)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(TxtDetailProject, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(TxtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(113, 113, 113)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TxtDescription)))
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addContainerGap(366, Short.MAX_VALUE)))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtDetailProject, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1041, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SidebarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(162, 162, 162)
-                    .addComponent(TxtDetailProject)
-                    .addGap(66, 66, 66)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(TxtProjectName)
-                        .addComponent(TxtDescription))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(162, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(TxtDetailProject)
+                .addGap(27, 27, 27)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -415,6 +455,14 @@ public class DetailProject extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_TxtUserMouseClicked
 
+    private void FieldProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldProjectNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldProjectNameActionPerformed
+
+    private void BtnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackActionPerformed
+        this.dispose();       
+    }//GEN-LAST:event_BtnBackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -431,6 +479,7 @@ public class DetailProject extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea AreaDesc;
+    private javax.swing.JButton BtnBack;
     private javax.swing.JTextField FieldProjectName;
     private javax.swing.JSeparator LineSidebar2;
     private javax.swing.JSeparator LineSidebar3;
@@ -448,6 +497,7 @@ public class DetailProject extends javax.swing.JFrame {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
