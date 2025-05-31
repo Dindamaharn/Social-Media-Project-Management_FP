@@ -11,9 +11,6 @@ import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import Database.DatabaseConnection;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 
 /**
  *
@@ -27,7 +24,6 @@ public class AddProject extends javax.swing.JFrame {
     public AddProject(int adminId) {
         this.adminId = adminId;
         initComponents();
-        loadAssigneesToComboBox(); 
         
         setupSidebarLabel(TxtDashboard);
         setupSidebarLabel(TxtUser);
@@ -53,10 +49,9 @@ public class AddProject extends javax.swing.JFrame {
 private void saveProject() {
     String name = txtProjectName.getText();
     String desc = txtDescription.getText();
-    String assignee = jComboBox1.getSelectedItem().toString(); 
 
 
-    if (name.isEmpty() || desc.isEmpty() || assignee.isEmpty()) {
+    if (name.isEmpty() || desc.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Semua field harus diisi!", "Warning", JOptionPane.WARNING_MESSAGE);
         return;
     }
@@ -64,11 +59,10 @@ private void saveProject() {
     Connection conn = DatabaseConnection.getConnection();
 
     try {
-        String sql = "INSERT INTO project (nama, deskripsi, assignee) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO project (nama, deskripsi) VALUES (?, ?)";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, name);
         pst.setString(2, desc);
-        pst.setString(3, assignee);
         pst.executeUpdate();
 
         JOptionPane.showMessageDialog(this, "Project berhasil disimpan!");
@@ -98,9 +92,7 @@ private void saveProject() {
         txtProjectName = new javax.swing.JTextField();
         Description = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
-        Asignee = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         SidebarPanel1 = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -133,21 +125,11 @@ private void saveProject() {
         Description.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Description.setText("Description");
 
-        Asignee.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Asignee.setText("Asignee");
-
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -160,12 +142,10 @@ private void saveProject() {
                 .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(Asignee)
                         .addComponent(Description)
                         .addComponent(txtDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
                         .addComponent(ProjectName)
-                        .addComponent(txtProjectName, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(txtProjectName, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         MainContentLayout.setVerticalGroup(
@@ -179,11 +159,7 @@ private void saveProject() {
                 .addComponent(Description)
                 .addGap(18, 18, 18)
                 .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Asignee)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
         );
@@ -330,7 +306,7 @@ private void saveProject() {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
                 .addComponent(LineSidebar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,16 +323,16 @@ private void saveProject() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ADDPROJECT)
                     .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(ADDPROJECT)
-                .addGap(33, 33, 33)
+                .addGap(27, 27, 27)
                 .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(SidebarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
@@ -435,41 +411,7 @@ private void saveProject() {
         this.dispose();
     }//GEN-LAST:event_TxtUserMouseClicked
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    
-    // Tambahkan method ini untuk load data ke JComboBox
-private void loadAssigneesToComboBox() {
-    try {
-        // 1. Koneksi ke database
-        Connection conn = Database.DatabaseConnection.getConnection();
-
-
-        // 2. Query untuk mengambil nama assignees
-        String query = "SELECT name FROM assignees";
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-
-        // 3. Bersihkan isi combobox terlebih dahulu
-        jComboBox1.removeAllItems();
-
-        // 4. Tambahkan nama dari database ke combobox
-        while (rs.next()) {
-            String name = rs.getString("name");
-            jComboBox1.addItem(name);
-        }
-
-        // 5. Tutup koneksi
-        rs.close();
-        stmt.close();
-        conn.close();
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Gagal memuat data assignees: " + e.getMessage());
-    }
-}
     /**
      * @param args the command line arguments
      */
@@ -487,7 +429,6 @@ private void loadAssigneesToComboBox() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ADDPROJECT;
-    private javax.swing.JLabel Asignee;
     private javax.swing.JLabel Description;
     private javax.swing.JSeparator LineSidebar2;
     private javax.swing.JSeparator LineSidebar3;
@@ -504,7 +445,6 @@ private void loadAssigneesToComboBox() {
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtProjectName;
     // End of variables declaration//GEN-END:variables

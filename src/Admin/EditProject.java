@@ -84,7 +84,7 @@ public class EditProject extends javax.swing.JFrame {
         EDITPROJECT.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         EDITPROJECT.setText("EDIT PROJECT");
 
-        MainContent.setBackground(new java.awt.Color(255, 153, 51));
+        MainContent.setBackground(new java.awt.Color(153, 204, 255));
 
         ProjectName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         ProjectName.setText("Project Name");
@@ -292,11 +292,11 @@ public class EditProject extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(EDITPROJECT)
                     .addComponent(MainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
