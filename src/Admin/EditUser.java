@@ -30,7 +30,7 @@ public class EditUser extends javax.swing.JFrame {
     private void loadUserData() {
     try {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "SELECT * FROM users WHERE id=?";
+        String sql = "SELECT * FROM assignees WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, userId);
         ResultSet rs = stmt.executeQuery();
@@ -38,7 +38,6 @@ public class EditUser extends javax.swing.JFrame {
             txtFullName.setText(rs.getString("name"));
             txtEmail.setText(rs.getString("email"));
             // password sebaiknya tidak ditampilkan
-            comboStatus.setSelectedItem(rs.getString("status"));
         }
     } catch (SQLException e) {
         e.printStackTrace();
@@ -62,7 +61,6 @@ public class EditUser extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         txtConfirmPwd = new javax.swing.JPasswordField();
-        comboStatus = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         SidebarPanel1 = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
@@ -109,13 +107,6 @@ public class EditUser extends javax.swing.JFrame {
 
         txtConfirmPwd.setText("jPasswordField1");
 
-        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
-        comboStatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboStatusActionPerformed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(50, 103, 177));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(247, 210, 50));
@@ -144,7 +135,6 @@ public class EditUser extends javax.swing.JFrame {
                             .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtConfirmPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(93, 93, 93))
         );
@@ -161,9 +151,7 @@ public class EditUser extends javax.swing.JFrame {
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtConfirmPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(54, 54, 54)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -347,17 +335,12 @@ public class EditUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void comboStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboStatusActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String name = txtFullName.getText();
         String email = txtEmail.getText();
         String password = new String(txtPassword.getPassword());
         String confirm = new String(txtConfirmPwd.getPassword());
-        String status = comboStatus.getSelectedItem().toString();
 
         if (!password.equals(confirm)) {
             JOptionPane.showMessageDialog(this, "Password dan konfirmasi tidak sama!");
@@ -366,13 +349,12 @@ public class EditUser extends javax.swing.JFrame {
 
         try {
             Connection conn = DatabaseConnection.getConnection();
-            String sql = "UPDATE users SET name=?, email=?, password=?, status=? WHERE id=?";
+            String sql = "UPDATE assignees SET name=?, email=?, password=?, WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
             stmt.setString(2, email);
             stmt.setString(3, password); // sebaiknya di-hash
-            stmt.setString(4, status);
-            stmt.setInt(5, userId);
+            stmt.setInt(4, userId);
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
@@ -452,7 +434,6 @@ public class EditUser extends javax.swing.JFrame {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
-    private javax.swing.JComboBox<String> comboStatus;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
