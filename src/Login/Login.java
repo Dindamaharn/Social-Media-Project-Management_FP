@@ -35,54 +35,64 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         TxtName = new javax.swing.JTextField();
         PwField = new javax.swing.JPasswordField();
         ButtonLogin = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(50, 103, 177));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel2.setBackground(new java.awt.Color(247, 210, 50));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 250));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(50, 103, 177));
+        jLabel1.setForeground(new java.awt.Color(12, 44, 71));
         jLabel1.setText("LOGIN");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 28, -1, -1));
+        jPanel2.add(TxtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 300, 30));
+        jPanel2.add(PwField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 300, 30));
 
-        TxtName.setText("email");
-        jPanel2.add(TxtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 78, 300, 30));
-
-        PwField.setText("jPasswordField1");
-        jPanel2.add(PwField, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 126, 300, 30));
-
-        ButtonLogin.setBackground(new java.awt.Color(50, 103, 177));
+        ButtonLogin.setBackground(new java.awt.Color(12, 44, 71));
         ButtonLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        ButtonLogin.setForeground(new java.awt.Color(247, 210, 50));
+        ButtonLogin.setForeground(new java.awt.Color(255, 255, 255));
         ButtonLogin.setText("Login");
         ButtonLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonLoginActionPerformed(evt);
             }
         });
-        jPanel2.add(ButtonLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 174, 300, 40));
+        jPanel2.add(ButtonLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 300, 40));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 259, 400, 250));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(12, 44, 71));
+        jLabel2.setText("Username");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(12, 44, 71));
+        jLabel3.setText("Password");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoginActionPerformed
-         String name = TxtName.getText();
+        String name = TxtName.getText();
         String password = String.valueOf(PwField.getPassword());
 
     try {
@@ -125,7 +135,7 @@ public class Login extends javax.swing.JFrame {
     } catch (Exception e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
-    }
+    }// TODO add your handling code here:
     }//GEN-LAST:event_ButtonLoginActionPerformed
 
     /**
@@ -168,7 +178,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField PwField;
     private javax.swing.JTextField TxtName;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
