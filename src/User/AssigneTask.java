@@ -4,111 +4,316 @@
  */
 package User;
 
+import Admin.ReviewTask;
+import Database.DatabaseConnection;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-
-
-
-
 
 /**
  *
  * @author dinda
  */
-
-
 public class AssigneTask extends javax.swing.JFrame {
- 
+
     private int userId;
     private String userName;
 
+    public AssigneTask(int userId) {
+        this.userId = userId;
+        initComponents();
+        fetchUserName(); // Ambil nama user berdasarkan userId
+        welcomeLabel.setText("Welcome, " + userName);
+        loadTaskData();  // Ganti ini dari loadTaskData(userId) menjadi loadTaskData()
+        setupMenuHoverEffect();
+    }
 
-    
-
-
-public AssigneTask(int userId) {
-    this.userId = userId;
-    initComponents();
-    fetchUserName(); // Ambil nama user berdasarkan userId
-    welcomeLabel.setText("Welcome, " + userName);
-    loadTaskData();  // Ganti ini dari loadTaskData(userId) menjadi loadTaskData()
-    setupMenuHoverEffect();
-}
-
-    
-private void fetchUserName() {
-    try {
-        Connection conn = Database.DatabaseConnection.getConnection();
-        String sql = "SELECT name FROM assignees WHERE id = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, userId);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            userName = rs.getString("name"); // Ganti dari "username" ke "name"
-        } else {
+    private void fetchUserName() {
+        try {
+            Connection conn = Database.DatabaseConnection.getConnection();
+            String sql = "SELECT name FROM assignees WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                userName = rs.getString("name"); // Ganti dari "username" ke "name"
+            } else {
+                userName = "User";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
             userName = "User";
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        userName = "User";
     }
-}
+//
 
     private void loadTaskData() {
         try {
             Connection conn = Database.DatabaseConnection.getConnection();
-            String sql = "SELECT id, name, 'desc' , point, deadline FROM tasks WHERE assignees_id = ?";
+            String sql;
+            sql = """
+                  SELECT
+                                            t.id,
+                                            t.name AS task_name,
+                                            t.desc,
+                                            t.point,
+                                            t.deadline,
+                                            p.name AS project_name,
+                                            a.name AS assignee_name,
+                                            st.status AS status_name
+                                       FROM
+                                            tasks t
+                                       JOIN
+                                            projects p ON t.projects_id = p.id
+                                       JOIN
+                                            assignees a ON t.assignees_id = a.id
+                                            
+                                       LEFT JOIN
+                                            (SELECT st1.* FROM status_tracks st1
+                                                INNER JOIN (
+                                                        SELECT tasks_id, MAX(created_at) AS latest
+                                                        FROM status_tracks
+                                                        GROUP BY tasks_id
+                                                ) st2 ON st1.tasks_id = st2.tasks_id AND st1.created_at = st2.latest
+                                            ) st ON st.tasks_id = t.id
+                                       WHERE a.id = ?
+                                       ORDER BY t.id ASC
+                  """;
+//"SELECT id, name, 'desc' , point, deadline FROM tasks WHERE assignees_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
 
-            DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("ID");
+            DefaultTableModel model = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
             model.addColumn("NAME");
             model.addColumn("Description");
             model.addColumn("Point");
             model.addColumn("Deadline");
-
+            model.addColumn("Status");
+            model.addColumn("ID");
+//
             while (rs.next()) {
                 model.addRow(new Object[]{
-                    rs.getInt("id"),
-                    rs.getString("name"),
+                    rs.getString("task_name"),
                     rs.getString("desc"),
-                     rs.getString("deadline"),
-                    rs.getDate("deadline")
+                    rs.getString("deadline"),
+                    rs.getDate("deadline"),
+                    rs.getString("status_name"),
+                    rs.getInt("id")
                 });
             }
 
+//            taskTable1.setModel(model);
             taskTable1.setModel(model);
+
+            // Sembunyikan kolom terakhir (Task ID)
+            taskTable1.getColumnModel().getColumn(5).setMinWidth(0);
+            taskTable1.getColumnModel().getColumn(5).setMaxWidth(0);
+            taskTable1.getColumnModel().getColumn(5).setWidth(0);
+
+            // Atur warna teks semua sel
+            taskTable1.setForeground(Color.BLACK);
+
+            // Atur warna latar belakang baris biasa
+            taskTable1.setBackground(Color.WHITE); // Latar belakang umum
+
+            // Atur warna baris yang dipilih
+            taskTable1.setSelectionBackground(new Color(171, 203, 202));
+            taskTable1.setSelectionForeground(Color.BLACK); // Warna teks saat dipilih
+
+            // Atur warna header tabel
+            taskTable1.getTableHeader().setForeground(Color.WHITE);
+
+            // Atur font seluruh tabel
+            taskTable1.setFont(new Font("Segoe UI", Font.PLAIN, 16)); // Font isi tabel
+
+            //Atur Header
+            taskTable1.getTableHeader().setPreferredSize(new Dimension(taskTable1.getWidth(), 40));
+            DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
+            centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+            centerHeaderRenderer.setForeground(Color.BLACK);
+            centerHeaderRenderer.setBackground(Color.LIGHT_GRAY);
+            centerHeaderRenderer.setFont(new Font("Segoe UI", Font.BOLD, 36));
+
+            for (int i = 0; i < taskTable1.getColumnModel().getColumnCount(); i++) {
+                taskTable1.getColumnModel().getColumn(i).setHeaderRenderer(centerHeaderRenderer);
+            }
+
+            // Atur tinggi baris 
+            taskTable1.setRowHeight(40);
+
+            // Atur lebar kolom
+            taskTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
+            taskTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
+            taskTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
+            taskTable1.getColumnModel().getColumn(3).setPreferredWidth(120);
+            taskTable1.getColumnModel().getColumn(4).setPreferredWidth(50);
+            taskTable1.getColumnModel().getColumn(5).setPreferredWidth(50);
+
+            taskTable1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                        boolean hasFocus, int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                    if (!isSelected) {
+                        if (row % 2 == 0) {
+                            c.setBackground(new Color(245, 245, 245));
+                        } else {
+                            c.setBackground(new Color(230, 230, 230));
+                        }
+                    } else {
+                        c.setBackground(table.getSelectionBackground()); // Tetap pakai warna seleksi jika dipilih
+                    }
+
+                    c.setForeground(Color.BLACK);
+                    return c;
+                }
+            });
+
+//            taskTable1.getColumn("Action").setCellRenderer(new ButtonRendererTask());
+//            taskTable1.getColumn("Action").setCellEditor(new ButtonEditorTask(new JCheckBox(), this));
+            //hover kursor kolom status action
+            taskTable1.addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    int row = taskTable1.rowAtPoint(e.getPoint());
+                    int col = taskTable1.columnAtPoint(e.getPoint());
+
+                    if (col == 6) {
+                        taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    } else if (col == 5) {
+                        String status = taskTable1.getValueAt(row, col).toString();
+                        if (status.equalsIgnoreCase("under review")) {
+                            taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                            return;
+                        }
+                    }
+                    taskTable1.setCursor(Cursor.getDefaultCursor());
+                }
+            });
+
+            //kolom status
+            taskTable1.getColumnModel().getColumn(4).setCellRenderer(new StatusCellRenderer());
+
+            //klik mouse hover
+//            taskTable1.addMouseMotionListener(new MouseMotionAdapter() {
+//                @Override
+//                public void mouseMoved(MouseEvent e) {
+//                    int row = taskTable1.rowAtPoint(e.getPoint());
+//                    int col = taskTable1.columnAtPoint(e.getPoint());
+//
+//                    if (col == 6) {
+//                        // Kolom "Action" selalu cursor tangan
+//                        taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//                    } else if (col == 5) {
+//                        // Kolom "Status" cursor tangan hanya jika status "under review"
+//                        String status = taskTable1.getValueAt(row, col).toString();
+//                        if (status.equalsIgnoreCase("under review")) {
+//                            taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//                        } else {
+//                            taskTable1.setCursor(Cursor.getDefaultCursor());
+//                        }
+//                    } else {
+//                        taskTable1.setCursor(Cursor.getDefaultCursor());
+//                    }
+//                }
+//            });
+            //klik mouse menuju file
+            taskTable1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int row = taskTable1.rowAtPoint(e.getPoint());
+                    int col = taskTable1.columnAtPoint(e.getPoint());
+
+                    if (col == 4) { // kolom status
+                        String status = taskTable1.getValueAt(row, col).toString();
+//                        if (status.equalsIgnoreCase("under review")) {
+//                            int taskId = Integer.parseInt(taskTable1.getValueAt(row, 7).toString());
+////                            new ReviewTask(adminId, taskId).setVisible(true);
+//                        }
+                    }
+                }
+            });
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+    class StatusCellRenderer extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+
+            String text = (value == null) ? "" : value.toString();  // Cek null dulu
+            JLabel label = new JLabel(text, JLabel.CENTER);
+            label.setOpaque(true);
+            label.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            label.setForeground(Color.WHITE);
+
+            String status = text.toLowerCase();
+            switch (status) {
+                case "pending" ->
+                    label.setBackground(new Color(255, 153, 51));      // Oranye
+                case "ongoing" ->
+                    label.setBackground(new Color(51, 153, 255));      // Biru
+                case "under review" ->
+                    label.setBackground(new Color(204, 153, 255)); // Ungu
+                case "completed" ->
+                    label.setBackground(new Color(102, 204, 102));   // Hijau
+                default ->
+                    label.setBackground(Color.GRAY);
+            }
+
+            if (isSelected) {
+                label.setBackground(new Color(171, 203, 202)); // warna seleksi
+                label.setForeground(Color.BLACK);
+            }
+
+            return label;
+        }
+
+    }
+
     private void setupMenuHoverEffect() {
-    // TxtDashboard
-    TxtDashboard.setOpaque(true);
-    TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-    TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        }
-    });
+        // TxtDashboard
+        TxtDashboard.setOpaque(true);
+        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+        TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
+            }
 
-    // Ulangi untuk TxtProject, TxtTask, TxtLogout...
-}
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+            }
+        });
 
-    
+        // Ulangi untuk TxtProject, TxtTask, TxtLogout...
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,9 +335,9 @@ private void fetchUserName() {
         TxtArasaka = new javax.swing.JLabel();
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        taskTable1 = new javax.swing.JTable();
         welcomeLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taskTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -267,20 +472,28 @@ private void fetchUserName() {
                 .addGap(63, 63, 63))
         );
 
+        welcomeLabel.setText("jLabel1");
+
         taskTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Name", "Project Name", "Deadline", "Point", "Status", "Action"
             }
-        ));
-        jScrollPane2.setViewportView(taskTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
 
-        welcomeLabel.setText("jLabel1");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(taskTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -290,12 +503,13 @@ private void fetchUserName() {
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(144, 144, 144)
-                        .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(831, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1111, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,8 +517,8 @@ private void fetchUserName() {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -325,13 +539,13 @@ private void fetchUserName() {
 
     private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
         int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure want to exit?",
-            "Logout Confirmation",
-            JOptionPane.YES_NO_OPTION
+                this,
+                "Are you sure want to exit?",
+                "Logout Confirmation",
+                JOptionPane.YES_NO_OPTION
         );
 
-        if (confirm ==JOptionPane.YES_OPTION){
+        if (confirm == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_TxtLogoutMouseClicked
@@ -345,25 +559,25 @@ private void fetchUserName() {
     /**
      * @param args the command line arguments
      */
-public static void main(String args[]) {
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(AssigneTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (Exception ex) {
-        java.util.logging.Logger.getLogger(AssigneTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
 
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            int userId = 1; // ⬅️ ganti dengan id user yang sesuai
-            new AssigneTask(userId).setVisible(true); // ✅ constructor with userId
-        }
-    });
-}
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                int userId = 1; // ⬅️ ganti dengan id user yang sesuai
+                new AssigneTask(userId).setVisible(true); // ✅ constructor with userId
+            }
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -378,7 +592,7 @@ public static void main(String args[]) {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable taskTable1;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
