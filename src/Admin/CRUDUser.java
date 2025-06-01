@@ -5,12 +5,28 @@
 package Admin;
 
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+import Database.DatabaseConnection;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author LENOVO
  */
 public class CRUDUser extends javax.swing.JFrame {
     private int adminId;
+    DefaultTableModel model;
     /**
      * Creates new form CRUDUser
      */
@@ -23,6 +39,9 @@ public class CRUDUser extends javax.swing.JFrame {
         setupSidebarLabel(TxtProject);
         setupSidebarLabel(TxtTask);
         setupSidebarLabel(TxtLogout);
+        
+        initTable(); // siapkan model tabel
+        loadDataToTable();
     }
 
     // Method untuk mengatur efek hover dan kursor label sidebar agar tidak mengulang kode
@@ -40,6 +59,135 @@ public class CRUDUser extends javax.swing.JFrame {
         });
     }
     
+    private void initTable() {
+        model = new DefaultTableModel(new String[] { "Name", "Email", "Point", "Action" }, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 3; // hanya kolom Action yg bisa diklik
+            }
+        };
+
+        TblUser.setModel(model); // jTable1 berasal dari GUI Builder
+        TblUser.setRowHeight(40);
+        TblUser.getColumn("Action").setCellRenderer(new ButtonRenderer());
+        TblUser.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
+    }
+    
+    private void loadDataToTable() {
+        model.setRowCount(0);
+        String query = """
+                    SELECT a.id, a.name, a.email, COALESCE(SUM(t.point), 0) AS point
+                    FROM assignees a
+                    LEFT JOIN tasks t ON a.id = t.assignees_id
+                    LEFT JOIN status_tracks st ON t.id = st.tasks_id AND st.status = 'completed'
+                    GROUP BY a.id, a.name, a.email
+                """;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                int point = rs.getInt("point");
+
+                model.addRow(new Object[] { name, email, point, "Edit/Delete|" + id });
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Gagal memuat data.");
+        }
+    }
+    
+    private void openEditForm(int userId, int adminId) {
+        EditUser editUser = new EditUser(userId, this.adminId);
+        editUser.setVisible(true);
+        // TODO: ganti dengan form edit asli
+        // new EditUserForm(id).setVisible(true);
+    }
+    
+    private void confirmAndDelete(int id) {
+        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus user ini?", "Konfirmasi",
+                JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try (Connection conn = DatabaseConnection.getConnection()) {
+                PreparedStatement stmt = conn.prepareStatement("DELETE FROM assignees WHERE id = ?");
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "User berhasil dihapus.");
+                loadDataToTable();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Gagal menghapus user.");
+            }
+        }
+    }
+    
+    // Renderer tombol
+    class ButtonRenderer extends JPanel implements TableCellRenderer {
+        private final JButton editButton = new JButton("Edit");
+        private final JButton deleteButton = new JButton("Delete");
+
+        public ButtonRenderer() {
+            setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
+            editButton.setPreferredSize(new Dimension(70, 30));
+            deleteButton.setPreferredSize(new Dimension(80, 30));
+            add(editButton);
+            add(deleteButton);
+        }
+        
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int col) {
+            return this;
+        }
+    }
+    
+    // Editor tombol
+class ButtonEditor extends DefaultCellEditor {
+    protected JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+    protected JButton editButton = new JButton("Edit");
+    protected JButton deleteButton = new JButton("Delete");
+
+    private int selectedId;
+
+    public ButtonEditor(JCheckBox checkBox) {
+        super(checkBox);
+        editButton.setPreferredSize(new Dimension(70, 30));
+        deleteButton.setPreferredSize(new Dimension(80, 30));
+        panel.add(editButton);
+        panel.add(deleteButton);
+
+        editButton.addActionListener(e -> {
+            fireEditingStopped();
+            openEditForm(selectedId, adminId);
+        });
+
+        deleteButton.addActionListener(e -> {
+            fireEditingStopped();
+            confirmAndDelete(selectedId);
+        });
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value,
+                                                 boolean isSelected, int row, int column) {
+        String val = (String) value;
+        if (val != null && val.contains("|")) {
+            String[] parts = val.split("\\|");
+            selectedId = Integer.parseInt(parts[1]);
+        }
+        return panel;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return "Edit/Delete|" + selectedId;
+    }
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,7 +199,7 @@ public class CRUDUser extends javax.swing.JFrame {
 
         BtnAddUser = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TblUser = new javax.swing.JTable();
         SidebarPanel1 = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -77,26 +225,26 @@ public class CRUDUser extends javax.swing.JFrame {
         });
         getContentPane().add(BtnAddUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 40, 120, 36));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TblUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Email", "Poin", "Status", "Action"
+                "Nama", "Email", "Point", "Action"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TblUser);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 1070, 520));
 
@@ -317,6 +465,7 @@ public class CRUDUser extends javax.swing.JFrame {
     private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel SidebarPanel1;
+    private javax.swing.JTable TblUser;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
     private javax.swing.JLabel TxtLogout;
@@ -326,6 +475,5 @@ public class CRUDUser extends javax.swing.JFrame {
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
