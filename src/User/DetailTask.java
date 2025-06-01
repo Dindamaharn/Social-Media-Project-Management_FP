@@ -4,7 +4,11 @@
  */
 package User;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author dinda
@@ -14,35 +18,41 @@ public class DetailTask extends javax.swing.JFrame {
     /**
      * Creates new form DetailTask
      */
-    public DetailTask() {
+    int taskId = 0;
+    private int userId;
+
+    public DetailTask(int taskId, int userId) {
+        this.taskId = taskId;
+        this.userId = userId;
         initComponents();
-        
+
         //TxtDahboard
         TxtDashboard.setOpaque(true);
         TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
         TxtDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         TxtDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
-        }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtDashboard.setBackground(new java.awt.Color(191, 191, 191));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtDashboard.setBackground(new java.awt.Color(211, 211, 211));
+            }
         });
-        
+
         // TxtProject
         TxtProject.setOpaque(true);
         TxtProject.setBackground(new java.awt.Color(211, 211, 211));
         TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
-        }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtProject.setBackground(new java.awt.Color(191, 191, 191));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+            }
         });
 
         // TxtTask
@@ -50,26 +60,30 @@ public class DetailTask extends javax.swing.JFrame {
         TxtTask.setBackground(new java.awt.Color(211, 211, 211));
         TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
-        }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtTask.setBackground(new java.awt.Color(191, 191, 191));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+            }
         });
-        
+
         // TxtLogout
         TxtLogout.setOpaque(true);
         TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
         TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
-        }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtLogout.setBackground(new java.awt.Color(191, 191, 191));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+            }
         });
+
+        fetchTaskData();
     }
 
     /**
@@ -93,23 +107,23 @@ public class DetailTask extends javax.swing.JFrame {
         TxtSocialMedia = new javax.swing.JLabel();
         TxtProjectManagement = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        txtTaskName = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        txtAdminName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        txtStatus = new javax.swing.JLabel();
+        txtDueDate = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
+        btnTodo = new javax.swing.JToggleButton();
+        btnOnProgress = new javax.swing.JToggleButton();
+        btnUnderReview = new javax.swing.JToggleButton();
+        btnDone = new javax.swing.JToggleButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        txtDesc = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -253,8 +267,8 @@ public class DetailTask extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(51, 255, 102));
         jPanel1.setToolTipText("");
 
-        jLabel1.setFont(new java.awt.Font("Liberation Sans", 0, 50)); // NOI18N
-        jLabel1.setText("{{TASK NAME}}");
+        txtTaskName.setFont(new java.awt.Font("Liberation Sans", 0, 50)); // NOI18N
+        txtTaskName.setText("{{TASK NAME}}");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -262,21 +276,21 @@ public class DetailTask extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(413, 413, 413))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 51, 255));
 
-        jLabel2.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
-        jLabel2.setText("{{25-11-2025}}");
+        txtAdminName.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
+        txtAdminName.setText("{{25-11-2025}}");
 
         jLabel3.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
         jLabel3.setText("Due Date :");
@@ -287,11 +301,11 @@ public class DetailTask extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
         jLabel5.setText("Status :");
 
-        jLabel10.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
-        jLabel10.setText("{{On Going}}");
+        txtStatus.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
+        txtStatus.setText("{{On Going}}");
 
-        jLabel11.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
-        jLabel11.setText("{{25-11-2025}}");
+        txtDueDate.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
+        txtDueDate.setText("{{25-11-2025}}");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -303,18 +317,18 @@ public class DetailTask extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(353, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -323,15 +337,15 @@ public class DetailTask extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -340,31 +354,31 @@ public class DetailTask extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
         jLabel12.setText("STATUS");
 
-        jToggleButton1.setText("Todo");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnTodo.setText("Todo");
+        btnTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                btnTodoActionPerformed(evt);
             }
         });
 
-        jToggleButton2.setText("On Progress");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnOnProgress.setText("On Progress");
+        btnOnProgress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
+                btnOnProgressActionPerformed(evt);
             }
         });
 
-        jToggleButton3.setText("Under Review");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnUnderReview.setText("Under Review");
+        btnUnderReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
+                btnUnderReviewActionPerformed(evt);
             }
         });
 
-        jToggleButton4.setText("Done");
-        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnDone.setText("Done");
+        btnDone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton4ActionPerformed(evt);
+                btnDoneActionPerformed(evt);
             }
         });
 
@@ -374,13 +388,13 @@ public class DetailTask extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                .addComponent(btnTodo, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jToggleButton2)
+                .addComponent(btnOnProgress)
                 .addGap(18, 18, 18)
-                .addComponent(jToggleButton3)
+                .addComponent(btnUnderReview)
                 .addGap(18, 18, 18)
-                .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -394,10 +408,10 @@ public class DetailTask extends javax.swing.JFrame {
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOnProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUnderReview, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -406,9 +420,9 @@ public class DetailTask extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Liberation Sans", 0, 45)); // NOI18N
         jLabel13.setText("Description :");
 
-        jLabel14.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
-        jLabel14.setText("{{INI ADALAH CONTOH DESKRIPSI DARI SEBUAH TASKS}}");
-        jLabel14.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        txtDesc.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
+        txtDesc.setText("{{INI ADALAH CONTOH DESKRIPSI DARI SEBUAH TASKS}}");
+        txtDesc.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -417,7 +431,7 @@ public class DetailTask extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 1480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 1480, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -427,7 +441,7 @@ public class DetailTask extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addComponent(txtDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -519,63 +533,128 @@ public class DetailTask extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
-        DashboardUser dashboard = new DashboardUser();
+        DashboardUser dashboard = new DashboardUser(userId);
         dashboard.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtDashboardMouseClicked
 
     private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
-        AssigneProject project = new AssigneProject();
+        AssigneProject project = new AssigneProject(userId);
         project.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtProjectMouseClicked
 
     private void TxtLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtLogoutMouseClicked
         int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure want to exit?",
-            "Logout Confirmation",
-            JOptionPane.YES_NO_OPTION
+                this,
+                "Are you sure want to exit?",
+                "Logout Confirmation",
+                JOptionPane.YES_NO_OPTION
         );
 
-        if (confirm ==JOptionPane.YES_OPTION){
+        if (confirm == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_TxtLogoutMouseClicked
 
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        AssigneTask task = new AssigneTask();
+        AssigneTask task = new AssigneTask(userId);
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-    jToggleButton1.setSelected(true);
-    jToggleButton2.setSelected(false);
-    jToggleButton3.setSelected(false);
-    jToggleButton4.setSelected(false);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    private void btnTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodoActionPerformed
+        btnTodo.setSelected(true);
+        btnOnProgress.setSelected(false);
+        btnUnderReview.setSelected(false);
+        btnDone.setSelected(false);
+    }//GEN-LAST:event_btnTodoActionPerformed
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-    jToggleButton1.setSelected(false);
-    jToggleButton2.setSelected(true);
-    jToggleButton3.setSelected(false);
-    jToggleButton4.setSelected(false);        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+    private void btnOnProgressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOnProgressActionPerformed
+        btnTodo.setSelected(false);
+        btnOnProgress.setSelected(true);
+        btnUnderReview.setSelected(false);
+        btnDone.setSelected(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOnProgressActionPerformed
 
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-    jToggleButton1.setSelected(false);
-    jToggleButton2.setSelected(false);
-    jToggleButton3.setSelected(true);
-    jToggleButton4.setSelected(false);
-    }//GEN-LAST:event_jToggleButton3ActionPerformed
+    private void btnUnderReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnderReviewActionPerformed
+        btnTodo.setSelected(false);
+        btnOnProgress.setSelected(false);
+        btnUnderReview.setSelected(true);
+        btnDone.setSelected(false);
+    }//GEN-LAST:event_btnUnderReviewActionPerformed
 
-    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
-    jToggleButton1.setSelected(false);
-    jToggleButton2.setSelected(false);
-    jToggleButton3.setSelected(false);
-    jToggleButton4.setSelected(true);
-    }//GEN-LAST:event_jToggleButton4ActionPerformed
+    private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
+        btnTodo.setSelected(false);
+        btnOnProgress.setSelected(false);
+        btnUnderReview.setSelected(false);
+        btnDone.setSelected(true);
+    }//GEN-LAST:event_btnDoneActionPerformed
+
+    ResultSet rs;
+
+    private void fetchTaskData() {
+        try {
+            Connection conn = Database.DatabaseConnection.getConnection();
+            String sql = """
+                        SELECT t.id,
+                                t.NAME    AS task_name,
+                                t.desc,
+                                t.point,
+                                t.deadline,
+                                p.NAME    AS project_name,
+                                a.NAME    AS assignee_name,
+                                adm.NAME  AS admin_name,
+                                st.status AS status_name
+                         FROM   tasks t
+                                JOIN projects p
+                                  ON t.projects_id = p.id
+                                JOIN assignees a
+                                  ON t.assignees_id = a.id
+                                JOIN admins adm
+                                  ON t.admins_id = adm.id
+                                LEFT JOIN (SELECT st1.*
+                                           FROM   status_tracks st1
+                                                  INNER JOIN (SELECT tasks_id,
+                                                                     Max(created_at) AS latest
+                                                              FROM   status_tracks
+                                                              GROUP  BY tasks_id) st2
+                                                          ON st1.tasks_id = st2.tasks_id
+                                                             AND st1.created_at = st2.latest) st
+                                       ON st.tasks_id = t.id
+                         WHERE  t.id = ?
+                                                              
+                         """;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, taskId);
+            this.rs = stmt.executeQuery();
+            this.bindData();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void bindData() {
+        try {
+            while (rs.next()) {
+                rs.getInt("id");
+                txtTaskName.setText( rs.getString("task_name"));
+                txtDesc.setText( rs.getString("desc"));
+//                txtTaskName.setText( rs.getInt("point"));
+                txtDueDate.setText( rs.getString("deadline"));
+//                rs.getString("project_name");
+                rs.getString("assignee_name");
+                txtAdminName.setText( rs.getString("admin_name"));
+                txtStatus.setText( rs.getString("status_name"));
+
+            }
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -624,36 +703,29 @@ public class DetailTask extends javax.swing.JFrame {
     private javax.swing.JLabel TxtProjectManagement;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JToggleButton btnDone;
+    private javax.swing.JToggleButton btnOnProgress;
+    private javax.swing.JToggleButton btnTodo;
+    private javax.swing.JToggleButton btnUnderReview;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
+    private javax.swing.JLabel txtAdminName;
+    private javax.swing.JLabel txtDesc;
+    private javax.swing.JLabel txtDueDate;
+    private javax.swing.JLabel txtStatus;
+    private javax.swing.JLabel txtTaskName;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -190,55 +190,10 @@ public class AssigneTask extends javax.swing.JFrame {
                 }
             });
 
-//            taskTable1.getColumn("Action").setCellRenderer(new ButtonRendererTask());
-//            taskTable1.getColumn("Action").setCellEditor(new ButtonEditorTask(new JCheckBox(), this));
-            //hover kursor kolom status action
-            taskTable1.addMouseMotionListener(new MouseMotionAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    int row = taskTable1.rowAtPoint(e.getPoint());
-                    int col = taskTable1.columnAtPoint(e.getPoint());
-
-                    if (col == 6) {
-                        taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    } else if (col == 5) {
-                        String status = taskTable1.getValueAt(row, col).toString();
-                        if (status.equalsIgnoreCase("under review")) {
-                            taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                            return;
-                        }
-                    }
-                    taskTable1.setCursor(Cursor.getDefaultCursor());
-                }
-            });
-
             //kolom status
             taskTable1.getColumnModel().getColumn(4).setCellRenderer(new StatusCellRenderer());
 
-            //klik mouse hover
-//            taskTable1.addMouseMotionListener(new MouseMotionAdapter() {
-//                @Override
-//                public void mouseMoved(MouseEvent e) {
-//                    int row = taskTable1.rowAtPoint(e.getPoint());
-//                    int col = taskTable1.columnAtPoint(e.getPoint());
-//
-//                    if (col == 6) {
-//                        // Kolom "Action" selalu cursor tangan
-//                        taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//                    } else if (col == 5) {
-//                        // Kolom "Status" cursor tangan hanya jika status "under review"
-//                        String status = taskTable1.getValueAt(row, col).toString();
-//                        if (status.equalsIgnoreCase("under review")) {
-//                            taskTable1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//                        } else {
-//                            taskTable1.setCursor(Cursor.getDefaultCursor());
-//                        }
-//                    } else {
-//                        taskTable1.setCursor(Cursor.getDefaultCursor());
-//                    }
-//                }
-//            });
-            //klik mouse menuju file
+            //klik mouse menuju detail
             taskTable1.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -246,10 +201,10 @@ public class AssigneTask extends javax.swing.JFrame {
                     int col = taskTable1.columnAtPoint(e.getPoint());
 
                     if (col == 4) { // kolom status
-                        String status = taskTable1.getValueAt(row, col).toString();
+//                        String status = taskTable1.getValueAt(row, col).toString();
 //                        if (status.equalsIgnoreCase("under review")) {
-//                            int taskId = Integer.parseInt(taskTable1.getValueAt(row, 7).toString());
-////                            new ReviewTask(adminId, taskId).setVisible(true);
+                            int taskId = Integer.parseInt(taskTable1.getValueAt(row, 5).toString());
+                            new DetailTask(taskId, userId).setVisible(true);
 //                        }
                     }
                 }
