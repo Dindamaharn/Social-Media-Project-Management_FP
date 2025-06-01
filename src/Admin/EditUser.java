@@ -37,6 +37,8 @@ public class EditUser extends javax.swing.JFrame {
         if (rs.next()) {
             txtFullName.setText(rs.getString("name"));
             txtEmail.setText(rs.getString("email"));
+            txtPassword.setText(rs.getString("password"));
+            txtConfirmPwd.setText(rs.getString("password"));
             // password sebaiknya tidak ditampilkan
         }
     } catch (SQLException e) {
@@ -349,7 +351,7 @@ public class EditUser extends javax.swing.JFrame {
 
         try {
             Connection conn = DatabaseConnection.getConnection();
-            String sql = "UPDATE assignees SET name=?, email=?, password=?, WHERE id=?";
+            String sql = "UPDATE assignees SET name=?, email=?, password=? WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
             stmt.setString(2, email);
@@ -360,6 +362,7 @@ public class EditUser extends javax.swing.JFrame {
             if (rows > 0) {
                 JOptionPane.showMessageDialog(this, "Data berhasil diupdate!");
                 this.dispose();
+                new CRUDUser(adminId).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Gagal update data.");
             }
