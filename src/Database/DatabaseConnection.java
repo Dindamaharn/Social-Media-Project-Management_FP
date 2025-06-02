@@ -16,6 +16,7 @@ public class DatabaseConnection {
     //iki gonane tsabit
 //    private static final String USER = "bibd";
 //    private static final String PASS = "rawrbibd";
+    
     //iki gonane arek arek
       private static final String USER = "root";
       private static final String PASS = "";

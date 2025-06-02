@@ -396,7 +396,11 @@ public class AssigneProject extends JFrame {
 
         JProgressBar progressBar = new JProgressBar(0, 100);
         progressBar.setValue(progress);
+        progressBar.setForeground(new Color(214,201,197)); 
+        progressBar.setBackground(new Color(12,44,71)); 
         progressBar.setStringPainted(false);
+      
+        
 
         JLabel progressLabel = new JLabel(progress + "%", SwingConstants.LEFT);
         progressLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));

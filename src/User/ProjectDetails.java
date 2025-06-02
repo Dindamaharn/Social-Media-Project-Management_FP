@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.Component;
+import javax.swing.UIManager;
+
 
 /**
  *
@@ -231,6 +233,9 @@ public class ProjectDetails extends javax.swing.JFrame {
         int progress = totalTasks > 0 ? (doneTasks * 100 / totalTasks) : 0;
         progressPercentage.setText(progress + "%");
         progressBar.setValue(progress);
+        progressBar.setForeground(new Color(214,201,197)); 
+        progressBar.setBackground(new Color(12,44,71)); 
+        
         if (progress == 100) {
             progressStatus.setText("Completed");
         } else if (progress > 0) {
@@ -286,7 +291,7 @@ public class ProjectDetails extends javax.swing.JFrame {
                 row.setOpaque(false);
                 row.setPreferredSize(new Dimension(0, 30));
                 row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-
+                row.setFont(new Font("SansSerif", Font.BOLD, 13));
                 row.add(new JLabel(name));
                 row.add(new JLabel(deadline));
                 row.add(new JLabel(status != null ? status : "Belum Ada Status"));
