@@ -148,9 +148,9 @@ public class DashboardUser extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        MainContent.setBackground(new java.awt.Color(255, 153, 51));
+        MainContent.setBackground(new java.awt.Color(12, 44, 71));
 
-        OverdueTask1.setBackground(new java.awt.Color(204, 255, 102));
+        OverdueTask1.setBackground(new java.awt.Color(171, 203, 202));
 
         txt1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txt1.setText("RECENT POINT");
@@ -179,7 +179,7 @@ public class DashboardUser extends JFrame {
                 .addContainerGap(103, Short.MAX_VALUE))
         );
 
-        TotalUser1.setBackground(new java.awt.Color(204, 255, 102));
+        TotalUser1.setBackground(new java.awt.Color(214, 201, 197));
 
         taskAssignLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         taskAssignLabel.setText("0");
@@ -223,7 +223,7 @@ public class DashboardUser extends JFrame {
                     .addContainerGap(66, Short.MAX_VALUE)))
         );
 
-        TotalTask1.setBackground(new java.awt.Color(204, 255, 102));
+        TotalTask1.setBackground(new java.awt.Color(214, 201, 197));
 
         taskOverdueLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         taskOverdueLabel.setText("0");
@@ -267,7 +267,7 @@ public class DashboardUser extends JFrame {
                     .addContainerGap(66, Short.MAX_VALUE)))
         );
 
-        taskInProgressPanel.setBackground(new java.awt.Color(204, 255, 102));
+        taskInProgressPanel.setBackground(new java.awt.Color(214, 201, 197));
 
         taskInProgressLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         taskInProgressLabel.setText("0");
@@ -311,7 +311,7 @@ public class DashboardUser extends JFrame {
                     .addContainerGap(66, Short.MAX_VALUE)))
         );
 
-        activityPanel.setBackground(new java.awt.Color(204, 255, 102));
+        activityPanel.setBackground(new java.awt.Color(214, 201, 197));
 
         recentActivityLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         recentActivityLabel.setText("RECENT ACTIVITY");
@@ -333,7 +333,7 @@ public class DashboardUser extends JFrame {
                 .addContainerGap(207, Short.MAX_VALUE))
         );
 
-        TopUser1.setBackground(new java.awt.Color(204, 255, 102));
+        TopUser1.setBackground(new java.awt.Color(171, 203, 202));
 
         jLabel90.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel90.setText("USERS");

@@ -354,9 +354,9 @@ public class ProjectDetails extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        MainContent.setBackground(new java.awt.Color(255, 153, 51));
+        MainContent.setBackground(new java.awt.Color(12, 44, 71));
 
-        OverdueTask.setBackground(new java.awt.Color(204, 255, 102));
+        OverdueTask.setBackground(new java.awt.Color(171, 203, 202));
 
         txt.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txt.setText("PROGRESS");
@@ -403,7 +403,7 @@ public class ProjectDetails extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        TotalUser.setBackground(new java.awt.Color(204, 255, 102));
+        TotalUser.setBackground(new java.awt.Color(214, 201, 197));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel14.setText("Project Name");
@@ -432,7 +432,7 @@ public class ProjectDetails extends javax.swing.JFrame {
                 .addGap(28, 28, 28))
         );
 
-        TotalTask.setBackground(new java.awt.Color(204, 255, 102));
+        TotalTask.setBackground(new java.awt.Color(214, 201, 197));
 
         taskDoneCount.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         taskDoneCount.setText("20");
@@ -494,7 +494,7 @@ public class ProjectDetails extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        taskListPanel.setBackground(new java.awt.Color(204, 255, 102));
+        taskListPanel.setBackground(new java.awt.Color(214, 201, 197));
 
         javax.swing.GroupLayout taskListPanelLayout = new javax.swing.GroupLayout(taskListPanel);
         taskListPanel.setLayout(taskListPanelLayout);
@@ -507,7 +507,7 @@ public class ProjectDetails extends javax.swing.JFrame {
             .addGap(0, 336, Short.MAX_VALUE)
         );
 
-        TopUser.setBackground(new java.awt.Color(204, 255, 102));
+        TopUser.setBackground(new java.awt.Color(171, 203, 202));
 
         jLabel43.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel43.setText("DESKRIPSI PROJECT");

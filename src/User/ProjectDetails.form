@@ -54,7 +54,7 @@
     <Container class="javax.swing.JPanel" name="MainContent">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="99" red="ff" type="rgb"/>
+          <Color blue="47" green="2c" red="c" type="rgb"/>
         </Property>
       </Properties>
 
@@ -109,7 +109,7 @@
         <Container class="javax.swing.JPanel" name="OverdueTask">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="ff" red="cc" type="rgb"/>
+              <Color blue="ca" green="cb" red="ab" type="rgb"/>
             </Property>
           </Properties>
 
@@ -193,7 +193,7 @@
         <Container class="javax.swing.JPanel" name="TotalUser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="ff" red="cc" type="rgb"/>
+              <Color blue="c5" green="c9" red="d6" type="rgb"/>
             </Property>
           </Properties>
 
@@ -244,7 +244,7 @@
         <Container class="javax.swing.JPanel" name="TotalTask">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="ff" red="cc" type="rgb"/>
+              <Color blue="c5" green="c9" red="d6" type="rgb"/>
             </Property>
           </Properties>
 
@@ -354,7 +354,7 @@
         <Container class="javax.swing.JPanel" name="taskListPanel">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="ff" red="cc" type="rgb"/>
+              <Color blue="c5" green="c9" red="d6" type="rgb"/>
             </Property>
           </Properties>
 
@@ -374,7 +374,7 @@
         <Container class="javax.swing.JPanel" name="TopUser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="ff" red="cc" type="rgb"/>
+              <Color blue="ca" green="cb" red="ab" type="rgb"/>
             </Property>
           </Properties>
 

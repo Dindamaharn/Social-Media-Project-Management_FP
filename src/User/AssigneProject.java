@@ -270,7 +270,7 @@ public class AssigneProject extends JFrame {
                 .addGap(63, 63, 63))
         );
 
-        projectPanel.setBackground(new java.awt.Color(204, 255, 102));
+        projectPanel.setBackground(new java.awt.Color(214, 201, 197));
 
         javax.swing.GroupLayout projectPanelLayout = new javax.swing.GroupLayout(projectPanel);
         projectPanel.setLayout(projectPanelLayout);
