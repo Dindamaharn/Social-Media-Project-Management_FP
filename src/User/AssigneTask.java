@@ -40,6 +40,10 @@ public class AssigneTask extends javax.swing.JFrame {
         loadTaskData();  // Ganti ini dari loadTaskData(userId) menjadi loadTaskData()
         setupMenuHoverEffect();
     }
+    
+    private void hideSelf(){
+        this.setVisible(false);
+    }
 
     private void fetchUserName() {
         try {
@@ -115,7 +119,7 @@ public class AssigneTask extends javax.swing.JFrame {
                 model.addRow(new Object[]{
                     rs.getString("task_name"),
                     rs.getString("desc"),
-                    rs.getString("deadline"),
+                    rs.getInt("point"),
                     rs.getDate("deadline"),
                     rs.getString("status_name"),
                     rs.getInt("id")
@@ -204,6 +208,7 @@ public class AssigneTask extends javax.swing.JFrame {
 //                        String status = taskTable1.getValueAt(row, col).toString();
 //                        if (status.equalsIgnoreCase("under review")) {
                             int taskId = Integer.parseInt(taskTable1.getValueAt(row, 5).toString());
+                            hideSelf();
                             new DetailTask(taskId, userId).setVisible(true);
 //                        }
                     }

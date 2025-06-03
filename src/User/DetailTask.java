@@ -126,9 +126,7 @@ public class DetailTask extends javax.swing.JFrame {
         txtDesc = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        lblActivityLogList = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -450,20 +448,10 @@ public class DetailTask extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Liberation Sans", 0, 45)); // NOI18N
         jLabel15.setText("Activity Log :");
 
-        jLabel16.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
-        jLabel16.setText("{{25-11-2025  10:30 - Updating Details}");
-        jLabel16.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel16.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-
-        jLabel19.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
-        jLabel19.setText("{{25-11-2025  10:25 - Updating Admin}}");
-        jLabel19.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel19.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-
-        jLabel20.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
-        jLabel20.setText("{{25-11-2025  10:20 - Updating User}}");
-        jLabel20.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel20.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        lblActivityLogList.setFont(new java.awt.Font("Liberation Sans", 0, 30)); // NOI18N
+        lblActivityLogList.setText("{{25-11-2025  10:30 - Updating Details}");
+        lblActivityLogList.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblActivityLogList.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -475,10 +463,7 @@ public class DetailTask extends javax.swing.JFrame {
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 1474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 1474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 1474, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(lblActivityLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 1474, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -487,12 +472,8 @@ public class DetailTask extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20)
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addComponent(lblActivityLogList)
+                .addContainerGap(330, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -628,7 +609,7 @@ public class DetailTask extends javax.swing.JFrame {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, taskId);
             this.rs = stmt.executeQuery();
-            this.bindData();
+            this.bindTaskData();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
@@ -636,21 +617,50 @@ public class DetailTask extends javax.swing.JFrame {
         }
     }
 
-    private void bindData() {
+    private void bindTaskData() {
         try {
             while (rs.next()) {
                 rs.getInt("id");
-                txtTaskName.setText( rs.getString("task_name"));
-                txtDesc.setText( rs.getString("desc"));
-//                txtTaskName.setText( rs.getInt("point"));
-                txtDueDate.setText( rs.getString("deadline"));
-//                rs.getString("project_name");
+                txtTaskName.setText(rs.getString("task_name"));
+                txtDesc.setText(rs.getString("desc"));
+                txtDueDate.setText(rs.getString("deadline"));
                 rs.getString("assignee_name");
-                txtAdminName.setText( rs.getString("admin_name"));
-                txtStatus.setText( rs.getString("status_name"));
-
+                txtAdminName.setText(rs.getString("admin_name"));
+                txtStatus.setText(rs.getString("status_name"));
             }
-        }catch (Exception e) {
+            fetchActivityLogData();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    ResultSet taskRs;
+    private void fetchActivityLogData() {
+        try {
+            Connection conn = Database.DatabaseConnection.getConnection();
+            String sql = """
+                        SELECT * FROM status_tracks WHERE tasks_id = ? ORDER BY updated_at 
+                         """;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, taskId);
+            this.taskRs = stmt.executeQuery();
+            this.bindActivityLogData();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void bindActivityLogData() {
+        try {
+            String taskLog = "";
+            while (taskRs.next()) {
+                taskLog += taskRs.getString("updated_at") + " " + taskRs.getString("status") + "\n";
+            }
+            lblActivityLogList.setText(taskLog);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
             e.printStackTrace();
         }
@@ -710,9 +720,6 @@ public class DetailTask extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -721,6 +728,7 @@ public class DetailTask extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel lblActivityLogList;
     private javax.swing.JLabel txtAdminName;
     private javax.swing.JLabel txtDesc;
     private javax.swing.JLabel txtDueDate;

@@ -582,11 +582,7 @@
                       <Component id="jLabel15" alignment="0" min="-2" pref="264" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel16" alignment="0" min="-2" pref="1474" max="-2" attributes="0"/>
-                              <Component id="jLabel19" min="-2" pref="1474" max="-2" attributes="0"/>
-                              <Component id="jLabel20" min="-2" pref="1474" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblActivityLogList" min="-2" pref="1474" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -599,12 +595,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel15" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="246" max="32767" attributes="0"/>
+                  <Component id="lblActivityLogList" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="330" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -618,32 +610,12 @@
             <Property name="text" type="java.lang.String" value="Activity Log :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel16">
+        <Component class="javax.swing.JLabel" name="lblActivityLogList">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Liberation Sans" size="30" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="{{25-11-2025  10:30 - Updating Details}"/>
-            <Property name="verticalAlignment" type="int" value="1"/>
-            <Property name="verticalTextPosition" type="int" value="1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel19">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="{{25-11-2025  10:25 - Updating Admin}}"/>
-            <Property name="verticalAlignment" type="int" value="1"/>
-            <Property name="verticalTextPosition" type="int" value="1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel20">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="{{25-11-2025  10:20 - Updating User}}"/>
             <Property name="verticalAlignment" type="int" value="1"/>
             <Property name="verticalTextPosition" type="int" value="1"/>
           </Properties>
