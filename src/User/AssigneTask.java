@@ -69,32 +69,29 @@ public class AssigneTask extends javax.swing.JFrame {
             Connection conn = Database.DatabaseConnection.getConnection();
             String sql;
             sql = """
-                  SELECT
-                                            t.id,
-                                            t.name AS task_name,
-                                            t.desc,
-                                            t.point,
-                                            t.deadline,
-                                            p.name AS project_name,
-                                            a.name AS assignee_name,
-                                            st.status AS status_name
-                                       FROM
-                                            tasks t
-                                       JOIN
-                                            projects p ON t.projects_id = p.id
-                                       JOIN
-                                            assignees a ON t.assignees_id = a.id
-                                            
-                                       LEFT JOIN
-                                            (SELECT st1.* FROM status_tracks st1
-                                                INNER JOIN (
-                                                        SELECT tasks_id, MAX(created_at) AS latest
-                                                        FROM status_tracks
-                                                        GROUP BY tasks_id
-                                                ) st2 ON st1.tasks_id = st2.tasks_id AND st1.created_at = st2.latest
-                                            ) st ON st.tasks_id = t.id
-                                       WHERE a.id = ?
-                                       ORDER BY t.id ASC
+                WITH latest_status AS (
+                                               SELECT st.*,
+                                                      ROW_NUMBER() OVER (PARTITION BY tasks_id ORDER BY created_at DESC) AS rn
+                                               FROM status_tracks st
+                                           )
+                                           
+                                           SELECT 
+                                               t.id,
+                                               t.name AS task_name,
+                                               t.desc,
+                                               t.point,
+                                               t.deadline,
+                                               p.name AS project_name,
+                                               a.name AS assignee_name,
+                                               adm.name AS admin_name,
+                                               ls.status AS status_name
+                                           FROM tasks t
+                                           JOIN projects p ON t.projects_id = p.id
+                                           JOIN assignees a ON t.assignees_id = a.id
+                                           JOIN admins adm ON t.admins_id = adm.id
+                                           LEFT JOIN latest_status ls ON ls.tasks_id = t.id AND ls.rn = 1
+                                           WHERE t.id = ?
+                                       ORDER BY t.id ASC;
                   """;
 //"SELECT id, name, 'desc' , point, deadline FROM tasks WHERE assignees_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);

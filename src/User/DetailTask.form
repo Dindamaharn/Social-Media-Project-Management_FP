@@ -25,33 +25,33 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="SidebarPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jPanel2" min="-2" pref="398" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel4" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel5" max="32767" attributes="0"/>
-                  <Component id="jPanel6" max="32767" attributes="0"/>
+                  <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="122" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="SidebarPanel" alignment="1" pref="1044" max="32767" attributes="0"/>
+          <Component id="SidebarPanel" alignment="1" pref="720" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <Component id="jPanel4" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
@@ -150,7 +150,7 @@
                   <Component id="TxtProject" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="TxtTask" min="-2" pref="35" max="-2" attributes="0"/>
-                  <EmptySpace pref="527" max="32767" attributes="0"/>
+                  <EmptySpace pref="203" max="32767" attributes="0"/>
                   <Component id="LineSidebar1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="TxtLogout" min="-2" pref="40" max="-2" attributes="0"/>
@@ -289,7 +289,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="txtTaskName" min="-2" pref="415" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="413" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="302" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -324,31 +324,27 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" pref="157" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtDueDate" min="-2" pref="204" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel5" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="txtStatus" min="-2" pref="176" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel4" min="-2" pref="204" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtAdminName" min="-2" pref="204" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="jLabel5" min="-2" pref="125" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="txtStatus" min="-2" pref="176" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel4" min="-2" pref="204" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtAdminName" min="-2" pref="204" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="353" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -370,7 +366,7 @@
                       <Component id="jLabel4" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                       <Component id="txtAdminName" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -379,7 +375,7 @@
         <Component class="javax.swing.JLabel" name="txtAdminName">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="{{25-11-2025}}"/>
           </Properties>
@@ -387,7 +383,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Due Date :"/>
           </Properties>
@@ -395,7 +391,7 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Assigned By :"/>
           </Properties>
@@ -403,7 +399,7 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Status :"/>
           </Properties>
@@ -411,7 +407,7 @@
         <Component class="javax.swing.JLabel" name="txtStatus">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="{{On Going}}"/>
           </Properties>
@@ -419,7 +415,7 @@
         <Component class="javax.swing.JLabel" name="txtDueDate">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="{{25-11-2025}}"/>
           </Properties>
@@ -438,7 +434,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="btnTodo" pref="107" max="32767" attributes="0"/>
+                  <Component id="btnTodo" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnOnProgress" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -466,7 +462,7 @@
                       <Component id="btnUnderReview" alignment="3" min="-2" pref="62" max="-2" attributes="0"/>
                       <Component id="btnDone" alignment="3" min="-2" pref="62" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="45" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -525,12 +521,11 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtDesc" min="-2" pref="1480" max="-2" attributes="0"/>
+                      <Component id="txtDesc" min="-2" pref="898" max="-2" attributes="0"/>
                       <Component id="jLabel13" min="-2" pref="264" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -540,8 +535,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel13" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtDesc" pref="77" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtDesc" pref="83" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -550,7 +544,7 @@
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="45" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Description :"/>
           </Properties>
@@ -558,7 +552,7 @@
         <Component class="javax.swing.JLabel" name="txtDesc">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="{{INI ADALAH CONTOH DESKRIPSI DARI SEBUAH TASKS}}"/>
             <Property name="verticalTextPosition" type="int" value="1"/>
@@ -578,14 +572,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel15" alignment="0" min="-2" pref="264" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="lblActivityLogList" min="-2" pref="1474" max="-2" attributes="0"/>
+                          <Component id="lblActivityLogList" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="jLabel15" min="-2" pref="264" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="634" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -596,7 +590,7 @@
                   <Component id="jLabel15" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblActivityLogList" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="330" max="32767" attributes="0"/>
+                  <EmptySpace pref="83" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -605,7 +599,7 @@
         <Component class="javax.swing.JLabel" name="jLabel15">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="45" style="0"/>
+              <Font name="Liberation Sans" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Activity Log :"/>
           </Properties>
@@ -613,7 +607,7 @@
         <Component class="javax.swing.JLabel" name="lblActivityLogList">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Sans" size="30" style="0"/>
+              <Font name="Liberation Sans" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="{{25-11-2025  10:30 - Updating Details}"/>
             <Property name="verticalAlignment" type="int" value="1"/>
