@@ -337,6 +337,7 @@
                               <Component id="jLabel1" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                               <Component id="TxtProjectName" alignment="0" min="-2" pref="185" max="-2" attributes="0"/>
                               <Component id="ComboProjectName" min="-2" pref="407" max="-2" attributes="0"/>
+                              <Component id="JDateChooserDeadline" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -363,7 +364,10 @@
                       <Component id="TxtDeadline" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="142" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Component id="JDateChooserDeadline" min="-2" pref="45" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
@@ -377,9 +381,9 @@
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="ComboAssignee" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="ComboProjectName" pref="45" max="32767" attributes="0"/>
+                      <Component id="ComboProjectName" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="98" max="32767" attributes="0"/>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="BtnSave" min="-2" max="-2" attributes="0"/>
                       <Component id="BtnCancel" min="-2" max="-2" attributes="0"/>
@@ -535,6 +539,8 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AreaTaskNameActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="JDateChooserDeadline">
         </Component>
       </SubComponents>
     </Container>

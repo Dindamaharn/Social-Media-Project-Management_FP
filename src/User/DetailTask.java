@@ -19,11 +19,11 @@ public class DetailTask extends javax.swing.JFrame {
      * Creates new form DetailTask
      */
     int taskId = 0;
-    private int userId;
+    private int assigneeId;
 
-    public DetailTask(int taskId, int userId) {
+    public DetailTask(int taskId, int assigneeId) {
         this.taskId = taskId;
-        this.userId = userId;
+        this.assigneeId = assigneeId;
         initComponents();
 
         //TxtDahboard
@@ -514,13 +514,13 @@ public class DetailTask extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
-        DashboardUser dashboard = new DashboardUser(userId);
+        DashboardUser dashboard = new DashboardUser(assigneeId);
         dashboard.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtDashboardMouseClicked
 
     private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
-        AssigneProject project = new AssigneProject(userId);
+        AssigneProject project = new AssigneProject(assigneeId);
         project.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtProjectMouseClicked
@@ -539,7 +539,7 @@ public class DetailTask extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtLogoutMouseClicked
 
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        AssigneTask task = new AssigneTask(userId);
+        AssigneTask task = new AssigneTask(assigneeId);
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked

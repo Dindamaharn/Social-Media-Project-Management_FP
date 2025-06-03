@@ -29,11 +29,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AssigneTask extends javax.swing.JFrame {
 
-    private int userId;
+    private int assigneeId;
     private String userName;
 
-    public AssigneTask(int userId) {
-        this.userId = userId;
+    public AssigneTask(int assigneeId) {
+        this.assigneeId = assigneeId;
         initComponents();
         fetchUserName(); // Ambil nama user berdasarkan userId
         welcomeLabel.setText("Welcome, " + userName);
@@ -50,7 +50,7 @@ public class AssigneTask extends javax.swing.JFrame {
             Connection conn = Database.DatabaseConnection.getConnection();
             String sql = "SELECT name FROM assignees WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, userId);
+            stmt.setInt(1, assigneeId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 userName = rs.getString("name"); // Ganti dari "username" ke "name"
@@ -98,7 +98,7 @@ public class AssigneTask extends javax.swing.JFrame {
                   """;
 //"SELECT id, name, 'desc' , point, deadline FROM tasks WHERE assignees_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, userId);
+            stmt.setInt(1, assigneeId);
             ResultSet rs = stmt.executeQuery();
 
             DefaultTableModel model = new DefaultTableModel() {
@@ -209,7 +209,7 @@ public class AssigneTask extends javax.swing.JFrame {
 //                        if (status.equalsIgnoreCase("under review")) {
                             int taskId = Integer.parseInt(taskTable1.getValueAt(row, 5).toString());
                             hideSelf();
-                            new DetailTask(taskId, userId).setVisible(true);
+                            new DetailTask(taskId, assigneeId).setVisible(true);
 //                        }
                     }
                 }
@@ -273,6 +273,47 @@ public class AssigneTask extends javax.swing.JFrame {
         });
 
         // Ulangi untuk TxtProject, TxtTask, TxtLogout...
+        // TxtProject
+        TxtProject.setOpaque(true);
+        TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+        TxtProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtProject.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtProject.setBackground(new java.awt.Color(191, 191, 191));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtProject.setBackground(new java.awt.Color(211, 211, 211));
+            }
+        });
+        
+        // TxtTask
+        TxtTask.setOpaque(true);
+        TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+        TxtTask.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtTask.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtTask.setBackground(new java.awt.Color(191, 191, 191));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+            }
+        });
+        
+        // TxtLogOut
+        TxtLogout.setOpaque(true);
+        TxtLogout.setBackground(new java.awt.Color(211, 211, 211));
+        TxtLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TxtLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                TxtTask.setBackground(new java.awt.Color(191, 191, 191));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TxtTask.setBackground(new java.awt.Color(211, 211, 211));
+            }
+        });
     }
 
     /**
@@ -486,13 +527,13 @@ public class AssigneTask extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
-        DashboardUser dashboard = new DashboardUser();
+        DashboardUser dashboard = new DashboardUser(assigneeId);
         dashboard.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtDashboardMouseClicked
 
     private void TxtProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProjectMouseClicked
-        AssigneProject project = new AssigneProject();
+        AssigneProject project = new AssigneProject(assigneeId);
         project.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtProjectMouseClicked
@@ -511,7 +552,7 @@ public class AssigneTask extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtLogoutMouseClicked
 
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        AssigneTask task = new AssigneTask();
+        AssigneTask task = new AssigneTask(assigneeId);
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked

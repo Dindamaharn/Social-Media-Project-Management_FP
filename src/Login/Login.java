@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author LENOVO
  */
 public class Login extends javax.swing.JFrame {
-    private int usersId;
+    private int assigneeId;
     private int adminId;
 
     /**
@@ -118,8 +118,8 @@ public class Login extends javax.swing.JFrame {
             ResultSet rsAssignees = pstAssignees.executeQuery();
 
             if (rsAssignees.next()) {
-                usersId = rsAssignees.getInt("id");
-                new User.DashboardUser(usersId).setVisible(true);  
+                assigneeId = rsAssignees.getInt("id");
+                new User.DashboardUser(assigneeId).setVisible(true);  
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Username atau Password salah!");

@@ -338,7 +338,7 @@ public class AssigneProject extends JFrame {
     }//GEN-LAST:event_TxtLogoutMouseClicked
 
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        AssigneTask task = new AssigneTask();
+        AssigneTask task = new AssigneTask(assigneeId);
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked

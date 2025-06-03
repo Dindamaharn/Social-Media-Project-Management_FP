@@ -33,6 +33,7 @@ import javax.swing.UIManager;
  * @author fikra
  */
 public class ProjectDetails extends javax.swing.JFrame {
+    private int assigneeId;
     private int projectId;
     private int assigneeIdProjects;
     private JPanel headerPanel;
@@ -770,7 +771,7 @@ public class ProjectDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtLogoutMouseClicked
 
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        AssigneTask task = new AssigneTask();
+        AssigneTask task = new AssigneTask(assigneeId);
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
