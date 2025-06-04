@@ -110,6 +110,7 @@ public class AssigneTask extends javax.swing.JFrame {
             model.addColumn("Point");
             model.addColumn("Deadline");
             model.addColumn("Status");
+            model.addColumn("Action");
             model.addColumn("ID");
 //
             while (rs.next()) {
@@ -119,6 +120,7 @@ public class AssigneTask extends javax.swing.JFrame {
                     rs.getInt("point"),
                     rs.getDate("deadline"),
                     rs.getString("status_name"),
+                    "Detail",
                     rs.getInt("id")
                 });
             }
@@ -127,9 +129,9 @@ public class AssigneTask extends javax.swing.JFrame {
             taskTable1.setModel(model);
 
             // Sembunyikan kolom terakhir (Task ID)
-            taskTable1.getColumnModel().getColumn(5).setMinWidth(0);
-            taskTable1.getColumnModel().getColumn(5).setMaxWidth(0);
-            taskTable1.getColumnModel().getColumn(5).setWidth(0);
+            taskTable1.getColumnModel().getColumn(6).setMinWidth(0);
+            taskTable1.getColumnModel().getColumn(6).setMaxWidth(0);
+            taskTable1.getColumnModel().getColumn(6).setWidth(0);
 
             // Atur warna teks semua sel
             taskTable1.setForeground(Color.BLACK);
@@ -201,10 +203,10 @@ public class AssigneTask extends javax.swing.JFrame {
                     int row = taskTable1.rowAtPoint(e.getPoint());
                     int col = taskTable1.columnAtPoint(e.getPoint());
 
-                    if (col == 4) { // kolom status
+                    if (col == 5) { // kolom status
 //                        String status = taskTable1.getValueAt(row, col).toString();
 //                        if (status.equalsIgnoreCase("under review")) {
-                            int taskId = Integer.parseInt(taskTable1.getValueAt(row, 5).toString());
+                            int taskId = Integer.parseInt(taskTable1.getValueAt(row, 6).toString());
                             hideSelf();
                             new DetailTask(taskId, assigneeId).setVisible(true);
 //                        }
