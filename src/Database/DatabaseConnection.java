@@ -14,12 +14,12 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/arasaka";
     //iki gonane tsabit
-    private static final String USER = "bibd";
-    private static final String PASS = "rawrbibd";
+//    private static final String USER = "bibd";
+//    private static final String PASS = "rawrbibd";
     
     //iki gonane arek arek
-//      private static final String USER = "root";
-//      private static final String PASS = "";
+      private static final String USER = "root";
+      private static final String PASS = "";
 
     public static Connection getConnection() {
     try {
