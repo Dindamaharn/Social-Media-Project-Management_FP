@@ -90,7 +90,7 @@ public class AssigneTask extends javax.swing.JFrame {
                                            JOIN assignees a ON t.assignees_id = a.id
                                            JOIN admins adm ON t.admins_id = adm.id
                                            LEFT JOIN latest_status ls ON ls.tasks_id = t.id AND ls.rn = 1
-                                           WHERE t.id = ?
+                                           WHERE t.assignees_id = ?
                                        ORDER BY t.id ASC;
                   """;
 //"SELECT id, name, 'desc' , point, deadline FROM tasks WHERE assignees_id = ?";

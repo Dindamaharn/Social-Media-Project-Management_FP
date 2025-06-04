@@ -5,6 +5,7 @@
 package User;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,12 @@ import java.time.LocalDateTime;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.sql.Timestamp;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
 
 /**
  *
@@ -23,7 +30,7 @@ public class DetailTask extends javax.swing.JFrame {
     /**
      * Creates new form DetailTask
      */
-    int taskId = 0;
+    private int taskId;
     private int assigneeId;
 
     public DetailTask(int taskId, int assigneeId) {
@@ -544,7 +551,7 @@ public class DetailTask extends javax.swing.JFrame {
 
     private void btnOnProgressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOnProgressActionPerformed
         btnTodo.setSelected(false);
-        updateTaskStatus("onprogress");
+        updateTaskStatus("ongoing");
         btnOnProgress.setSelected(true);
         btnUnderReview.setSelected(false);
 //        btnDone.setSelected(false);        // TODO add your handling code here:
@@ -567,19 +574,31 @@ public class DetailTask extends javax.swing.JFrame {
                 return;
             }
 
-            // 2. Upload image path to server atau copy ke local folder
-            
-            uploadImageToDatabase(fileToUpload.getAbsolutePath()); // Method yang kamu buat sendiri
-            // 3. Update status tugas
-            updateTaskStatus("under review");
+            // Buat nama file unik
+            String extension = fileName.substring(fileName.lastIndexOf("."));
+            String newFileName = "task_" + taskId + "_" + System.currentTimeMillis() + extension;
 
-            // 4. Update status UI button
-            btnTodo.setSelected(false);
-            btnOnProgress.setSelected(false);
-            btnUnderReview.setSelected(true);
-//            btnDone.setSelected(false);
+            // Path tujuan penyimpanan di local
+            Path destinationPath = Paths.get("src/Images/uploads/" + newFileName);
+            try {
+                Files.copy(fileToUpload.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
 
-            JOptionPane.showMessageDialog(this, "Task status updated to 'Under Review' with uploaded image.");
+                // Simpan nama file ke database (bukan full path)
+                updateTaskImageInDatabase(newFileName);
+
+                // Update status
+                updateTaskStatus("under review");
+
+                // Update tampilan UI
+                btnTodo.setSelected(false);
+                btnOnProgress.setSelected(false);
+                btnUnderReview.setSelected(true);
+
+                JOptionPane.showMessageDialog(this, "Task updated to 'Under Review' and image uploaded.");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Failed to upload image: " + e.getMessage());
+                e.printStackTrace();
+            }
         } else {
             // Jika user membatalkan upload
             JOptionPane.showMessageDialog(this, "Upload canceled. Task status not updated.", "Canceled", JOptionPane.WARNING_MESSAGE);
@@ -587,45 +606,65 @@ public class DetailTask extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUnderReviewActionPerformed
 
     private void updateTaskStatus(String status) {
-        try {
+         try {
             Connection conn = Database.DatabaseConnection.getConnection();
-            String sql = """
-                        INSERT INTO `status_tracks`( `tasks_id`, `status`, `created_at`, `updated_at`) VALUES ( ?,?,?,?)
-                         """;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, taskId);
-            stmt.setString(2, status);
-            stmt.setString(3, LocalDateTime.now().toString());
-            stmt.setString(4, LocalDateTime.now().toString());
-            stmt.executeUpdate();
-//            this.rs = stmt.executeQuery();
-            this.fetchTaskData();
+            String checkSql = """
+                SELECT id FROM status_tracks 
+                WHERE tasks_id = ? 
+                ORDER BY created_at DESC 
+                LIMIT 1
+            """;
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setInt(1, taskId);
+            ResultSet rs = checkStmt.executeQuery();
 
+            if (rs.next()) {
+                
+                int latestId = rs.getInt("id");
+                String updateSql = """
+                    UPDATE status_tracks 
+                    SET status = ?, updated_at = ? 
+                    WHERE id = ?
+                """;
+                PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+                updateStmt.setString(1, status);
+                updateStmt.setString(2, LocalDateTime.now().toString());
+                updateStmt.setInt(3, latestId);
+                updateStmt.executeUpdate();
+            } else {
+                
+                String insertSql = """
+                    INSERT INTO status_tracks (tasks_id, status, updated_at) 
+                    VALUES (?, ?, ?)
+                """;
+                PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+                insertStmt.setInt(1, taskId);
+                insertStmt.setString(2, status);
+                insertStmt.setString(3, LocalDateTime.now().toString());
+                insertStmt.executeUpdate();
+            }
+
+            this.fetchTaskData();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error updating status: " + e.getMessage());
             e.printStackTrace();
         }
     }
     
-    private void uploadImageToDatabase(String absolutePath) {
-          try {
+    private void updateTaskImageInDatabase(String imageFileName) {
+        try {
             Connection conn = Database.DatabaseConnection.getConnection();
-            String sql = """
-                        INSERT INTO `task_details`( `tasks_id`, `image_path`, `created_at`) VALUES ( ?,?,?)
-                         """;
+            String sql = "UPDATE tasks SET image = ?, updated_at = ? WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, taskId);
-            stmt.setString(2, absolutePath);
-            stmt.setString(3, LocalDateTime.now().toString());
+            stmt.setString(1, imageFileName); // hanya nama file
+            stmt.setString(2, LocalDateTime.now().toString());
+            stmt.setInt(3, taskId);
             stmt.executeUpdate();
-//            this.rs = stmt.executeQuery();
-//            this.fetchTaskData();
-
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error saving image info: " + e.getMessage());
             e.printStackTrace();
         }
-    }
+}
 
     ResultSet rs;
 
