@@ -78,8 +78,9 @@ public class CRUDUser extends javax.swing.JFrame {
         String query = """
                     SELECT a.id, a.name, a.email, COALESCE(SUM(t.point), 0) AS point
                     FROM assignees a
-                    LEFT JOIN tasks t ON a.id = t.assignees_id
-                    LEFT JOIN status_tracks st ON t.id = st.tasks_id AND st.status = 'completed'
+                    LEFT JOIN (SELECT t.assignees_id, t.point FROM tasks t
+                            INNER JOIN status_tracks st ON t.id = st.tasks_id
+                            WHERE st.status = 'completed') AS t ON a.id = t.assignees_id
                     GROUP BY a.id, a.name, a.email
                 """;
 
