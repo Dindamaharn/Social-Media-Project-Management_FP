@@ -55,12 +55,16 @@ private int adminId;
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
         txtConfirmPassword = new javax.swing.JPasswordField();
         txtPassword = new javax.swing.JPasswordField();
         saveButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
         SidebarPanel1 = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -73,42 +77,37 @@ private int adminId;
         TxtProjectManagement = new javax.swing.JLabel();
         LogoArasaka = new javax.swing.JLabel();
         TxtUser = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(50, 103, 177));
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(247, 210, 50));
+        jPanel2.setBackground(new java.awt.Color(214, 201, 197));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(50, 103, 177));
-        jLabel1.setText("ADD USER");
-
-        txtEmail.setText("Email");
         txtEmail.setPreferredSize(new java.awt.Dimension(300, 35));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
             }
         });
+        jPanel2.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 179, 993, 30));
 
-        txtName.setText("Full name");
         txtName.setPreferredSize(new java.awt.Dimension(300, 35));
         txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNameActionPerformed(evt);
             }
         });
+        jPanel2.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 82, 993, 30));
+        jPanel2.add(txtConfirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 363, 993, 30));
+        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 271, 993, 30));
 
-        txtConfirmPassword.setText("jPasswordField1");
-
-        txtPassword.setText("jPasswordField1");
-
-        saveButton.setBackground(new java.awt.Color(50, 103, 177));
+        saveButton.setBackground(new java.awt.Color(12, 44, 71));
         saveButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        saveButton.setForeground(new java.awt.Color(247, 210, 50));
+        saveButton.setForeground(new java.awt.Color(255, 255, 255));
         saveButton.setText("Save");
         saveButton.setBorderPainted(false);
         saveButton.setOpaque(true);
@@ -117,45 +116,35 @@ private int adminId;
                 saveButtonActionPerformed(evt);
             }
         });
+        jPanel2.add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(895, 530, 150, 40));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(93, 93, 93))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(13, 13, 13)
-                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Username");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 38, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, 480, 360));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setText("Email");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 135, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel4.setText("Password");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 227, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setText("Confirm Password");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 319, -1, -1));
+
+        btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(12, 44, 71));
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 530, 150, 40));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 1080, 605));
 
         SidebarPanel1.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel1.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -308,6 +297,10 @@ private int adminId;
 
         jPanel1.add(SidebarPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 770));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("ADD USER");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 32, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -356,7 +349,8 @@ private int adminId;
         int rowsInserted = stmt.executeUpdate();
         if (rowsInserted > 0) {
             JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
-            // Kosongkan form kalau perlu
+            this.dispose();
+            new CRUDUser(adminId).setVisible(true);// Kosongkan form kalau perlu
         } else {
             JOptionPane.showMessageDialog(this, "Gagal menambahkan data.");
         }
@@ -402,6 +396,11 @@ private int adminId;
         this.dispose();
     }//GEN-LAST:event_TxtUserMouseClicked
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.dispose(); // Menutup form EditUser
+        new CRUDUser(adminId).setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -430,7 +429,12 @@ private int adminId;
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton saveButton;
