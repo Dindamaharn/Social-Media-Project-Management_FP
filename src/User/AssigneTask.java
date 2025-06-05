@@ -36,7 +36,7 @@ public class AssigneTask extends javax.swing.JFrame {
         this.assigneeId = assigneeId;
         initComponents();
         fetchUserName(); // Ambil nama user berdasarkan userId
-        welcomeLabel.setText("Welcome, " + userName);
+        welcomeLabel.setText("Welcome, " + userName + " In Below is Your Tasks List");
         loadTaskData();  // Ganti ini dari loadTaskData(userId) menjadi loadTaskData()
         setupMenuHoverEffect();
     }
@@ -105,7 +105,7 @@ public class AssigneTask extends javax.swing.JFrame {
                 }
             };
 
-            model.addColumn("NAME");
+            model.addColumn("Task Name");
             model.addColumn("Description");
             model.addColumn("Point");
             model.addColumn("Deadline");
@@ -213,6 +213,44 @@ public class AssigneTask extends javax.swing.JFrame {
                     }
                 }
             });
+            
+            // Atur renderer khusus untuk kolom "Detail"
+        taskTable1.getColumnModel().getColumn(5).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+            JLabel label = new JLabel(value != null ? value.toString() : "", SwingConstants.CENTER);
+            label.setFont(new Font("Segoe UI", Font.BOLD, 14));  // Bold
+            label.setOpaque(true);
+
+            if (isSelected) {
+                label.setBackground(table.getSelectionBackground());
+                label.setForeground(table.getSelectionForeground());
+            } else {
+                label.setBackground(row % 2 == 0 ? new Color(245, 245, 245) : new Color(230, 230, 230));
+                label.setForeground(Color.BLUE.darker());
+            }
+
+            return label;
+             }
+        });
+
+
+        // Ubah kursor menjadi tangan saat hover kolom "Detail"
+        taskTable1.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                int row = taskTable1.rowAtPoint(e.getPoint());
+                int col = taskTable1.columnAtPoint(e.getPoint());
+
+        if (col == 5 && row >= 0) {
+            taskTable1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        } else {
+            taskTable1.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+        }
+        });
+
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error loading tasks: " + e.getMessage());
@@ -472,6 +510,7 @@ public class AssigneTask extends javax.swing.JFrame {
                 .addGap(63, 63, 63))
         );
 
+        welcomeLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         welcomeLabel.setText("jLabel1");
 
         taskTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -501,24 +540,20 @@ public class AssigneTask extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(831, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1111, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 802, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1036, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(28, 28, 28)
                 .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

@@ -3,7 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Admin;
+
+import java.io.File;
 import javax.swing.JOptionPane;
+import Database.DatabaseConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.sql.Statement;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 /**
  *
  * @author dinda
@@ -24,6 +42,8 @@ public class ReviewTask extends javax.swing.JFrame {
         setupSidebarLabel(TxtProject);
         setupSidebarLabel(TxtTask);
         setupSidebarLabel(TxtLogout);
+        
+        loadTaskUnderReview(taskId);
     }
 
     // Method untuk mengatur efek hover dan kursor label sidebar agar tidak mengulang kode
@@ -41,6 +61,98 @@ public class ReviewTask extends javax.swing.JFrame {
         });
     }
     
+    //method load data
+    public void loadTaskUnderReview(int taskId) {
+    try {
+        Connection conn = DatabaseConnection.getConnection();
+        String query = "SELECT t.name AS task_name, t.deadline, t.point, t.image, t.comment, " +
+                       "p.name AS project_name, a.name AS assignee_name, s.status " +
+                       "FROM tasks t " +
+                       "JOIN projects p ON t.projects_id = p.id " +
+                       "JOIN assignees a ON t.assignees_id = a.id " +
+                       "JOIN (SELECT tasks_id, status FROM status_tracks WHERE status = 'under review' ORDER BY created_at DESC) s " +
+                       "ON t.id = s.tasks_id " +
+                       "WHERE t.id = ? LIMIT 1";
+
+        PreparedStatement pst = conn.prepareStatement(query);
+        pst.setLong(1, taskId);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+        FieldTaskName.setText(rs.getString("task_name"));
+        FieldDeadline.setText(rs.getString("deadline"));
+        FieldPoint.setText(String.valueOf(rs.getInt("point")));
+
+        String imageFileName = rs.getString("image");
+        String imagePath = "src" + File.separator + "Images" + File.separator + "uploads" + File.separator + imageFileName;
+
+        System.out.println("Image path: " + imagePath);
+
+        File imgFile = new File(imagePath);
+        System.out.println("Absolute path: " + imgFile.getAbsolutePath());
+        System.out.println("File exists: " + imgFile.exists());
+    
+ 
+        if (imgFile.exists()) {
+            ImageIcon icon = new ImageIcon(imagePath);
+            Image img = icon.getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH);
+            LabelImagePreview.setIcon(new ImageIcon(img));
+        } else {
+            System.out.println("Gambar tidak ditemukan di path: " + imagePath);
+            LabelImagePreview.setIcon(null);
+        }
+
+        FieldImages.setText(imagePath);
+
+        FieldProjectName.setText(rs.getString("project_name"));
+        FieldAssignee.setText(rs.getString("assignee_name"));
+        FieldStatus.setText(rs.getString("status"));
+        } else {
+            JOptionPane.showMessageDialog(null, "Task dengan status 'under review' tidak ditemukan.");
+        }
+
+        rs.close();
+        pst.close();
+        conn.close();
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error saat mengambil data task: " + e.getMessage());
+    }
+    }
+    
+    //method konfimasi status
+    private void updateTaskStatus(int taskId, String newStatus) {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+
+    try {
+        conn = DatabaseConnection.getConnection();
+        String sql = "UPDATE status_tracks SET status = ? WHERE tasks_id = ?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, newStatus);
+        stmt.setInt(2, taskId);
+
+        int rowsUpdated = stmt.executeUpdate();
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(null, "Status task berhasil diupdate menjadi: " + newStatus);
+        } else {
+            JOptionPane.showMessageDialog(null, "Gagal mengupdate status task.");
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error saat update status: " + ex.getMessage());
+    } finally {
+        try {
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,6 +174,25 @@ public class ReviewTask extends javax.swing.JFrame {
         TxtProjectManagement = new javax.swing.JLabel();
         LogoArasaka = new javax.swing.JLabel();
         TxtUser = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        BtnAccept = new javax.swing.JButton();
+        TxtProjectName1 = new javax.swing.JLabel();
+        TxtTaskName = new javax.swing.JLabel();
+        TxtDeadline = new javax.swing.JLabel();
+        TxtPoint = new javax.swing.JLabel();
+        TxtStatus = new javax.swing.JLabel();
+        TxtAssignee = new javax.swing.JLabel();
+        BtnCancel = new javax.swing.JButton();
+        FieldAssignee = new javax.swing.JTextField();
+        FieldStatus = new javax.swing.JTextField();
+        FieldProjectName = new javax.swing.JTextField();
+        FieldDeadline = new javax.swing.JTextField();
+        FieldTaskName = new javax.swing.JTextField();
+        FieldPoint = new javax.swing.JTextField();
+        TxtStatus1 = new javax.swing.JLabel();
+        LabelImagePreview = new javax.swing.JLabel();
+        FieldImages = new javax.swing.JTextField();
+        Task = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -207,12 +338,217 @@ public class ReviewTask extends javax.swing.JFrame {
                 .addComponent(TxtProject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
                 .addComponent(LineSidebar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TxtLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
+
+        jPanel2.setBackground(new java.awt.Color(214, 201, 197));
+        jPanel2.setForeground(new java.awt.Color(12, 44, 71));
+        jPanel2.setPreferredSize(new java.awt.Dimension(972, 631));
+
+        BtnAccept.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        BtnAccept.setText("Accept");
+        BtnAccept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAcceptActionPerformed(evt);
+            }
+        });
+
+        TxtProjectName1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtProjectName1.setText("Project Name");
+
+        TxtTaskName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtTaskName.setText("Task Name");
+
+        TxtDeadline.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtDeadline.setText("Deadline");
+
+        TxtPoint.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtPoint.setText("Point");
+
+        TxtStatus.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtStatus.setText("Images");
+
+        TxtAssignee.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtAssignee.setText("Assignee");
+
+        BtnCancel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        BtnCancel.setText("Cancel");
+        BtnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCancelActionPerformed(evt);
+            }
+        });
+
+        FieldAssignee.setEditable(false);
+        FieldAssignee.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldAssignee.setText("Assignee Name Here");
+        FieldAssignee.setPreferredSize(new java.awt.Dimension(105, 30));
+        FieldAssignee.setRequestFocusEnabled(false);
+        FieldAssignee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldAssigneeActionPerformed(evt);
+            }
+        });
+
+        FieldStatus.setEditable(false);
+        FieldStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldStatus.setText("Status Here");
+        FieldStatus.setPreferredSize(new java.awt.Dimension(105, 30));
+        FieldStatus.setRequestFocusEnabled(false);
+        FieldStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldStatusActionPerformed(evt);
+            }
+        });
+
+        FieldProjectName.setEditable(false);
+        FieldProjectName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldProjectName.setText("Project Name Here");
+        FieldProjectName.setPreferredSize(new java.awt.Dimension(105, 30));
+        FieldProjectName.setRequestFocusEnabled(false);
+        FieldProjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldProjectNameActionPerformed(evt);
+            }
+        });
+
+        FieldDeadline.setEditable(false);
+        FieldDeadline.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldDeadline.setText("Deadline Here");
+        FieldDeadline.setPreferredSize(new java.awt.Dimension(105, 30));
+        FieldDeadline.setRequestFocusEnabled(false);
+        FieldDeadline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldDeadlineActionPerformed(evt);
+            }
+        });
+
+        FieldTaskName.setEditable(false);
+        FieldTaskName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldTaskName.setText("Task Name Here");
+        FieldTaskName.setPreferredSize(new java.awt.Dimension(105, 30));
+        FieldTaskName.setRequestFocusEnabled(false);
+        FieldTaskName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldTaskNameActionPerformed(evt);
+            }
+        });
+
+        FieldPoint.setEditable(false);
+        FieldPoint.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldPoint.setText("Point Here");
+        FieldPoint.setPreferredSize(new java.awt.Dimension(105, 30));
+        FieldPoint.setRequestFocusEnabled(false);
+        FieldPoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldPointActionPerformed(evt);
+            }
+        });
+
+        TxtStatus1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TxtStatus1.setText("Status");
+
+        FieldImages.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FieldImages.setText("Task Name Here");
+        FieldImages.setPreferredSize(new java.awt.Dimension(105, 30));
+        FieldImages.setRequestFocusEnabled(false);
+        FieldImages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldImagesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtProjectName1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(FieldTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtDeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(FieldDeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(FieldAssignee, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtAssignee, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(124, 124, 124)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(FieldImages, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(FieldPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(TxtPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(FieldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(TxtStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(LabelImagePreview, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(161, 161, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(BtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtProjectName1)
+                    .addComponent(TxtPoint))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FieldProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FieldPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtTaskName, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(TxtStatus1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FieldTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FieldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtDeadline)
+                    .addComponent(TxtStatus))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FieldDeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FieldImages, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(210, 210, 210)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(BtnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(TxtAssignee)
+                                .addGap(18, 18, 18)
+                                .addComponent(FieldAssignee, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(LabelImagePreview, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64))))
+        );
+
+        Task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Task.setForeground(new java.awt.Color(12, 44, 71));
+        Task.setText("REVIEW TASK");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -220,11 +556,21 @@ public class ReviewTask extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidebarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1146, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Task)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1035, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SidebarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(Task)
+                .addGap(26, 26, 26)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,6 +613,43 @@ public class ReviewTask extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_TxtUserMouseClicked
 
+    private void BtnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAcceptActionPerformed
+     updateTaskStatus(taskId, "completed");
+     this.dispose();
+    }//GEN-LAST:event_BtnAcceptActionPerformed
+
+    private void BtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_BtnCancelActionPerformed
+
+    private void FieldAssigneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldAssigneeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldAssigneeActionPerformed
+
+    private void FieldStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldStatusActionPerformed
+
+    private void FieldProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldProjectNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldProjectNameActionPerformed
+
+    private void FieldDeadlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldDeadlineActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldDeadlineActionPerformed
+
+    private void FieldTaskNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldTaskNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldTaskNameActionPerformed
+
+    private void FieldPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldPointActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldPointActionPerformed
+
+    private void FieldImagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldImagesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldImagesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -283,17 +666,36 @@ public class ReviewTask extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAccept;
+    private javax.swing.JButton BtnCancel;
+    private javax.swing.JTextField FieldAssignee;
+    private javax.swing.JTextField FieldDeadline;
+    private javax.swing.JTextField FieldImages;
+    private javax.swing.JTextField FieldPoint;
+    private javax.swing.JTextField FieldProjectName;
+    private javax.swing.JTextField FieldStatus;
+    private javax.swing.JTextField FieldTaskName;
+    private javax.swing.JLabel LabelImagePreview;
     private javax.swing.JSeparator LineSidebar2;
     private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel SidebarPanel1;
+    private javax.swing.JLabel Task;
     private javax.swing.JLabel TxtArasaka;
+    private javax.swing.JLabel TxtAssignee;
     private javax.swing.JLabel TxtDashboard;
+    private javax.swing.JLabel TxtDeadline;
     private javax.swing.JLabel TxtLogout;
+    private javax.swing.JLabel TxtPoint;
     private javax.swing.JLabel TxtProject;
     private javax.swing.JLabel TxtProjectManagement;
+    private javax.swing.JLabel TxtProjectName1;
     private javax.swing.JLabel TxtSocialMedia;
+    private javax.swing.JLabel TxtStatus;
+    private javax.swing.JLabel TxtStatus1;
     private javax.swing.JLabel TxtTask;
+    private javax.swing.JLabel TxtTaskName;
     private javax.swing.JLabel TxtUser;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
