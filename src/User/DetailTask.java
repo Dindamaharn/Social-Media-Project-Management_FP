@@ -37,6 +37,8 @@ public class DetailTask extends javax.swing.JFrame {
         this.taskId = taskId;
         this.assigneeId = assigneeId;
         initComponents();
+        
+        setLocationRelativeTo(null);
 
         //TxtDahboard
         TxtDashboard.setOpaque(true);

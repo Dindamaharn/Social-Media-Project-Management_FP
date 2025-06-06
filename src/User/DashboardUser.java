@@ -31,7 +31,7 @@ public class DashboardUser extends JFrame {
         setSize(1366, 768);
         setLayout(new BorderLayout());
         initComponents();
-        
+        setLocationRelativeTo(null);
         
         activityPanel.setLayout(new BoxLayout(activityPanel, BoxLayout.Y_AXIS));
         activityPanel.setBorder(new EmptyBorder(10, 10, 150, 10)); // top, left, bottom, right

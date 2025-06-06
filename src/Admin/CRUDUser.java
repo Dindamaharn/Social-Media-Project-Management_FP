@@ -34,6 +34,8 @@ public class CRUDUser extends javax.swing.JFrame {
         this.adminId = adminId;
         initComponents();
         
+        setLocationRelativeTo(null);
+        
         setupSidebarLabel(TxtDashboard);
         setupSidebarLabel(TxtUser);
         setupSidebarLabel(TxtProject);
@@ -71,6 +73,36 @@ public class CRUDUser extends javax.swing.JFrame {
         TblUser.setRowHeight(40);
         TblUser.getColumn("Action").setCellRenderer(new ButtonRenderer());
         TblUser.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
+        
+        // Atur model dan tinggi baris
+        TblUser.setModel(model);
+        TblUser.setRowHeight(40);
+
+        // Styling header tabel
+        JTableHeader header = TblUser.getTableHeader();
+        header.setPreferredSize(new Dimension(header.getPreferredSize().width, 40));
+        header.setFont(header.getFont().deriveFont(Font.BOLD, 14f));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Custom renderer dan editor
+        TblUser.getColumn("Action").setCellRenderer(new ButtonRenderer());
+        TblUser.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
+
+        // Kursor tangan di kolom aksi
+        TblUser.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseMoved(MouseEvent e) {
+                int column = TblUser.columnAtPoint(e.getPoint());
+                    if (column == 3) {
+                        TblUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    } else {
+                        TblUser.setCursor(Cursor.getDefaultCursor());
+                    }
+            }
+        });
+
+        // Warna baris terpilih
+        TblUser.setSelectionBackground(new Color(171, 203, 202));
+
     }
     
     private void loadDataToTable() {
@@ -106,6 +138,7 @@ public class CRUDUser extends javax.swing.JFrame {
     private void openEditForm(int userId, int adminId) {
         EditUser editUser = new EditUser(userId, this.adminId);
         editUser.setVisible(true);
+        dispose(); 
         // TODO: ganti dengan form edit asli
         // new EditUserForm(id).setVisible(true);
     }
@@ -135,15 +168,39 @@ public class CRUDUser extends javax.swing.JFrame {
         public ButtonRenderer() {
             setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
             editButton.setPreferredSize(new Dimension(70, 30));
-            deleteButton.setPreferredSize(new Dimension(80, 30));
+            deleteButton.setPreferredSize(new Dimension(70, 30));
+            
+            // Styling tombol
+        styleButton(editButton, new Color(30, 144, 255));
+        styleButton(deleteButton, new Color(220, 20, 60));
             add(editButton);
             add(deleteButton);
+            
         }
         
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int col) {
-            return this;
+        private void styleButton(JButton button, Color bg) {
+        button.setBackground(bg);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+        button.setFont(button.getFont().deriveFont(Font.BOLD));
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                                                   boolean isSelected, boolean hasFocus,
+                                                   int row, int column) {
+        Color background;
+        if (isSelected) {
+            background = new Color(171, 203, 202);
+        } else {
+            background = (row % 2 == 0) ? table.getBackground() : new Color(240, 240, 240);
         }
+        setBackground(background);
+        return this;
+    }
     }
     
     // Editor tombol
@@ -156,8 +213,13 @@ class ButtonEditor extends DefaultCellEditor {
 
     public ButtonEditor(JCheckBox checkBox) {
         super(checkBox);
+
         editButton.setPreferredSize(new Dimension(70, 30));
         deleteButton.setPreferredSize(new Dimension(80, 30));
+
+        styleButton(editButton, new Color(30, 144, 255));
+        styleButton(deleteButton, new Color(220, 20, 60));
+
         panel.add(editButton);
         panel.add(deleteButton);
 
@@ -172,6 +234,16 @@ class ButtonEditor extends DefaultCellEditor {
         });
     }
 
+    private void styleButton(JButton button, Color bg) {
+        button.setBackground(bg);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+        button.setFont(button.getFont().deriveFont(Font.BOLD));
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value,
                                                  boolean isSelected, int row, int column) {
@@ -180,6 +252,13 @@ class ButtonEditor extends DefaultCellEditor {
             String[] parts = val.split("\\|");
             selectedId = Integer.parseInt(parts[1]);
         }
+
+        // Samakan warna editor dengan baris (ganjil/genap)
+        Color bg = (row % 2 == 0) ? table.getBackground() : new Color(240, 240, 240);
+        if (table.getSelectedRow() == row) {
+            bg = new Color(171, 203, 202);
+        }
+        panel.setBackground(bg);
         return panel;
     }
 
@@ -213,6 +292,8 @@ class ButtonEditor extends DefaultCellEditor {
         TxtProjectManagement = new javax.swing.JLabel();
         LogoArasaka = new javax.swing.JLabel();
         TxtUser = new javax.swing.JLabel();
+        Task = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -224,7 +305,7 @@ class ButtonEditor extends DefaultCellEditor {
                 BtnAddUserActionPerformed(evt);
             }
         });
-        getContentPane().add(BtnAddUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 40, 120, 36));
+        getContentPane().add(BtnAddUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 30, 120, 36));
 
         TblUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -247,7 +328,7 @@ class ButtonEditor extends DefaultCellEditor {
         });
         jScrollPane1.setViewportView(TblUser);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 1070, 520));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 1060, 640));
 
         SidebarPanel1.setBackground(new java.awt.Color(211, 211, 211));
         SidebarPanel1.setPreferredSize(new java.awt.Dimension(220, 420));
@@ -400,6 +481,24 @@ class ButtonEditor extends DefaultCellEditor {
 
         getContentPane().add(SidebarPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 770));
 
+        Task.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Task.setForeground(new java.awt.Color(12, 44, 71));
+        Task.setText("USER");
+        getContentPane().add(Task, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 770, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 0, 40, 770));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -466,6 +565,7 @@ class ButtonEditor extends DefaultCellEditor {
     private javax.swing.JSeparator LineSidebar3;
     private javax.swing.JLabel LogoArasaka;
     private javax.swing.JPanel SidebarPanel1;
+    private javax.swing.JLabel Task;
     private javax.swing.JTable TblUser;
     private javax.swing.JLabel TxtArasaka;
     private javax.swing.JLabel TxtDashboard;
@@ -475,6 +575,7 @@ class ButtonEditor extends DefaultCellEditor {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

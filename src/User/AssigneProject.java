@@ -115,7 +115,7 @@ public class AssigneProject extends JFrame {
         projectPanel.repaint();  
         
   
-        
+        setLocationRelativeTo(null);
     }
 
     /**

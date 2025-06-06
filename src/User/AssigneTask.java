@@ -39,6 +39,7 @@ public class AssigneTask extends javax.swing.JFrame {
         welcomeLabel.setText("Welcome, " + userName + " In Below is Your Tasks List");
         loadTaskData();  // Ganti ini dari loadTaskData(userId) menjadi loadTaskData()
         setupMenuHoverEffect();
+        setLocationRelativeTo(null);
     }
     
     private void hideSelf(){

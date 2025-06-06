@@ -12,6 +12,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.table.JTableHeader;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+
 
 /**
  *
@@ -27,6 +33,8 @@ public class DetailProject extends javax.swing.JFrame {
         this.adminId = adminId;
         this.projectId = projectId;
         initComponents();
+        
+        setLocationRelativeTo(null);
         
         loadProjectDetails(projectId);
         
@@ -110,6 +118,12 @@ public class DetailProject extends javax.swing.JFrame {
             }
 
 
+            // Styling header tabel
+            JTableHeader header = TblDetailProject.getTableHeader();
+            header.setPreferredSize(new Dimension(header.getPreferredSize().width, 40)); // Atur tinggi header
+            header.setFont(header.getFont().deriveFont(Font.BOLD)); // Buat tulisan tebal
+            ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER); // Rata tengah
+            
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error loading project details: " + e.getMessage());
             }
@@ -307,6 +321,7 @@ public class DetailProject extends javax.swing.JFrame {
         TxtProjectName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         TxtProjectName.setText("Project Name");
 
+        FieldProjectName.setEditable(false);
         FieldProjectName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         FieldProjectName.setText("Project Name Here");
         FieldProjectName.addActionListener(new java.awt.event.ActionListener() {
@@ -334,12 +349,14 @@ public class DetailProject extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        TblDetailProject.setRowHeight(40);
         jScrollPane2.setViewportView(TblDetailProject);
 
         TxtDescription.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         TxtDescription.setText("Description");
         TxtDescription.setToolTipText("");
 
+        AreaDesc.setEditable(false);
         AreaDesc.setColumns(20);
         AreaDesc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         AreaDesc.setRows(5);
@@ -378,8 +395,8 @@ public class DetailProject extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(53, 53, 53)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtProjectName)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtProjectName, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(TxtDescription))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -29,6 +29,7 @@ public class CRUDProject extends javax.swing.JFrame {
     public CRUDProject(int adminId) {
         this.adminId = adminId;
         initComponents();
+        setLocationRelativeTo(null);
         
         // Pengaturan efek hover dan kursor pada label sidebar
         setupSidebarLabel(TxtDashboard);
@@ -220,6 +221,7 @@ public class CRUDProject extends javax.swing.JFrame {
             if (label.equals("Details")) {
                 new DetailProject(adminId, projectId).setVisible(true);
             }
+            dispose(); 
         }
         clicked = false;
         return label;

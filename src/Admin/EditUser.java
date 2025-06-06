@@ -25,6 +25,7 @@ public class EditUser extends javax.swing.JFrame {
         this.adminId = adminId;
         this.userId = userId;
         loadUserData(); // untuk isi field dengan data lama
+        setLocationRelativeTo(null);
     }
     
     private void loadUserData() {

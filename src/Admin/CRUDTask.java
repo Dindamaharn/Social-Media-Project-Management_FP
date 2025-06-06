@@ -33,6 +33,7 @@ public class CRUDTask extends javax.swing.JFrame {
     public CRUDTask(int adminId) {
         this.adminId = adminId;
         initComponents();
+        setLocationRelativeTo(null);
         
         // Pengaturan efek hover dan kursor pada label sidebar
         setupSidebarLabel(TxtDashboard);
@@ -251,6 +252,7 @@ public class CRUDTask extends javax.swing.JFrame {
             if (status.equalsIgnoreCase("under review")) {
                 int taskId = Integer.parseInt(TabelCRUDTask.getValueAt(row, 7).toString());
                 new ReviewTask(adminId, taskId).setVisible(true);
+                dispose();
             }
         }
         }
@@ -343,6 +345,7 @@ public class CRUDTask extends javax.swing.JFrame {
             });
         
             editTaskWindow.setVisible(true);
+            dispose(); 
         }
         });
 

@@ -24,6 +24,7 @@ public class AddProject extends javax.swing.JFrame {
     public AddProject(int adminId) {
         this.adminId = adminId;
         initComponents();
+        setLocationRelativeTo(null);
         
         setupSidebarLabel(TxtDashboard);
         setupSidebarLabel(TxtUser);

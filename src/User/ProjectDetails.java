@@ -53,6 +53,7 @@ public class ProjectDetails extends javax.swing.JFrame {
         setLayout(new BorderLayout());
         
         initComponents();
+        setLocationRelativeTo(null);
         
         taskListPanel.setLayout(new BoxLayout(taskListPanel, BoxLayout.Y_AXIS));
         taskListPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); 

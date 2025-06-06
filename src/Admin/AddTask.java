@@ -33,6 +33,9 @@ public class AddTask extends javax.swing.JFrame {
     public AddTask(int adminId) {
         this.adminId = adminId;
         initComponents();
+        
+        setLocationRelativeTo(null);
+        
         loadComboBoxData();
         
         // Pengaturan efek hover dan kursor pada label sidebar
@@ -562,6 +565,8 @@ public class AddTask extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnSaveActionPerformed
 
     private void BtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelActionPerformed
+        CRUDTask task = new CRUDTask(adminId);
+        task.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnCancelActionPerformed
 

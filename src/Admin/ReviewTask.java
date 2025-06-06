@@ -36,6 +36,7 @@ public class ReviewTask extends javax.swing.JFrame {
         this.adminId = adminId;
         this.taskId = taskId;
         initComponents();
+        setLocationRelativeTo(null);
         
         // Pengaturan efek hover dan kursor pada label sidebar
         setupSidebarLabel(TxtDashboard);
@@ -615,6 +616,8 @@ public class ReviewTask extends javax.swing.JFrame {
 
     private void BtnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAcceptActionPerformed
      updateTaskStatus(taskId, "completed");
+     CRUDTask task = new CRUDTask(adminId);
+    task.setVisible(true);
      this.dispose();
     }//GEN-LAST:event_BtnAcceptActionPerformed
 

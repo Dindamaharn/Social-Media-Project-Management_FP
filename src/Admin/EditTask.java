@@ -35,6 +35,7 @@ private CRUDTask parentFrame;
     public EditTask(int adminId, int taskId, CRUDTask parent) {
         this.adminId = adminId;
         this.taskId = taskId;
+        this.parentFrame = parentFrame; 
         
         initComponents();
         setupSidebarLabel(TxtDashboard);
@@ -42,9 +43,11 @@ private CRUDTask parentFrame;
         setupSidebarLabel(TxtProject);
         setupSidebarLabel(TxtTask);
         setupSidebarLabel(TxtLogout);
+        setLocationRelativeTo(null);
         
-        loadComboData();
         loadTaskData();
+        loadComboData();
+        
     }
 
     //Method Sidebar
@@ -324,7 +327,6 @@ private CRUDTask parentFrame;
         TaskNameData.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TaskNameData.setText("Task Name Here");
         TaskNameData.setPreferredSize(new java.awt.Dimension(105, 30));
-        TaskNameData.setRequestFocusEnabled(false);
         TaskNameData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TaskNameDataActionPerformed(evt);
@@ -525,6 +527,8 @@ private CRUDTask parentFrame;
     }//GEN-LAST:event_TxtUserMouseClicked
 
     private void BtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelActionPerformed
+        CRUDTask task = new CRUDTask(adminId);
+        task.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnCancelActionPerformed
 
