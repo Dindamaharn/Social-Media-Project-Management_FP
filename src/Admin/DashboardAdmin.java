@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
+import javax.swing.table.TableCellRenderer;
 
 
 /**
@@ -27,7 +27,7 @@ import javax.swing.JTable;
 public class DashboardAdmin extends javax.swing.JFrame {
     private int adminId;
     private JPanel activityPanelDetails;
-    private JTable tableTopUser;
+//    private JTable tableTopUser;
     private DefaultTableModel topUserModel;
    
     /**
@@ -47,8 +47,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
         loadTaskSummary();
         loadProjectSummary(); // ← ini ditambahkan
         loadUserSummary();       // Tambahkan
-    loadTaskCount();         // Tambahkan
-     loadTopUserTable(); // ← Tambahkan ini
+        loadTaskCount();         // Tambahkan
+        loadTopUserTable(); // ← Tambahkan ini
+        loadOverdueTasks();
+        loadProjectData();
     }
     
     private void loadUserSummary() {
@@ -163,7 +165,83 @@ private void loadTopUserTable() {
     }
 }
 
+    private void loadOverdueTasks() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "SELECT t.id AS no, t.name AS task_name, p.name AS project_name " +
+                         "FROM tasks t " +
+                         "JOIN projects p ON t.projects_id = p.id " +
+                         "WHERE t.deadline < CURDATE()";
 
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            
+            DefaultTableModel overdueTaskModel = new DefaultTableModel();
+            overdueTaskModel.setColumnIdentifiers(new String[] {"No", "Task Name", "Project Name"});
+
+            int no = 1;
+            while (rs.next()) {
+                String taskName = rs.getString("task_name");
+                String projectName = rs.getString("project_name");
+                overdueTaskModel.addRow(new Object[]{no++, taskName, projectName});
+            }
+
+         
+            tableOverdueTask.setModel(overdueTaskModel);
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat data overdue tasks: " + e.getMessage());
+        }
+    }
+
+    private void loadProjectData() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "SELECT p.id AS project_id, p.name AS project_name, " +
+                         "       (SELECT COUNT(*) FROM status_tracks st " +
+                         "        WHERE st.tasks_id IN (SELECT t.id FROM tasks t WHERE t.projects_id = p.id) " +
+                         "        AND st.status = 'completed') AS completed_tasks, " +
+                         "       (SELECT COUNT(*) FROM tasks t WHERE t.projects_id = p.id) AS total_tasks " +
+                         "FROM projects p";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            DefaultTableModel projectModel = new DefaultTableModel();
+            projectModel.setColumnIdentifiers(new String[] {"No", "Project Name", "Progress", "Task Count"});       
+
+            int no = 1;
+            while (rs.next()) {
+                String projectName = rs.getString("project_name");
+                int completedTasks = rs.getInt("completed_tasks");
+                int totalTasks = rs.getInt("total_tasks");
+
+                double progress = (totalTasks == 0) ? 0 : (double) completedTasks / totalTasks * 100;
+                JProgressBar progressBar = new JProgressBar(0, 100);
+                progressBar.setValue((int) progress);
+                progressBar.setStringPainted(true);
+
+                projectModel.addRow(new Object[]{no++, projectName, progressBar, totalTasks});
+            }
+            tableAllUser.setModel(projectModel);
+
+            tableAllUser.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    return (JProgressBar) value;
+                }
+            });
+    
+            tableAllUser.getColumnModel().getColumn(2).setCellEditor(null);
+
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat data project: " + e.getMessage());
+        }
+}
       
 
     
@@ -235,7 +313,7 @@ private void loadTopUserTable() {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalUserLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addComponent(lblTotalUser)
                 .addGap(45, 45, 45))
             .addGroup(TotalUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,26 +436,26 @@ private void loadTopUserTable() {
 
         tableOverdueTask.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
         ));
         jScrollPane1.setViewportView(tableOverdueTask);
 
         tableTopUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
         ));
         jScrollPane4.setViewportView(tableTopUser);
@@ -397,12 +475,12 @@ private void loadTopUserTable() {
                         .addComponent(TotalTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(MainContentLayout.createSequentialGroup()
-                        .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(MainContentLayout.createSequentialGroup()
                                 .addGap(464, 464, 464)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3))
                         .addGap(0, 42, Short.MAX_VALUE))))
         );
         MainContentLayout.setVerticalGroup(
