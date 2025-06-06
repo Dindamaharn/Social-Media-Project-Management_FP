@@ -272,11 +272,12 @@ public class ProjectDetails extends javax.swing.JFrame {
                 
                 anonymousPanelDetailsUtama = new JPanel();
                 anonymousPanelDetailsUtama.setLayout(new BoxLayout(anonymousPanelDetailsUtama, BoxLayout.Y_AXIS));
-                anonymousPanelDetailsUtama.setBorder(new EmptyBorder(10, 10, 150, 10));  
-                anonymousPanelDetailsUtama.setPreferredSize(new Dimension(952, 260));
-                anonymousPanelDetailsUtama.setMaximumSize(new Dimension(952, 260));
-                anonymousPanelDetailsUtama.setMinimumSize(new Dimension(952, 260));
+                anonymousPanelDetailsUtama.setBorder(new EmptyBorder(10, 10, 10, 10));  
+                anonymousPanelDetailsUtama.setPreferredSize(new Dimension(952, 110));
+                anonymousPanelDetailsUtama.setMaximumSize(new Dimension(952, 40));
+                anonymousPanelDetailsUtama.setMinimumSize(new Dimension(952, 40));
                 anonymousPanelDetailsUtama.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+//                anonymousPanelDetailsUtama.setBackground(new Color(12,44,71)); 
                 anonymousPanelDetailsUtama.setOpaque(false);
                 
                 anonymousPanelDetails = new JPanel();
@@ -286,7 +287,7 @@ public class ProjectDetails extends javax.swing.JFrame {
                 anonymousPanelDetails.setMinimumSize(new Dimension(952, 40));
                 anonymousPanelDetails.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
                 anonymousPanelDetails.setOpaque(false);
-//                
+             
 
                 JPanel row = new JPanel(new GridLayout(1, 4));
                 row.setOpaque(false);
@@ -299,7 +300,8 @@ public class ProjectDetails extends javax.swing.JFrame {
 
                 JButton btn = new JButton("Details");
                 btn.addActionListener(e -> {
-//                    new UserTaskDetails(taskId).setVisible(true);
+                    new DetailTask(taskId, assigneeIdProjects).setVisible(true);
+                    this.dispose();
                 });
                 row.add(btn);
                 anonymousPanelDetails.add(row);
@@ -771,7 +773,7 @@ public class ProjectDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtLogoutMouseClicked
 
     private void TxtTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtTaskMouseClicked
-        AssigneTask task = new AssigneTask(assigneeId);
+        AssigneTask task = new AssigneTask(assigneeIdProjects);
         task.setVisible(true);
         this.dispose(); // Menutup form saat ini jika perlu
     }//GEN-LAST:event_TxtTaskMouseClicked
