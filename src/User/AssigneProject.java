@@ -494,10 +494,16 @@ public class AssigneProject extends JFrame {
             psTotal.close();
 
             String completedQuery = """
-                SELECT COUNT(*) AS completed 
-                FROM tasks t 
-                JOIN status_tracks s ON t.id = s.tasks_id 
-                WHERE t.projects_id = ? AND s.status = 'completed'
+                SELECT COUNT(*) AS completed
+                   FROM tasks t
+                   JOIN status_tracks s ON t.id = s.tasks_id
+                   WHERE t.projects_id = ?
+                     AND s.created_at = (
+                         SELECT MAX(st2.created_at)
+                         FROM status_tracks st2
+                         WHERE st2.tasks_id = t.id
+                     )
+                     AND s.status = 'completed'
             """;
             PreparedStatement psCompleted = conn.prepareStatement(completedQuery);
             psCompleted.setInt(1, projectId);

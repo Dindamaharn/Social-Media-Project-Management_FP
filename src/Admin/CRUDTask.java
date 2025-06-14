@@ -281,7 +281,7 @@ public class CRUDTask extends javax.swing.JFrame {
             deleteButton.setForeground(Color.WHITE);
             deleteButton.setFocusPainted(false);
             deleteButton.setBorderPainted(false);
-        
+            
             add(editButton);
             add(deleteButton);
         }

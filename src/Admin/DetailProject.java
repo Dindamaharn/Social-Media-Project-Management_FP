@@ -81,12 +81,12 @@ public class DetailProject extends javax.swing.JFrame {
                     SELECT a.name AS assignee_name,
                          SUM(CASE WHEN st.status = 'completed' THEN t.point ELSE 0 END) AS completed_point,
                             (
-                              SELECT COUNT(*) 
+                              SELECT COUNT(DISTINCT t2.id) 
                               FROM tasks t2 
                               WHERE t2.assignees_id = a.id AND t2.projects_id = ?
                             ) AS total_tasks,
                            (
-                              SELECT COUNT(*) 
+                              SELECT COUNT(DISTINCT t2.id) 
                               FROM tasks t2
                               JOIN status_tracks st2 ON t2.id = st2.tasks_id
                               WHERE t2.assignees_id = a.id AND t2.projects_id = ? AND st2.status = 'completed'
