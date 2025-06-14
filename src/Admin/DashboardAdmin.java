@@ -57,7 +57,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     
     private void loadUserSummary() {
     try (Connection conn = DatabaseConnection.getConnection()) {
-        String query = "SELECT COUNT(*) AS total FROM assignees"; // ganti 'users' sesuai nama tabel kamu
+        String query = "SELECT COUNT(*) AS total FROM assignees"; 
         PreparedStatement stmt = conn.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
@@ -73,7 +73,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     
     private void loadTaskCount() {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "SELECT COUNT(*) AS total FROM tasks"; // ganti 'task' sesuai nama tabel kamu
+            String query = "SELECT COUNT(*) AS total FROM tasks"; 
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -137,13 +137,20 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }
     
     private void loadTopUserTable() {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "SELECT assignees.name, SUM(tasks.point) AS total_point " +
-                     "FROM tasks " +
-                     "JOIN assignees ON tasks.assignees_id = assignees.id " +
-                     "GROUP BY assignees_id " +
-                     "ORDER BY total_point DESC " +
-                     "LIMIT 5";
+    try (Connection conn = DatabaseConnection.getConnection()) {
+        String sql = 
+            "WITH latest_status AS ( " +
+            "    SELECT st.tasks_id, st.status, ROW_NUMBER() OVER (PARTITION BY st.tasks_id ORDER BY st.updated_at DESC, st.id DESC) AS rn " +
+            "    FROM status_tracks st " +
+            ") " +
+            "SELECT a.name, SUM(t.point) AS total_point " +
+            "FROM tasks t " +
+            "JOIN assignees a ON t.assignees_id = a.id " +
+            "JOIN latest_status ls ON t.id = ls.tasks_id " +
+            "WHERE ls.rn = 1 AND ls.status = 'completed' " +
+            "GROUP BY a.id, a.name " +
+            "ORDER BY total_point DESC " +
+            "LIMIT 5";
 
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
@@ -166,7 +173,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Gagal memuat data top user: " + e.getMessage());
     }
-    }
+}
+
 
     private void loadOverdueTasks() {
         try (Connection conn = DatabaseConnection.getConnection()) {
@@ -199,52 +207,61 @@ public class DashboardAdmin extends javax.swing.JFrame {
         }
     }
 
-    private void loadProjectData() {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "SELECT p.id AS project_id, p.name AS project_name, " +
-                         "       (SELECT COUNT(*) FROM status_tracks st " +
-                         "        WHERE st.tasks_id IN (SELECT t.id FROM tasks t WHERE t.projects_id = p.id) " +
-                         "        AND st.status = 'completed') AS completed_tasks, " +
-                         "       (SELECT COUNT(*) FROM tasks t WHERE t.projects_id = p.id) AS total_tasks " +
-                         "FROM projects p";
+   private void loadProjectData() {
+    try (Connection conn = DatabaseConnection.getConnection()) {
+        String sql =
+            "WITH latest_status AS ( " +
+            "    SELECT st.tasks_id, st.status, " +
+            "           ROW_NUMBER() OVER (PARTITION BY st.tasks_id ORDER BY st.updated_at DESC, st.id DESC) AS rn " +
+            "    FROM status_tracks st " +
+            ") " +
+            "SELECT p.id AS project_id, p.name AS project_name, " +
+            "       COUNT(t.id) AS total_tasks, " +
+            "       COUNT(CASE WHEN ls.status = 'completed' THEN 1 END) AS completed_tasks " +
+            "FROM projects p " +
+            "LEFT JOIN tasks t ON t.projects_id = p.id " +
+            "LEFT JOIN latest_status ls ON t.id = ls.tasks_id AND ls.rn = 1 " +
+            "GROUP BY p.id, p.name";
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
 
-            DefaultTableModel projectModel = new DefaultTableModel();
-            projectModel.setColumnIdentifiers(new String[] {"No", "Project Name", "Progress", "Task Count"});       
+        DefaultTableModel projectModel = new DefaultTableModel();
+        projectModel.setColumnIdentifiers(new String[] {"No", "Project Name", "Progress", "Task Count"});
 
-            int no = 1;
-            while (rs.next()) {
-                String projectName = rs.getString("project_name");
-                int completedTasks = rs.getInt("completed_tasks");
-                int totalTasks = rs.getInt("total_tasks");
+        int no = 1;
+        while (rs.next()) {
+            String projectName = rs.getString("project_name");
+            int totalTasks = rs.getInt("total_tasks");
+            int completedTasks = rs.getInt("completed_tasks");
 
-                double progress = (totalTasks == 0) ? 0 : (double) completedTasks / totalTasks * 100;
-                JProgressBar progressBar = new JProgressBar(0, 100);
-                progressBar.setValue((int) progress);
-                progressBar.setStringPainted(true);
+            double progress = (totalTasks == 0) ? 0 : (double) completedTasks / totalTasks * 100;
+            JProgressBar progressBar = new JProgressBar(0, 100);
+            progressBar.setValue((int) progress);
+            progressBar.setStringPainted(true);
 
-                projectModel.addRow(new Object[]{no++, projectName, progressBar, totalTasks});
-            }
-            tableAllUser.setModel(projectModel);
-
-            tableAllUser.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    return (JProgressBar) value;
-                }
-            });
-    
-            tableAllUser.getColumnModel().getColumn(2).setCellEditor(null);
-
-
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Gagal memuat data project: " + e.getMessage());
+            projectModel.addRow(new Object[]{no++, projectName, progressBar, totalTasks});
         }
+
+        tableAllUser.setModel(projectModel);
+
+        // Custom renderer for JProgressBar in table
+        tableAllUser.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                return (JProgressBar) value;
+            }
+        });
+
+        tableAllUser.getColumnModel().getColumn(2).setCellEditor(null);
+
+        rs.close();
+        stmt.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Gagal memuat data project: " + e.getMessage());
     }
+}
+
       
     
     /**
@@ -467,7 +484,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("ALL USER");
+        jLabel16.setText("ALL PROJECT");
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));

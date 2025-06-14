@@ -332,22 +332,31 @@ public class CRUDTask extends javax.swing.JFrame {
 
             editButton.addActionListener(e -> {
             int row = table.getSelectedRow();
-            
-        if (row != -1) {
+
+            if (row != -1) {
+                String status = table.getValueAt(row, 5).toString(); // Kolom status
+                if (status.equalsIgnoreCase("completed")) {
+                    JOptionPane.showMessageDialog(null,
+                    "This task has been completed and cannot be edited.",
+                    "Edit Blocked",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             int taskId = Integer.parseInt(table.getValueAt(row, 7).toString());
             EditTask editTaskWindow = new EditTask(adminId, taskId, CRUDTask.this);
-        
+
             editTaskWindow.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
+                @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
-                loadTaskData(); // method di CRUDTask untuk refresh tabel
+                    loadTaskData(); // method di CRUDTask untuk refresh tabel
                 }
             });
-        
+
             editTaskWindow.setVisible(true);
-            dispose(); 
-        }
-        });
+            dispose();
+            }
+            });
 
         deleteButton.addActionListener(e -> {
             int row = table.getSelectedRow();

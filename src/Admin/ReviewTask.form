@@ -303,43 +303,40 @@
                   <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+                          <Component id="BtnCancel" min="-2" pref="94" max="-2" attributes="0"/>
+                          <EmptySpace pref="631" max="32767" attributes="0"/>
+                          <Component id="BtnDecline" min="-2" pref="111" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="FieldProjectName" min="-2" pref="306" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="FieldProjectName" min="-2" pref="306" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Component id="TxtProjectName1" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
+                              <Component id="TxtTaskName" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
+                              <Component id="FieldTaskName" min="-2" pref="306" max="-2" attributes="0"/>
+                              <Component id="TxtDeadline" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="FieldDeadline" alignment="0" min="-2" pref="306" max="-2" attributes="0"/>
+                              <Component id="FieldAssignee" alignment="0" min="-2" pref="306" max="-2" attributes="0"/>
+                              <Component id="TxtAssignee" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="TxtStatus" min="-2" pref="157" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="FieldImages" min="-2" pref="306" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="TxtProjectName1" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
-                                      <Component id="TxtTaskName" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
-                                      <Component id="FieldTaskName" min="-2" pref="306" max="-2" attributes="0"/>
-                                      <Component id="TxtDeadline" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <Component id="FieldDeadline" alignment="0" min="-2" pref="306" max="-2" attributes="0"/>
-                                      <Component id="FieldAssignee" alignment="0" min="-2" pref="306" max="-2" attributes="0"/>
-                                      <Component id="TxtAssignee" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="TxtStatus" min="-2" pref="157" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="FieldImages" min="-2" pref="306" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="FieldPoint" min="-2" pref="306" max="-2" attributes="0"/>
-                                              <Component id="TxtPoint" min="-2" pref="97" max="-2" attributes="0"/>
-                                              <Component id="FieldStatus" alignment="0" min="-2" pref="306" max="-2" attributes="0"/>
-                                              <Component id="TxtStatus1" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Component id="LabelImagePreview" min="-2" pref="397" max="-2" attributes="0"/>
+                                      <Component id="FieldPoint" min="-2" pref="306" max="-2" attributes="0"/>
+                                      <Component id="TxtPoint" min="-2" pref="97" max="-2" attributes="0"/>
+                                      <Component id="FieldStatus" alignment="0" min="-2" pref="306" max="-2" attributes="0"/>
+                                      <Component id="TxtStatus1" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Component id="LabelImagePreview" min="-2" pref="397" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="1019" pref="161" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="BtnCancel" min="-2" pref="94" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="BtnAccept" min="-2" pref="94" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <Component id="BtnAccept" min="-2" pref="94" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -378,27 +375,22 @@
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="BtnAccept" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                      <Component id="BtnCancel" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                  <Component id="TxtAssignee" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="FieldAssignee" min="-2" pref="39" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <Component id="TxtAssignee" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="FieldAssignee" min="-2" pref="39" max="-2" attributes="0"/>
+                          <EmptySpace pref="158" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace pref="18" max="32767" attributes="0"/>
                           <Component id="LabelImagePreview" min="-2" pref="199" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="BtnDecline" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="BtnAccept" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="BtnCancel" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -410,6 +402,9 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Accept"/>
           </Properties>
@@ -595,6 +590,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FieldImagesActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="BtnDecline">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="0" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Decline"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnDeclineActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

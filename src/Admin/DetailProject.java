@@ -78,25 +78,45 @@ public class DetailProject extends javax.swing.JFrame {
 
             // Ambil nama assignee, point, dan task completed
             String queryAssigneeTask = """
-                    SELECT a.name AS assignee_name,
-                         SUM(CASE WHEN st.status = 'completed' THEN t.point ELSE 0 END) AS completed_point,
-                            (
-                              SELECT COUNT(DISTINCT t2.id) 
-                              FROM tasks t2 
-                              WHERE t2.assignees_id = a.id AND t2.projects_id = ?
-                            ) AS total_tasks,
-                           (
-                              SELECT COUNT(DISTINCT t2.id) 
-                              FROM tasks t2
-                              JOIN status_tracks st2 ON t2.id = st2.tasks_id
-                              WHERE t2.assignees_id = a.id AND t2.projects_id = ? AND st2.status = 'completed'
-                            ) AS completed_tasks
-                    FROM assignees a
-                    JOIN tasks t ON a.id = t.assignees_id
-                    LEFT JOIN status_tracks st ON t.id = st.tasks_id AND st.status = 'completed'
-                    WHERE t.projects_id = ?
-                    GROUP BY a.id
-            """;
+                                        SELECT 
+                                        a.name AS assignee_name,
+                                        SUM(
+                                            CASE 
+                                                WHEN (
+                                                      SELECT st2.status 
+                                                      FROM status_tracks st2 
+                                                      WHERE st2.tasks_id = t.id 
+                                                      ORDER BY st2.created_at DESC 
+                                                      LIMIT 1
+                                                     ) = 'completed' 
+                                                THEN t.point 
+                                                ELSE 0 
+                                                END
+                                            ) AS completed_point,
+                                        (
+                                            SELECT COUNT(DISTINCT t2.id) 
+                                            FROM tasks t2 
+                                            WHERE t2.assignees_id = a.id AND t2.projects_id = ?
+                                        ) AS total_tasks,
+                                        (
+                                            SELECT COUNT(DISTINCT t2.id) 
+                                            FROM tasks t2
+                                            JOIN (
+                                                SELECT tasks_id, status 
+                                                FROM status_tracks st3 
+                                                WHERE (tasks_id, created_at) IN (
+                                                    SELECT tasks_id, MAX(created_at) 
+                                                    FROM status_tracks 
+                                                    GROUP BY tasks_id
+                                                    )
+                                                ) st2 ON t2.id = st2.tasks_id
+                                            WHERE t2.assignees_id = a.id AND t2.projects_id = ? AND st2.status = 'completed'
+                                        ) AS completed_tasks
+                                        FROM assignees a
+                                        JOIN tasks t ON a.id = t.assignees_id
+                                        WHERE t.projects_id = ?
+                                        GROUP BY a.id
+                                        """;
 
             PreparedStatement taskStmt = conn.prepareStatement(queryAssigneeTask);
             taskStmt.setInt(1, projectId); // for total_tasks subquery
@@ -477,6 +497,8 @@ public class DetailProject extends javax.swing.JFrame {
     }//GEN-LAST:event_FieldProjectNameActionPerformed
 
     private void BtnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackActionPerformed
+        CRUDProject project = new CRUDProject(adminId);
+        project.setVisible(true);
         this.dispose();       
     }//GEN-LAST:event_BtnBackActionPerformed
 

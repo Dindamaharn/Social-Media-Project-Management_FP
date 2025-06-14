@@ -65,7 +65,8 @@ public class EditProject extends javax.swing.JFrame {
         txtProjectName = new javax.swing.JTextField();
         Description = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
-        btnSave = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        btnSave1 = new javax.swing.JButton();
         SidebarPanel1 = new javax.swing.JPanel();
         TxtDashboard = new javax.swing.JLabel();
         TxtProject = new javax.swing.JLabel();
@@ -104,11 +105,19 @@ public class EditProject extends javax.swing.JFrame {
         txtDescription.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDescription.setText("Type Your Description Here");
 
-        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnSave1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSave1.setText("Save");
+        btnSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave1ActionPerformed(evt);
             }
         });
 
@@ -118,14 +127,18 @@ public class EditProject extends javax.swing.JFrame {
             MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainContentLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Description)
-                        .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ProjectName)
-                        .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Description)
+                    .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ProjectName)
+                    .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
+            .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
+                    .addContainerGap(842, Short.MAX_VALUE)
+                    .addComponent(btnSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(28, 28, 28)))
         );
         MainContentLayout.setVerticalGroup(
             MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,9 +151,14 @@ public class EditProject extends javax.swing.JFrame {
                 .addComponent(Description)
                 .addGap(18, 18, 18)
                 .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 284, Short.MAX_VALUE)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
+            .addGroup(MainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainContentLayout.createSequentialGroup()
+                    .addContainerGap(533, Short.MAX_VALUE)
+                    .addComponent(btnSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(32, 32, 32)))
         );
 
         SidebarPanel1.setBackground(new java.awt.Color(211, 211, 211));
@@ -322,36 +340,11 @@ public class EditProject extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProjectNameActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        String name = txtProjectName.getText().trim();
-        String desc = txtDescription.getText().trim();
-        
-        
-        if (name.isEmpty() || desc.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Semua field harus diisi.");
-            return;
-        }
-         try {
-            Connection conn = Database.DatabaseConnection.getConnection();
-            String sql = "UPDATE projects SET name=?, `desc`=?, updated_at=NOW() WHERE id=?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, name);
-            pst.setString(2, desc);
-            pst.setInt(3, projectId);
- int affected = pst.executeUpdate();
-            if (affected > 0) {
-                JOptionPane.showMessageDialog(this, "Data berhasil diupdate.");
-                new CRUDProject(adminId).setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Gagal mengupdate data.");
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Kesalahan: " + e.getMessage());
-        }
-         
-    }//GEN-LAST:event_btnSaveActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        CRUDProject project = new CRUDProject(adminId);
+        project.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     private void TxtDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtDashboardMouseClicked
         DashboardAdmin dashboard = new DashboardAdmin(adminId);
@@ -390,6 +383,10 @@ public class EditProject extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_TxtUserMouseClicked
 
+    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSave1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -423,7 +420,8 @@ public class EditProject extends javax.swing.JFrame {
     private javax.swing.JLabel TxtSocialMedia;
     private javax.swing.JLabel TxtTask;
     private javax.swing.JLabel TxtUser;
-    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnSave1;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtProjectName;
     // End of variables declaration//GEN-END:variables

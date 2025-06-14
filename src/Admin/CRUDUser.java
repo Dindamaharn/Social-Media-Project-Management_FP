@@ -106,34 +106,45 @@ public class CRUDUser extends javax.swing.JFrame {
     }
     
     private void loadDataToTable() {
-        model.setRowCount(0);
-        String query = """
-                    SELECT a.id, a.name, a.email, COALESCE(SUM(t.point), 0) AS point
-                    FROM assignees a
-                    LEFT JOIN (SELECT t.assignees_id, t.point FROM tasks t
-                            INNER JOIN status_tracks st ON t.id = st.tasks_id
-                            WHERE st.status = 'completed') AS t ON a.id = t.assignees_id
-                    GROUP BY a.id, a.name, a.email
-                """;
+    model.setRowCount(0);
 
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query);
-                ResultSet rs = stmt.executeQuery()) {
+    String query = """
+        WITH latest_status AS (
+            SELECT st.tasks_id, st.status,
+                   ROW_NUMBER() OVER (PARTITION BY st.tasks_id ORDER BY st.updated_at DESC, st.id DESC) AS rn
+            FROM status_tracks st
+        ),
+        completed_tasks AS (
+            SELECT t.id, t.assignees_id, t.point
+            FROM tasks t
+            JOIN latest_status ls ON t.id = ls.tasks_id
+            WHERE ls.rn = 1 AND ls.status = 'completed'
+        )
+        SELECT a.id, a.name, a.email, COALESCE(SUM(ct.point), 0) AS point
+        FROM assignees a
+        LEFT JOIN completed_tasks ct ON a.id = ct.assignees_id
+        GROUP BY a.id, a.name, a.email
+        """;
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                int point = rs.getInt("point");
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query);
+         ResultSet rs = stmt.executeQuery()) {
 
-                model.addRow(new Object[] { name, email, point, "Edit/Delete|" + id });
-            }
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String email = rs.getString("email");
+            int point = rs.getInt("point");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Gagal memuat data.");
+            model.addRow(new Object[]{name, email, point, "Edit/Delete|" + id});
         }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Gagal memuat data.");
     }
+}
+
     
     private void openEditForm(int userId, int adminId) {
         EditUser editUser = new EditUser(userId, this.adminId);
