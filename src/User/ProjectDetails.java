@@ -215,16 +215,25 @@ public class ProjectDetails extends javax.swing.JFrame {
         stmtTotal.close();
         
         //ambil yang done
-        String queryDone = "SELECT COUNT(*) AS done FROM status_tracks st " +
-                           "JOIN tasks t ON st.tasks_id = t.id " +
-                           "WHERE t.projects_id = ? AND st.status = 'completed'";
+        String queryDone = """
+                           SELECT COUNT(*) AS completed
+                           FROM tasks t
+                           JOIN status_tracks s ON t.id = s.tasks_id
+                           WHERE t.projects_id = ?
+                             AND s.created_at = (
+                                 SELECT MAX(st2.created_at)
+                                 FROM status_tracks st2
+                                 WHERE st2.tasks_id = t.id
+                             )
+                             AND s.status = 'completed';
+                           """;
         PreparedStatement stmtDone = conn.prepareStatement(queryDone);
         stmtDone.setInt(1, projectId);
         ResultSet rsDone = stmtDone.executeQuery();
 
         int doneTasks = 0;
         if (rsDone.next()) {
-            doneTasks = rsDone.getInt("done");
+            doneTasks = rsDone.getInt("completed");
             taskDoneCount.setText(String.valueOf(doneTasks));
         }
 
@@ -256,10 +265,18 @@ public class ProjectDetails extends javax.swing.JFrame {
         try {
             Connection conn = DatabaseConnection.getConnection();
 
-            String query = "SELECT t.id AS task_id, t.name, t.deadline, st.status " +
-                           "FROM tasks t " +
-                           "LEFT JOIN status_tracks st ON t.id = st.tasks_id " +
-                           "WHERE t.projects_id = ? AND t.assignees_id = ? ";
+            String query = """
+                           SELECT t.id AS task_id, t.name, t.deadline, st.status
+                           FROM tasks t
+                           LEFT JOIN status_tracks st ON st.id = (
+                               SELECT st2.id
+                               FROM status_tracks st2
+                               WHERE st2.tasks_id = t.id
+                               ORDER BY st2.created_at DESC
+                               LIMIT 1
+                           )
+                           WHERE t.projects_id = ? AND t.assignees_id = ?
+                           """;
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, projectId);
             stmt.setInt(2, assigneeIdProjects);
