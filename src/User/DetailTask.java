@@ -370,7 +370,7 @@ public class DetailTask extends javax.swing.JFrame {
         });
 
         btnOnProgress.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnOnProgress.setText("On Progress");
+        btnOnProgress.setText("On Going");
         btnOnProgress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOnProgressActionPerformed(evt);
